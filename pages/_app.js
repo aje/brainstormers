@@ -3,10 +3,10 @@ import { NextUIProvider } from '@nextui-org/react';
 
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     return (
-        <NextUIProvider>
-            <SessionProvider session={session}>
+        <SessionProvider session={session}>
+            <NextUIProvider>
                 <Component {...pageProps} />
-            </SessionProvider>
-        </NextUIProvider>
+            </NextUIProvider>
+        </SessionProvider>
     )
 }

@@ -1,23 +1,36 @@
 import Head from 'next/head'
 import {signIn, useSession, signOut} from "next-auth/react";
-import { Container, Card, Row, Text } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function Home() {
     const { data: session } = useSession();
     // console.log(session);
     return (
-        <Container>
-            <Card css={{ $$cardColor: '$colors$primary' }}>
-                <Card.Body>
-                    <Row justify="center" align="center">
-                        <Text h6 size={15} color="white" css={{ m: 0 }}>
-                            NextUI gives you the best developer experience with all the features
-                            you need for building beautiful and modern websites and
-                            applications.
-                        </Text>
-                    </Row>
-                </Card.Body>
-            </Card>
-        </Container>
+        <div className="container">
+            <Head>
+                <title>Create Next App</title>
+                <link rel="icon" href="/favicon.ico"/>
+            </Head>
+
+            <main>
+                <h1 className="title">
+                    {session && <>
+                        {session.user.email}
+                        <button onClick={() => signOut()}>Sign out</button>
+                    </>}
+
+                    Welcome to <a href="https://nextjs.org">Next.js!</a>
+                </h1>
+
+
+                <Link href={'/pages/signin'}>
+                    <a onClick={e=> {
+                        e.preventDefault();
+                        signIn().then(r => console.log(r))
+                    }}>Sign In</a>
+                </Link>
+
+            </main>
+        </div>
     )
 }
