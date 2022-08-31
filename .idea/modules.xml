@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/brainstormers-nextjs.iml" filepath="$PROJECT_DIR$/.idea/brainstormers-nextjs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ideastorm.iml" filepath="$PROJECT_DIR$/.idea/ideastorm.iml" />
     </modules>
   </component>
 </project>
