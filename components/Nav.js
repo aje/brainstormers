@@ -17,7 +17,8 @@ const Nav = () => {
             <Navbar.Content>
                 <Navbar.Link color="inherit" href="#">
                     Login
-                </Navbar.Link><Navbar.Item>
+                </Navbar.Link>
+                <Navbar.Item>
                     <Button auto flat as={Link} href="#">
                         Sign Up
                     </Button>
