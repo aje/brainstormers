@@ -1,18 +1,18 @@
-import Head from 'next/head'
-import {signIn, useSession, signOut} from "next-auth/react";
+import {useSession} from "next-auth/react";
 
-import {Button, Container, styled, Text, useTheme} from "@nextui-org/react";
+import {Button, Container, Textarea, useTheme} from "@nextui-org/react";
 
 import {Flag} from "@styled-icons/entypo/Flag";
+import IdeaSlider from "../components/home/IdeaSlider";
 
 
 export default function Home() {
     const { data: session } = useSession();
     const {theme} = useTheme()
 
-    return (
+    return (<>
         <div className={"bg-primary/10 pt-52 pb-32 text-center"}>
-            <Container xl>
+            <Container >
             <div >
 
                 <main className={"flex flex-col items-center"}>
@@ -40,5 +40,44 @@ export default function Home() {
             </div>
             </Container>
         </div>
+        <IdeaSlider />
+        <div className={"bg-blue-50 py-20"}>
+            <Container >
+                <main className={"flex  items-center"}>
+                    <div className="w-3/5 pr-20">
+                        <h2 >Write your <span className={"text-blue-400"}>idea</span> down <span className={"font-normal"}>and ask other people's opinion</span></h2>
+                        <Textarea className={"mb-6"} placeholder={"Something that makes ..."} fullWidth  size={"xl"} />
+                        <div className="flex">
+                        <Button>Add idea</Button>
+                        <Button flat className={"ml-3"}>Login or Sign up</Button>
+                        </div>
+                    </div>
+                    <div className="w-2/5 bg-red-300">pic</div>
+                </main>
+            </Container>
+        </div>
+        <div className={"py-20"}>
+            <Container >
+                <main >
+                    <h2>
+                        Get <span className="text-primary">inspired</span> by other ideas <span className="font-normal"> and help them to grow the and this is the best</span>
+                    </h2>
+                    <h3>Last month best ideas (33)</h3>
+                    list of ideas
+                </main>
+            </Container>
+        </div>
+        <div className={"py-20 bg-gray-100"}>
+            <Container >
+                <main >
+                    <h2>
+                        Get to know our <span className="text-primary">Entrepreneurs</span>
+                    </h2>
+                    <h3>Last month (33)</h3>
+                    list of Entrepreneurs
+                </main>
+            </Container>
+        </div>
+        </>
     )
 }

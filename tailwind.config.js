@@ -7,10 +7,10 @@ module.exports = {
     ],
 
     theme: {
-        colors: {
-            primary: 'rgb(var(--color-primary) / <alpha-value>)',
-        },
         extend: {
+            colors: {
+                primary: 'rgb(var(--color-primary) / <alpha-value>)',
+            },
             fontFamily: {
                 'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
             },
