@@ -8,7 +8,8 @@ const MyRating = ({count, value, size = "sm", ...rest}) => {
     const sizeMap = {
         lg: 32,
         xl: 48,
-        sm: 20
+        sm: 20,
+        md: 26
     }
     const color = "#FFC107";
     return (<div className={"flex-shrink-0"}>

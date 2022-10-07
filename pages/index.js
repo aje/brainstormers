@@ -5,6 +5,7 @@ import {Button, Container, Textarea, useTheme} from "@nextui-org/react";
 import {Flag} from "@styled-icons/entypo/Flag";
 import IdeaSlider from "../components/home/IdeaSlider";
 import IdeaForm from "../components/home/IdeaForm";
+import LatestIdeas from "../components/home/LatestIdeas";
 
 
 export default function Home() {
@@ -43,17 +44,7 @@ export default function Home() {
         </div>
         <IdeaSlider />
             <IdeaForm />
-        <div className={"py-20"}>
-            <Container >
-                <main >
-                    <h2>
-                        Get <span className="text-primary">inspired</span> by other ideas <span className="font-normal"> and help them to grow the and this is the best</span>
-                    </h2>
-                    <h3>Last month best ideas (33)</h3>
-                    list of ideas
-                </main>
-            </Container>
-        </div>
+        <LatestIdeas />
         <div className={"py-20 bg-gray-100"}>
             <Container >
                 <main >
