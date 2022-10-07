@@ -4,6 +4,7 @@ import {Button, Container, Textarea, useTheme} from "@nextui-org/react";
 
 import {Flag} from "@styled-icons/entypo/Flag";
 import IdeaSlider from "../components/home/IdeaSlider";
+import IdeaForm from "../components/home/IdeaForm";
 
 
 export default function Home() {
@@ -41,21 +42,7 @@ export default function Home() {
             </Container>
         </div>
         <IdeaSlider />
-        <div className={"bg-blue-50 py-20"}>
-            <Container >
-                <main className={"flex  items-center"}>
-                    <div className="w-3/5 pr-20">
-                        <h2 >Write your <span className={"text-blue-400"}>idea</span> down <span className={"font-normal"}>and ask other people's opinion</span></h2>
-                        <Textarea className={"mb-6"} placeholder={"Something that makes ..."} fullWidth  size={"xl"} />
-                        <div className="flex">
-                        <Button>Add idea</Button>
-                        <Button flat className={"ml-3"}>Login or Sign up</Button>
-                        </div>
-                    </div>
-                    <div className="w-2/5 bg-red-300">pic</div>
-                </main>
-            </Container>
-        </div>
+            <IdeaForm />
         <div className={"py-20"}>
             <Container >
                 <main >
