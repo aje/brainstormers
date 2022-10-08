@@ -1,5 +1,4 @@
-import {useEffect, useState} from 'react';
-import {Button, Card, Container, Grid, Link, Text, User} from "@nextui-org/react";
+import {Button, Card, Container, Grid, Text, User} from "@nextui-org/react";
 import MyRating from "../MyRating";
 
 const LatestIdeas = () => {
@@ -86,7 +85,7 @@ const LatestIdeas = () => {
                 <h3>Last month <span className="font-normal"> best ideas (33)</span></h3>
                 <Grid.Container gap={2}>
                     {ideas.map(idea => <Grid sm={4} >
-                        <Card isPressable className={"bg-primary/10"}>
+                        <Card flat isPressable className={"bg-primary/10"}>
                             <Card.Header className={"flex-col pb-0 mt-2 items-start"}>
                                 <User size={"xs"} className={"-ml-1 mb-2"}  src={idea.author.avatar} name={idea.author.name}/>
                                 <Text h5 className={"ml-2 mb-0"}> {idea.title}</Text>
