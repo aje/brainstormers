@@ -1,11 +1,12 @@
 import {model, models, Schema} from "mongoose";
 
-export const userRoles = ['TRAVELER', 'ADMIN', 'DRIVER', 'AGENT'];
+export const userRoles = ['ENTREPRENEUR', 'ADMIN', 'USER', 'CRITIC'];
 
 export const UserSchema = new Schema({
     name: { type: String, required: true},
     email: String,
     avatar: String,
+    bio: String,
     role: {
         type: String,
         enum: userRoles
