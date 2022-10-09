@@ -9,14 +9,14 @@ const Nav = () => {
     const { data: session } = useSession();
     // console.log(session, sidebar);
     return (<>
-        <Navbar  variant={'stinky'} containerCss={{background: "transparent"}} disableShadow disableBlur
+        <Navbar containerCss={{background: "transparent", position: "fixed", top: 0, zIndex: 0}} disableShadow disableBlur
                  // className={"fixed "}
         >
             <Navbar.Brand>
                 <Image src={"/logo.png"} width={200} quality={100} height={60}/>
             </Navbar.Brand>
             <Navbar.Content >
-                <Navbar.Link href="#">Home</Navbar.Link>
+                <Navbar.Link href="/">Home</Navbar.Link>
                 <Navbar.Link href="#">Explore</Navbar.Link>
                 <Navbar.Link href="#">Blog</Navbar.Link>
                 {session ? <ProfileButton /> :  <LoginPopover />}

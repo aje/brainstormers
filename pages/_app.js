@@ -4,7 +4,6 @@ import {createTheme, NextUIProvider} from '@nextui-org/react';
 import Layout from "../components/Layout";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-// import {Toaster} from "react-hot-toast";
 import LoadingPage from "../components/LoadingPage";
 import {hookstate} from "@hookstate/core";
 

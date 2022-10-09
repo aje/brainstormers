@@ -51,26 +51,24 @@ const IdeaSlider = () => {
         <div className={" py-20 text-center"}>
             <Container >
                 <main className={"flex  items-center"}>
-                    <Button ripple={false}  disabled={index===0} size="xl" auto  light  onPress={onPrev} className={"hover:text-primary active:text-primary"}>
-                        <ChevronSmallLeft size={80} />
+                    <Button ripple={false} light icon={<ChevronSmallLeft size={80} />} disabled={index===0} size="xl" onPress={onPrev} css={{ minWidth: 50}}  className={" hover:text-primary active:text-primary"}>
+                    
                     </Button>
                     <div className={"flex-1"}>
                         <User size="sm" src={ideas[index].author.avatar}
                               name={ideas[index].author.name}/>
 
                         <Text h2>Idea: <span className={"font-normal"}>{ideas[index].title}</span></Text>
-                        <Text className={"text-2xl mb-5 px-9 text-gray-500"}>{ideas[index].description}</Text>
+                        <Text className={"text-2xl mb-5 px-6 text-gray-500"}>{ideas[index].description}</Text>
                         {ideas[index].tags.map(t => <a className={"hover:underline hover:text-gray-500 transition-all font-bold italic text-gray-300 mr-3"}>{t}</a>)}
 
-                        <div className="flex justify-between items-center mt-5">
-                            <Button icon={<EmojiSad size={34} />} bordered size={"xl"} ghost color={"error"} className={" font-bold text-2xl"}>DON'T DO IT</Button>
+                        <div className="flex justify-around items-center mt-5">
+                            <Button borderWeight={"bold"} icon={<EmojiSad size={34} />} bordered size={"xl"} ghost color={"error"} className={" font-bold text-2xl"}>DON'T DO IT</Button>
                             <MyRating size={"xl"} />
-                            <Button  icon={<Check size={40} />} bordered size={"xl"} ghost color={"primary"} className={" font-bold text-2xl"}>LET'S DO IT</Button>
+                            <Button borderWeight={"bold"}  icon={<Check size={40} />} bordered size={"xl"} ghost color={"primary"} className={" font-bold text-2xl"}>LET'S DO IT</Button>
                         </div>
                     </div>
-                    <Button ripple={false} disabled={index === (ideas.length - 1)} size="xl" onPress={onNext} auto light  className={"hover:text-primary active:text-primary"}>
-                        <ChevronSmallRight size={80} />
-                    </Button>
+                    <Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 50}}  onPress={onNext} auto light  className={"hover:text-primary active:text-primary"}></Button>
                 </main>
             </Container>
         </div>
