@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/react";
-import {Button, User} from "@nextui-org/react";
+import {Button, Navbar, User} from "@nextui-org/react";
 import {useHookstate} from "@hookstate/core";
 import {sidebarState} from "../pages/_app";
 
@@ -12,12 +12,11 @@ const ProfileButton = () => {
         state.set(true)
         document.body.style.overflow = "hidden";
     }
-    return (<><Button light onPress={onOpen}>
-        <User size={"sm"} src={session.user.image} name={session.user.name}/>
-        </Button>
-
-        </>
-        );
+    return (<><Navbar.Link href="#" onPress={onOpen}>
+            <User size={"sm"} src={session.user.image} name={session.user.name}/>
+        </Navbar.Link>
+    </>
+    );
 };
 
 export default ProfileButton;

@@ -47,6 +47,7 @@ export const IdeaSchema = new Schema({
     },
     upsides: [CommentSchema],
     downsides: [CommentSchema],
+    alternatives: [String],
     costs: Array,
     targetAudience: Array,
     marketSize: Number,
