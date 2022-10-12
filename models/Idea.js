@@ -1,7 +1,7 @@
 import mongoose, {Schema} from "mongoose";
 import {CommentSchema} from "./Comment";
 
-const ideaTypes = [{
+const ideaTags = [{
     ONLINE: {value: 'ONLINE',  },
     OFFLINE: {value: 'OFFLINE',  },
     TECH: {value: 'TECH',  },
@@ -31,12 +31,8 @@ export const IdeaSchema = new Schema({
     ratingsAverage: Number,
     tags: [{
         type: String,
-        enum: Object.keys(ideaTypes)
+        enum: Object.keys(ideaTags)
     }],
-    oceanType: {
-        type: String,
-        enum: ['BLUE', 'RED']
-    },
     status: {
         type: String,
         enum: Object.keys(ideaStatuses)
@@ -47,6 +43,7 @@ export const IdeaSchema = new Schema({
     },
     upsides: [CommentSchema],
     downsides: [CommentSchema],
+    problems: [String],
     alternatives: [String],
     costs: Array,
     targetAudience: Array,

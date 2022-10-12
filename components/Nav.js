@@ -17,7 +17,7 @@ const Nav = () => {
             </Navbar.Brand>
             <Navbar.Content >
                 <Navbar.Link href="/">Home</Navbar.Link>
-                <Navbar.Link href="#">Explore</Navbar.Link>
+                <Navbar.Link href="/explore">Explore</Navbar.Link>
                 <Navbar.Link href="#">Blog</Navbar.Link>
                 {session ? <ProfileButton /> :  <LoginPopover />}
             </Navbar.Content>
