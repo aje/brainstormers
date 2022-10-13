@@ -4,6 +4,7 @@ import {EmojiSad} from "@styled-icons/entypo/EmojiSad";
 import MyRating from "../components/MyRating";
 import {Check} from "@styled-icons/entypo/Check";
 import clsx from "clsx";
+import {ideaTypes} from "../variables";
 
 const Explore = () => {
 
@@ -13,6 +14,7 @@ const Explore = () => {
                 name: "Number 0",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "Gym app that also motivates",
             description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\n" +
                 "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam",
@@ -23,6 +25,7 @@ const Explore = () => {
                 name: "Number 1",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "Business of a club or somethign",
             description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.\n" +
                 "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam",
@@ -33,6 +36,7 @@ const Explore = () => {
                 name: "Number 2",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -42,6 +46,7 @@ const Explore = () => {
                 name: "Number 3",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -51,6 +56,7 @@ const Explore = () => {
                 name: "Number 3",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -60,6 +66,7 @@ const Explore = () => {
                 name: "Number 2",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "PROBLEM",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -69,6 +76,7 @@ const Explore = () => {
                 name: "Number 3",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -78,6 +86,7 @@ const Explore = () => {
                 name: "Number 3",
                 avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
             },
+            type: "IDEA",
             title: "This is better be a good idea",
             description: "lorem ipsum do luco  ",
             tags: ["INTERNET", "ONLINE"]
@@ -97,7 +106,7 @@ const Explore = () => {
         <div
             className={"bg-pink-50 p-20"}
             style={{height: "calc(100vh - 117px)" , backgroundImage: "url(/explorebg.png)", backgroundSize: "cover", backgroundPosition:"bottom"}}>
-            <Text h2 className={"my-10"}>Get <span className={"text-primary timing"}>inspired</span> by other ideas</Text>
+            <Text h2 className={"my-10 font-sans"}>Get <span className={"text-primary timing"}>inspired</span> by other ideas</Text>
             <div
                 className={"flex relative h-full"}
                 // className={clsx("flex h-full pb-32  w-160% transition-all transition duration-1000", index === 0 ?  "translate-x-0" : "-translate-x-50%" )}
@@ -119,7 +128,7 @@ const Explore = () => {
                         <Card.Body className={"p-10 block"}>
                             <User size="sm" src={idea.author.avatar}
                                   name={idea.author.name}/>
-                            <Text h2>Idea: <span className={"font-normal"}>{idea.title}</span></Text>
+                            <Text h2 className={"font-sans"}>{ideaTypes[idea.type]?.value}: <span className={"font-normal"}>{idea.title}</span></Text>
                             <Text className={"text-2xl mb-5 text-gray-500 font-light"}>{idea.description}</Text>
                             {idea.tags.map(t => <a className={"hover:underline hover:text-gray-500 transition-all font-bold italic text-gray-300 mr-3"}>{t}</a>)}
                         </Card.Body>

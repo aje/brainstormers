@@ -12,7 +12,7 @@ const Nav = () => {
         <Navbar containerCss={{background: "transparent", position: "fixed", top: 0, zIndex: 0}} disableShadow disableBlur
                  // className={"fixed "}
         >
-            <Navbar.Brand>
+            <Navbar.Brand as={"a"} href={"/"}>
                 <Image src={"/logo.png"} width={200} quality={100} height={60}/>
             </Navbar.Brand>
             <Navbar.Content >
