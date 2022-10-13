@@ -58,7 +58,7 @@ const IdeaSlider = () => {
                         <User size="sm" src={ideas[index].author.avatar}
                               name={ideas[index].author.name}/>
 
-                        <Text h2>Idea: <span className={"font-normal"}>{ideas[index].title}</span></Text>
+                        <Text h2>Idea: <span className={"font-normal  font-sans"}>{ideas[index].title}</span></Text>
                         <Text className={"text-2xl mb-5 px-6 text-gray-500"}>{ideas[index].description}</Text>
                         {ideas[index].tags.map(t => <a className={"hover:underline hover:text-gray-500 transition-all font-bold italic text-gray-300 mr-3"}>{t}</a>)}
 

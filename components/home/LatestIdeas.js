@@ -79,8 +79,8 @@ const LatestIdeas = () => {
     return (<div className={"py-20"}>
         <Container >
             <main >
-                <h2>
-                    Get <span className="text-primary">inspired</span> by other ideas <span className="font-normal"> and help them to grow the and this is the best</span>
+                <h2 className={"font-sans"}>
+                    Get <span className="text-primary">inspired</span> by other ideas <span className="font-normal font-serif"> and help them to grow the and this is the best</span>
                 </h2>
                 <h3>Last month <span className="font-normal"> best ideas (33)</span></h3>
                 <Grid.Container gap={2}>

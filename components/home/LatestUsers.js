@@ -27,8 +27,8 @@ const LatestUsers = () => {
     return (<div className={"py-20 bg-gray-100"} style={{backgroundImage: "url(/ent.png)", backgroundSize: "cover", backgroundPosition:"bottom"}}>
         <Container >
             <main >
-                <h2>
-                    Get to know our <span className="text-primary">Entrepreneurs</span>
+                <h2 className={"font-sans"}>
+                    Get to know our <span className="text-primary font-serif">Entrepreneurs</span>
                 </h2>
                 <h3>Last month <span className="font-normal"> most active entrepreneurs(33)</span></h3>
                 <Grid.Container gap={2}>

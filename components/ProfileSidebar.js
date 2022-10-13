@@ -112,7 +112,7 @@ const ProfileSidebar = () => {
 
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
-                        <Text h4>My Ideas <span className={""}>(254)</span></Text>
+                        <Text h4 className={"font-sans"}>My Ideas <span className={""}>(254)</span></Text>
                         <Button size={"sm"} auto flat>See all ideas</Button>
                     </div>
 
@@ -137,7 +137,7 @@ const ProfileSidebar = () => {
 
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
-                        <Text h4>My comments <span className={""}>(254)</span></Text>
+                        <Text h4 className={"font-sans"}>My comments <span className={""}>(254)</span></Text>
                         <Button size={"sm"} auto flat>See all comments</Button>
                     </div>
                     {myComments.length === 0 ? <Empty />
@@ -151,7 +151,7 @@ const ProfileSidebar = () => {
 
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
-                        <Text h4>My Bookmarks <span className={""}>(254)</span></Text>
+                        <Text h4 className={"font-sans"}>My Bookmarks <span className={""}>(254)</span></Text>
                         <Button size={"sm"} auto flat>See all bookmarks</Button>
                     </div>
                     <Grid.Container gap={2}>

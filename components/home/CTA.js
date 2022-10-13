@@ -9,9 +9,9 @@ const Cta = () => {
         <Container >
             <div >
                 <main className={"flex flex-col items-center"}>
-                    <h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>
+                    <h1 className={"font-bold text-5xl  font-sans"}>Everything begins with an <span className="text-primary"> idea</span></h1>
                     <p className={"text-2xl mx-auto w-1/2 my-7"}> Start your journey by brainstorming your ideas with other people around the globe or your friends</p>
-                    <Button size={"xl"} icon={<Flag size={30} />} className={"font-bold text-2xl"}  color="primary">Start ideation</Button>
+                    <Button as={"a"} href={"#ideaform"} size={"xl"} icon={<Flag size={30} />} className={"font-bold text-2xl"}  color="primary">Start ideation</Button>
                     {/*<h1 className="text-5xl ">*/}
                     {/*    {session && <>*/}
                     {/*        {session.user.email}*/}

@@ -12,7 +12,8 @@ module.exports = {
                 primary: 'rgb(var(--color-primary) / <alpha-value>)',
             },
             fontFamily: {
-                'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
+                'sans': ['Century Gothic', ...defaultTheme.fontFamily.sans],
+                'serif': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
             },
             spacing: {
                 '240%': '240%',

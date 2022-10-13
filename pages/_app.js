@@ -8,7 +8,7 @@ import LoadingPage from "../components/LoadingPage";
 import {hookstate} from "@hookstate/core";
 
 const fonts = {
-    sans: "'Century Gothic',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
+    sans: "'Proxima Nova',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
 };
 const theme = createTheme({
     type: "light", // it could be "light" or "dark"
