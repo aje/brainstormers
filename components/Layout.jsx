@@ -2,9 +2,8 @@ import Nav from './Nav'
 import Footer from './Footer'
 import {Toaster} from "react-hot-toast";
 import ProfileSidebar from "./ProfileSidebar";
-import { hookstate, useHookstate } from '@hookstate/core';
+import {useHookstate} from '@hookstate/core';
 import {sidebarState} from "../pages/_app";
-
 
 
 const Layout = ({children}) => {

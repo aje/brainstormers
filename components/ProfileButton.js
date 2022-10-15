@@ -1,5 +1,5 @@
 import {useSession} from "next-auth/react";
-import {Button, Navbar, User} from "@nextui-org/react";
+import {Navbar, User} from "@nextui-org/react";
 import {useHookstate} from "@hookstate/core";
 import {sidebarState} from "../pages/_app";
 

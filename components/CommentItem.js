@@ -1,4 +1,4 @@
-import {Avatar, Text, User} from "@nextui-org/react";
+import {Text, User} from "@nextui-org/react";
 import Moment from "react-moment";
 import clsx from "clsx";
 

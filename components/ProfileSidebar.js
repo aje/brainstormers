@@ -1,4 +1,4 @@
-import {Button, Card, Dropdown, Grid, Modal, Popover, Text, User} from "@nextui-org/react";
+import {Button, Card, Dropdown, Grid, Text, User} from "@nextui-org/react";
 import {signOut, useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {sidebarState} from "../pages/_app";
@@ -7,10 +7,13 @@ import Empty from "./Empty";
 import Moment from "react-moment";
 import Image from "next/image";
 import {Cog} from "@styled-icons/entypo/Cog";
+import {useState} from "react";
+import Edit from "./profile/edit";
 
 const ProfileSidebar = () => {
     const { data: session } = useSession();
     const state = useHookstate(sidebarState);
+    const [edit, setEdit] = useState(false);
     const onClose = () => {
         state.set(false)
         document.body.style.overflow = "auto";
@@ -62,7 +65,7 @@ const ProfileSidebar = () => {
 
                 break;
             case "edit":
-
+                setEdit(true)
                 break;
             case "logout":
                 signOut({ callbackUrl: '/' });
@@ -110,6 +113,7 @@ const ProfileSidebar = () => {
                     </Dropdown>
                 </div>
 
+                {edit ? <Edit /> : <>
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My Ideas <span className={""}>(254)</span></Text>
@@ -172,6 +176,7 @@ const ProfileSidebar = () => {
 
                     </Grid.Container>
                 </div>
+                </>}
             </Card.Body>
         </Card>
         {/*</Modal>*/}

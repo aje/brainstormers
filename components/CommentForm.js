@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Card, Loading, Textarea} from "@nextui-org/react";
+import {Button, Loading, Textarea} from "@nextui-org/react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
