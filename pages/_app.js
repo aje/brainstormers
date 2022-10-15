@@ -36,6 +36,10 @@ const theme = createTheme({
 })
 
 export const sidebarState = hookstate(false);
+export const ideaFormData = hookstate({
+    description: "",
+    type: ""
+});
 
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     const router = useRouter();
