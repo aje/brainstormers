@@ -52,8 +52,8 @@ export const IdeaSchema = new Schema({
     toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
 
-IdeaSchema.virtual('reviews', {
-    ref: 'Review',
+IdeaSchema.virtual('comments', {
+    ref: 'comment',
     localField: '_id',
     foreignField: 'idea'
 });
