@@ -9,9 +9,11 @@ import Image from "next/image";
 import {Cog} from "@styled-icons/entypo/Cog";
 import {useState} from "react";
 import Edit from "./profile/edit";
+import {useRouter} from "next/router";
 
 const ProfileSidebar = () => {
     const { data: session } = useSession();
+    const router = useRouter();
     const state = useHookstate(sidebarState);
     const [edit, setEdit] = useState(false);
     const onClose = () => {
@@ -86,7 +88,7 @@ const ProfileSidebar = () => {
         {/*    onClose={()=>state.set(false)}*/}
         {/*>*/}
         <Card  css={{ borderRadius: 0}} style={{zIndex: 400}}
-               className=" bg-white h-screen w-2/3 fixed top-0 right-0"
+               className="fadeInAnimated bg-white h-screen w-2/3 fixed top-0 right-0"
         >
             <Card.Body className={"p-10"}>
                 <div className="flex items-center justify-between">
@@ -117,7 +119,10 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My Ideas <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} auto flat>See all ideas</Button>
+                        <Button size={"sm"} auto flat onPress={()=> {
+                            onClose();
+                            router.push("/profile/ideas")
+                        }}>See all ideas</Button>
                     </div>
 
                     <Grid.Container gap={2}>
@@ -142,7 +147,10 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My comments <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} auto flat>See all comments</Button>
+                        <Button size={"sm"} auto flat onPress={()=> {
+                            onClose()
+                            router.push("/profile/comments")
+                        }}>See all comments</Button>
                     </div>
                     {myComments.length === 0 ? <Empty />
                         : myComments.map(item => <div className="ml-3 mt-6">
@@ -156,7 +164,10 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My Bookmarks <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} auto flat>See all bookmarks</Button>
+                        <Button size={"sm"} onPress={()=> {
+                            onClose()
+                            router.push("/profile/bookmarks")
+                        }}  auto flat><span>See all bookmarks</span></Button>
                     </div>
                     <Grid.Container gap={2}>
                         {ideas.map(idea => <Grid sm={6}  >
