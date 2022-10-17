@@ -1,6 +1,5 @@
 import mongoose, {Schema} from "mongoose";
 import {CommentSchema} from "./Comment";
-import {ideaTypes} from "../variables";
 
 const ideaStatuses = [{
     OPEN: {value: 'OPEN',  },
@@ -9,7 +8,6 @@ const ideaStatuses = [{
     NONE_EXECUTABLE: {value: 'NONE_EXECUTABLE',  }
 }];
 
-
 export const IdeaSchema = new Schema({
     title: {
         type: String,
@@ -17,7 +15,6 @@ export const IdeaSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     createdAt: {
         type: Date,
@@ -36,13 +33,10 @@ export const IdeaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    type: {
-        type: String,
-        enum: Object.keys(ideaTypes)
-    },
     upsides: [CommentSchema],
     downsides: [CommentSchema],
     problems: [String],
+    solutions: [String],
     alternatives: [String],
     costs: Array,
     targetAudience: Array,

@@ -36,14 +36,9 @@ const theme = createTheme({
 })
 
 export const sidebarState = hookstate(false);
-export const ideaFormData = hookstate({
-    description: "",
-    type: ""
-});
 
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     const router = useRouter();
-
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         const handleStart = (url, { shallow }) => {
