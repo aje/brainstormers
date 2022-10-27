@@ -7,6 +7,7 @@ export const UserSchema = new Schema({
     email: String,
     avatar: String,
     bio: String,
+    password: String,
     role: {
         type: String,
         enum: userRoles
