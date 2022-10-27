@@ -1,8 +1,8 @@
-import { getProviders, signIn } from "next-auth/react"
-import { getSession } from "next-auth/react"
+import {getProviders, getSession, signIn} from "next-auth/react";
 import React from "react";
 
 export default function SignIn({ providers }) {
+    // console.log(providers);
     return (
         <div className={"bg-grey"}>
             {Object.values(providers).map((provider) => (

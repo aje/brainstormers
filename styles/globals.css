@@ -1,4 +1,4 @@
-/*@tailwind base;*/
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
@@ -7,5 +7,24 @@
     :root {
         --color-primary: 0 145 110;
         --color-secondary: 111 114 185;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.fadeInAnimated {
+    animation: fadeIn ease-out 0.25s ;
+}
+
+@keyframes fadeIn {
+    0% {
+        /*opacity: 0;*/
+        transform: translateX(100%) scale(0.7);
+    }
+    100% {
+        /*opacity: 100;*/
+        transform: translateX(0) scale(1);
     }
 }

@@ -1,44 +1,40 @@
-import Head from 'next/head'
-import {signIn, useSession, signOut} from "next-auth/react";
+import IdeaSlider from "../components/home/IdeaSlider";
+import IdeaForm from "../components/home/IdeaForm";
+import LatestIdeas from "../components/home/LatestIdeas";
+import LatestUsers from "../components/home/LatestUsers";
+import CTA from "../components/home/CTA";
+import ProblemForm from "../components/home/ProblemForm";
+import {Container, Text} from "@nextui-org/react";
+import React from "react";
+import {hookstate} from "@hookstate/core";
 
-import {Button, Container, styled, Text, useTheme} from "@nextui-org/react";
-
-import {Flag} from "@styled-icons/entypo/Flag";
-
+export const ideaFormData = hookstate({
+    problem: "",
+    idea: ""
+});
 
 export default function Home() {
-    const { data: session } = useSession();
-    const {theme} = useTheme()
+    // const { data: session } = useSession();
+    // const {theme} = useTheme()
 
-    return (
-        <div className={"bg-primary/10 pt-52 pb-32 text-center"}>
-            <Container xl>
-            <div >
+    return (<>
+            <CTA />
+            <IdeaSlider />
+            <IdeaForm />
 
-                <main className={"flex flex-col items-center"}>
-                    <h1 className={"font-bold text-5xl"}>Everything begins with an <span className="text-primary"> idea</span></h1>
-                    <p className={"text-2xl mx-auto w-1/2 mt-4 mb-4"}> Start your journey by brainstorming your ideas with other people around the globe or your friends</p>
-                    <Button size={"lg"} icon={<Flag size={30} />}   color="primary">Start ideation</Button>
-                    {/*<h1 className="text-5xl ">*/}
-                    {/*    {session && <>*/}
-                    {/*        {session.user.email}*/}
-                    {/*        <button onClick={() => signOut()}>Sign out</button>*/}
-                    {/*    </>}*/}
-
-                    {/*    */}
-                    {/*</h1>*/}
-
-
-                    {/*<Link href={'/pages/signin'}>*/}
-                    {/*    <a onClick={e=> {*/}
-                    {/*        e.preventDefault();*/}
-                    {/*        signIn().then(r => console.log(r))*/}
-                    {/*    }}>Sign In</a>*/}
-                    {/*</Link>*/}
-
-                </main>
+            <div className={" py-20 text-center "}
+                 style={{backgroundImage: "url(/homepage.png)" , backgroundSize: "50%"}}
+            >
+                <Container >
+                    <main>
+                        <Text className={"text-primary font-sanse"} h2>You have no idea?</Text>
+                        <Text className={"text-2xl "}>Do not worry! You tell us what <span className="text-red-500">problem</span> in life you have and we will try to find a <span className={"text-primary"}>solution</span> for it! </Text>
+                    </main>
+                </Container>
             </div>
-            </Container>
-        </div>
+            <ProblemForm />
+            <LatestIdeas />
+            <LatestUsers />
+        </>
     )
 }

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // export const baseURL = 'http://virtserver.swaggerhub.com/behroozina/SPSDriver/1.0.0';
 // export const baseURL = 'http://127.0.0.1:3000/api';
-export const baseURL = 'http://localhost:3000/api';
+export const baseURL = 'http://localhost:3002/api';
 // export const baseURL = 'http://localhost:8080/api/v.1/';
 export const headers = {
     'Access-Control-Allow-Origin': '*',

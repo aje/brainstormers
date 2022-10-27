@@ -1,28 +1,27 @@
-import { Navbar, Button, Link, Text, Card, Radio } from "@nextui-org/react";
+import {Navbar} from "@nextui-org/react";
+import Image from "next/image";
+import LoginPopover from "./LoginPopover";
+import {useSession} from "next-auth/react";
+import ProfileButton from "./ProfileButton";
+
 
 const Nav = () => {
+    const { data: session } = useSession();
+    // console.log(session, sidebar);
     return (<>
-        <Navbar isBordered variant={'sticky'} className={"fixed bg-transparent shadow-0"}>
-            <Navbar.Brand>
-                <Text b color="inherit" hideIn="xs">
-                    ACME
-                </Text>
+        <Navbar containerCss={{background: "transparent", position: "fixed", top: 0, zIndex: 1}} disableShadow disableBlur
+                 // className={"fixed "}
+        >
+            <Navbar.Brand as={"a"} href={"/"}>
+                <Image src={"/logo.png"} width={200} quality={100} height={60}/>
             </Navbar.Brand>
-            <Navbar.Content hideIn="xs">
-                <Navbar.Link href="#">Features</Navbar.Link>
-                <Navbar.Link isActive href="#">Customers</Navbar.Link>
-                <Navbar.Link href="#">Pricing</Navbar.Link>
-                <Navbar.Link href="#">Company</Navbar.Link>
-            </Navbar.Content>
-            <Navbar.Content>
-                <Navbar.Link color="inherit" href="#">
-                    Login
-                </Navbar.Link>
-                <Navbar.Item>
-                    <Button auto flat as={Link} href="#">
-                        Sign Up
-                    </Button>
-                </Navbar.Item>
+
+            <Navbar.Content className={"font-bold"} >
+                <Navbar.Link href="/">Home</Navbar.Link>
+                <Navbar.Link href="/explore">Explore</Navbar.Link>
+                {/*<Navbar.Link href="#">Blog</Navbar.Link>*/}
+                {session ? <ProfileButton /> :  <LoginPopover />}
+
             </Navbar.Content>
         </Navbar>
     </>);
