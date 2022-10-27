@@ -15,11 +15,13 @@ const Nav = () => {
             <Navbar.Brand as={"a"} href={"/"}>
                 <Image src={"/logo.png"} width={200} quality={100} height={60}/>
             </Navbar.Brand>
+
             <Navbar.Content className={"font-bold"} >
                 <Navbar.Link href="/">Home</Navbar.Link>
                 <Navbar.Link href="/explore">Explore</Navbar.Link>
                 {/*<Navbar.Link href="#">Blog</Navbar.Link>*/}
                 {session ? <ProfileButton /> :  <LoginPopover />}
+
             </Navbar.Content>
         </Navbar>
     </>);

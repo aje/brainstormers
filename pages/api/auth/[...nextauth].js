@@ -46,11 +46,13 @@ export const authOptions = {
         })
         // ...add more providers here
     ],
+
     callbacks: {
         async signIn({user, account, profile, email, credentials}) {
             return true
         },
     },
+
     adapter: MongoDBAdapter(clientPromise),
 }
 
