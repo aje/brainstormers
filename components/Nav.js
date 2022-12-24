@@ -9,7 +9,10 @@ const Nav = () => {
     const { data: session } = useSession();
     // console.log(session, sidebar);
     return (<>
-        <Navbar containerCss={{background: "#e5f4f0ab", position: "fixed", top: 0, zIndex: 1}} disableShadow disableBlur
+        <Navbar containerCss={{
+            background: "transparent",
+            // background: "#e5f4f0ab",
+            position: "fixed", top: 0, zIndex: 1}} disableShadow disableBlur
                  // className={"fixed "}
         >
             <Navbar.Brand as={"a"} href={"/"}>

@@ -1,43 +1,33 @@
 import React, {useState} from 'react';
-import {Button, Card, Container, Input, Text} from "@nextui-org/react";
+import {Button, Card, Container, Input, Loading, Text, Textarea} from "@nextui-org/react";
 import axios from "../services/axios"
-import {useSession} from "next-auth/react";
-import {useRouter} from "next/router";
 import {toast} from "react-hot-toast";
 import {useHookstate} from "@hookstate/core";
 import {AddToList} from "@styled-icons/entypo/AddToList"
 import {Trash} from "@styled-icons/entypo/Trash"
 import {ideaFormData} from "./index";
+import {SendPlane} from "@styled-icons/remix-line/SendPlane";
+import Empty from "../components/Empty";
+import TagsInput from 'react-tagsinput';
+import 'react-tagsinput/react-tagsinput.css'
+import {useRouter} from "next/router";
+
 
 const Upload = () => {
-    const { data: session } = useSession();
-
     const state = useHookstate(ideaFormData);
-    // console.log("state", state.get())
     const router = useRouter();
     const {problem, idea} = state.get();
-    // console.log(session);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         tags: [],
-        solutions: [idea],
-        problems: [problem],
-        alternatives: [],
-        costs: [],
-        targetAudience: [],
-        marketSize: 0,
+        targetAudience: "",
     });
-
     const [problems, setProblems] = useState([problem]);
     const [ideas, setIdeas] = useState([idea]);
-
-    //
-    // useEffect(()=>{
-    //     if(session)
-    //         onChange("author")(session?.user?._id)
-    // }, [session, state]);
+    const [alts, setAlts] = useState([""]);
+    const [step, setStep] = useState(0);
 
     const onChange = name => event => {
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
@@ -45,11 +35,29 @@ const Upload = () => {
 
     const onSubmit = () => {
         setLoading(true);
-        axios.post(`/posts`, formData).then(()=>{
+        const data = formData;
+        if(problems.length > 1 ||  problems[0] !== "") data.problems = problems;
+        if(ideas.length > 1 ||  ideas[0] !== "") data.solutions = ideas;
+        axios.post(`/posts`, data).then(({data})=>{
             toast.success("Successfully created!");
-            router.push('/')
+            setFormData(data)
+            setStep(1)
+            // router.push('/')
         }).finally(() => setLoading(false))
     };
+
+    const onSubmitFinal = () => {
+        setLoading(true);
+        const data = formData;
+        if(alts.length > 1 ||  alts[0] !== "") data.alternatives = alts;
+        axios.patch(`/posts`, data).then((res)=>{
+            toast.success("Successfully updated!");
+            // console.log(data);
+            // setFormData(data)
+            // setStep(1)
+            router.push(`/ideas/idea/${res.data?.id}`)
+        }).finally(() => setLoading(false))
+    }
 
     const addProblem = () => {
         const t = [...problems]
@@ -87,85 +95,214 @@ const Upload = () => {
         setIdeas(t);
     }
 
-    const disabled = formData.title === "";
+    const addAlts = () => {
+        const t = [...alts]
+        t.push("");
+        setAlts(t);
+    }
+
+    const removeAlts = (i) => e => {
+        const t = [...alts]
+        t.splice(i, 1);
+        setAlts(t);
+    }
+
+    const onChangeAlts = (i) => e => {
+        const t = [...alts]
+        t[i] = e.target.value;
+        setAlts(t);
+    }
+
+    const disabled = formData.title === "" || loading;
 
     return (<>
         <div className={"py-20 bg-violet-50"} >
             <Container>
+                <Text h1 editable>Start <span className={"text-primary"}>Ideation</span> <span
+                    className={"font-normal"}>and brainstorm</span></Text>
+                {step === 0 && <>
 
-                <Text h1 editable>Start <span className={"text-primary"}>Ideation</span> <span className={"font-normal"}>and brainstorm</span></Text>
+                    <div className={"bg-white  rounded-3xl mb-5"}>
+                        <div className="p-4">
+                            <Input
+                                label={"Title"}
+                                value={formData.title}
+                                onChange={onChange("title")}
+                                required
+                                size={"xl"}
+                                className={"mb-3"}
+                                fullWidth
+                                // underlined
+                                placeholder={"Choose a name or small explanation"}/>
 
+                            <Textarea
+                                size={"xl"}
 
-
-                <div className="grid gap-5 grid-cols-2  mb-5">
-                    <div  className={"bg-green-50 px-1 rounded-3xl"}>
-                        <Card.Header className={"pb-0"}>
-                            <Text h3 className={"text-green-500"}>Solutions</Text>
-                        </Card.Header>
-
-                        {ideas.map((p, i) => <div key={i} className="flex w-full px-4 pb-4">
-                                <Input
-                                    underlined
-                                    css={{flexGrow: 1}}
-                                    value={p}
-                                    onChange={onChangeIdeas(i)}
-                                    required size={"lg"}/>
-                                {i === (ideas.length -1 ) ?
-                                    <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addIdeas}  disabled={p === ""} light color={"success"}
-                                            className={"ml-2 hover:text-green-800"} auto>
-                                        <AddToList size={24}/>
-                                    </Button>
-                                    :
-                                    <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeIdeas(i)} light color={"success"}
-                                            className={"ml-2 hover:text-green-800"} auto>
-                                        <Trash size={16}/>
-                                    </Button>
-                                }
-                            </div>
-                        )}
+                                value={formData.description}
+                                onChange={onChange("description")}
+                                // className={"mb-6"}
+                                // underlined
+                                fullWidth
+                                label="Description"
+                                placeholder="Enter your amazing ideas."
+                            />
+                        </div>
                     </div>
-                    <div  className={"bg-red-50 px-1 rounded-3xl"}>
-                        <Card.Header className={"pb-0"}>
-                            <Text h3 className={"text-red-500"}>Problems</Text>
-                        </Card.Header>
-                        {problems.map((p, i) => <div key={i} className="flex w-full px-4 pb-4">
-                                <Input
-                                    underlined
-                                    css={{flexGrow: 1}}
-                                    value={p}
-                                    onChange={onChangeProblem(i)}
-                                    required size={"lg"}/>
-                            {i === (problems.length -1 ) ?
-                                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addProblem} disabled={p === ""} light color={"error"}
-                                        className={"ml-2 hover:text-red-800"} auto>
-                                    <AddToList size={24}/>
-                                </Button>
-                                :
-                                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeProblem(i)} light color={"error"}
-                                        className={"ml-2 hover:text-red-800"} auto>
-                                    <Trash size={16}/>
-                                </Button>
-                            }
-                            </div>
-                        )}
+                    <div className="grid gap-5 grid-cols-2  mb-5">
+                        <div className={"bg-green-50 px-1 rounded-3xl"}>
+                            <Card.Header className={"pb-0 block mb-2"}>
+                                <Text h3 className={"text-green-500"}>Solutions</Text>
+                                <Text className={"-mt-3 text-gray-500"}>How do you solve a problem?</Text>
+                            </Card.Header>
 
+                            {ideas.map((p, i) => <div key={i} className="flex w-full px-4  pb-4">
+                                    <Input
+                                        placeholder={"Solutions or ideas"}
+                                        underlined
+                                        css={{flexGrow: 1}}
+                                        value={p}
+                                        onChange={onChangeIdeas(i)}
+                                        required size={"lg"}/>
+                                    {i === (ideas.length - 1) ?
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addIdeas}
+                                                disabled={p === ""} light color={"success"}
+                                                className={"ml-2 hover:text-green-800"} auto>
+                                            <AddToList size={24}/>
+                                        </Button>
+                                        :
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeIdeas(i)}
+                                                light color={"success"}
+                                                className={"ml-2 hover:text-green-800"} auto>
+                                            <Trash size={16}/>
+                                        </Button>
+                                    }
+                                </div>
+                            )}
+                        </div>
+                        <div className={"bg-red-50 px-1 rounded-3xl"}>
+                            <Card.Header className={"pb-0 block"}>
+                                <Text h3 className={"text-red-500"}>Problems</Text>
+                                <Text className={"-mt-3 text-gray-500"}>What problems are you solving?</Text>
+                            </Card.Header>
+                            {problems.map((p, i) => <div key={i} className="flex w-full px-4 pb-4">
+                                    <Input
+                                        underlined
+                                        css={{flexGrow: 1}}
+                                        value={p}
+                                        placeholder={"A problem to fix"}
+                                        onChange={onChangeProblem(i)}
+                                        required size={"lg"}/>
+                                    {i === (problems.length - 1) ?
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addProblem}
+                                                disabled={p === ""} light color={"error"}
+                                                className={"ml-2 hover:text-red-800"} auto>
+                                            <AddToList size={24}/>
+                                        </Button>
+                                        :
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeProblem(i)}
+                                                light color={"error"}
+                                                className={"ml-2 hover:text-red-800"} auto>
+                                            <Trash size={16}/>
+                                        </Button>
+                                    }
+                                </div>
+                            )}
+
+                        </div>
                     </div>
-                </div>
+                    <Button className={"mt-5"} onPress={onSubmit}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
+                        {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> : "Save & Next"}
+                    </Button>
+                </>}
 
-                <Text h3 >Title</Text>
-                <Input
-                    // label={"Title"}
-                    value={formData.title}
-                    onChange={onChange("title")}
-                    required size={"xl"}
-                    fullWidth
-                    underlined
-                    className={"mb-6"}
-                    placeholder={"Choose a name or small explaination"}/>
+                {step === 1 &&
+                    <>
+                        <Text h2><span className={"font-normal text-gray-500"}>Title:</span> {formData.title}</Text>
+                        <Text>{formData.description}</Text>
+                        <div className="grid gap-5 my-5 grid-cols-2">
+                            <div className="bg-green-50 rounded-3xl px-1">
+                                <Card.Header className={"pb-0 block mb-2"}>
+                                    <Text h3 className={"text-green-500"}>Solutions</Text>
+                                </Card.Header>
+                                {formData.solutions.length === 0 ? <Empty /> : formData.solutions.map((p, i) => <div key={i} className="flex w-full px-4  pb-4">
+                                        <p>{p}</p>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="bg-red-50 rounded-3xl px-1">
+                                <Card.Header className={"pb-0 block"}>
+                                    <Text h3 className={"text-red-500"}>Problems</Text>
+                                </Card.Header>
 
-                <Button className={"mt-5"} onPress={onSubmit} disabled={disabled}>Save & Next</Button>
+                                {formData.problems.length === 0 ? <Empty /> : formData.problems.map((p, i) => <div key={i} className="flex w-full px-4  pb-4">
+                                        <p>{p}</p>
+                                    </div>
+                                )}
+                        </div>
 
+                        </div>
+
+
+                        <Text h4>Existing Alternatives</Text>
+                        <div className="bg-white rounded-3xl pt-2 mb-5">
+                            {alts.map((p, i) => <div key={i} className="flex w-full px-4  pb-4">
+                                    <Input
+                                        underlined
+                                        css={{flexGrow: 1}}
+                                        value={p}
+                                        onChange={onChangeAlts(i)}
+                                        required size={"lg"}/>
+                                    {i === (alts.length - 1) ?
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addAlts}
+                                                disabled={p === ""} light
+                                                className={"ml-2 hover:text-green-800"} auto>
+                                            <AddToList size={24}/>
+                                        </Button>
+                                        :
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeAlts(i)}
+                                                light
+                                                className={"ml-2 hover:text-green-800"} auto>
+                                            <Trash size={16}/>
+                                        </Button>
+                                    }
+                                </div>
+                            )}
+                        </div>
+
+
+                        <Text h4>Target Audience</Text>
+                        <div className="bg-white rounded-3xl pt-2 px-4 mb-5">
+                        <Input
+                            value={formData.targetAudience}
+                            onChange={onChange("targetAudience")}
+                            required
+                            size={"xl"}
+                            className={"mb-3 "}
+                            fullWidth
+                            underlined
+                            placeholder={"Who is eligible to use your product or service or who has the problems?"}/>
+                        </div>
+
+                        <Text h4>Tags <small className={"text-gray-500 ml-1"} > Enter to add</small></Text>
+                        <TagsInput
+                            tagProps={{
+                                className:"react-tagsinput-tagd rounded-xl px-2 pb-1 pt-0 border border-solid border-gray-300 mr-2",
+                                classNameRemove: "before:content-['×'] text-gray-500 hover:text-gray-800 cursor-pointer pl-2 "
+
+                            }}
+                            className={"rounded-3xl bg-white px-4 pt-3 pb-2"}
+                            // maxTags={5} addOnBlur
+                            value={formData.tags} onChange={onChange("tags")} />
+
+
+                        <Button className={"mt-5 "} onPress={onSubmitFinal}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
+                            {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> : "Save"}
+                        </Button>
+                    </>
+                }
             </Container>
+
+
 
 
 

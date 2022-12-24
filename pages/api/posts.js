@@ -15,34 +15,23 @@ const apiRoute = nextConnect({
     },
 });
 
-apiRoute.put(async (req, res) => {
-    await dbConnect();
+apiRoute.patch(async (req, res) => {
     const session = await unstable_getServerSession(req, res, authOptions)
-        // console.log(req.body);
-        const update = {
-            title: req.body.title,
-        }
-    const posts = await Post.findByIdAndUpdate(req.body._id)
-        // .populate({path: 'user', model: User});
-    // const file = req.file;
     // findOneAndUpdate
-    // if (session) {
-    //     // Signed in
-    //     await dbConnect();
-    //
-    //     const filter = { user: session.user };
-    //     const update = { $push: {
-    //             qualifications: req.body,
-    //         },};
-    //     const d = await Driver.findOneAndUpdate(
-    //         filter,
-    //         update,
-    //     );
-    //     res.status(200).json({data: d});
-    // } else {
-    //     // Not Signed in
-    //     res.status(401)
-    // }
+    if (session) {
+        await dbConnect();
+        const update = {
+            tags: req.body.tags,
+            targetAudience: req.body.targetAudience,
+            alternatives: req.body.alternatives
+        }
+        console.log(update);
+        const post = await Idea.findByIdAndUpdate(req.body._id, update)
+        res.status(200).json(post);
+    } else {
+        // Not Signed in
+        res.status(401)
+    }
 
     res.end()
     // res.status(200).json({data: "success"});
@@ -52,9 +41,9 @@ apiRoute.put(async (req, res) => {
     const session = await getSession({ req });
     try {
         if(session) {
-            console.log(session.user);
+            // console.log(session.user);
             const data = await Idea.create({...req.body, author: session.user});
-            res.status(201).json({data: data});
+            res.status(201).json(data);
         }
         res.status(401).json({data: "Not authorized"})
     } catch (error) {

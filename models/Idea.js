@@ -22,9 +22,6 @@ export const IdeaSchema = new Schema({
     },
     ratingsQuantity: Number,
     ratingsAverage: Number,
-    tags: [{
-        type: String,
-    }],
     status: {
         type: String,
         enum: Object.keys(ideaStatuses)
@@ -37,10 +34,11 @@ export const IdeaSchema = new Schema({
     // downsides: [CommentSchema],
     problems: [String],
     solutions: [String],
+
     alternatives: [String],
-    costs: Array,
-    targetAudience: Array,
-    marketSize: Number,
+    targetAudience: String,
+    tags: [String],
+
 },{
     toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
     toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
