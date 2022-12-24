@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Card, Container, Input, Text} from "@nextui-org/react";
 import axios from "../services/axios"
 import {useSession} from "next-auth/react";
@@ -28,19 +28,16 @@ const Upload = () => {
         costs: [],
         targetAudience: [],
         marketSize: 0,
-        author: null
-        // user: session?.user?._id
     });
 
     const [problems, setProblems] = useState([problem]);
     const [ideas, setIdeas] = useState([idea]);
 
-    console.log(problems);
-
-    useEffect(()=>{
-        if(session)
-            onChange("author")(session?.user?._id)
-    }, [session, state]);
+    //
+    // useEffect(()=>{
+    //     if(session)
+    //         onChange("author")(session?.user?._id)
+    // }, [session, state]);
 
     const onChange = name => event => {
         setFormData( {...formData, [name]: event?.target ? event.target.value: event });
@@ -97,20 +94,37 @@ const Upload = () => {
             <Container>
 
                 <Text h1 editable>Start <span className={"text-primary"}>Ideation</span> <span className={"font-normal"}>and brainstorm</span></Text>
-                <Text h3 >Title</Text>
-                <Input
-                    // label={"Title"}
-                    value={formData.title}
-                    onChange={onChange("title")}
-                    required size={"xl"}
-                    fullWidth
-                    underlined
-                    className={"mb-6"}
-                    placeholder={"Choose a name or small explaination"}/>
 
 
-                <div className="grid gap-5 grid-cols-2 ">
-                    <div  className={"bg-red-100 px-1 rounded-3xl"}>
+
+                <div className="grid gap-5 grid-cols-2  mb-5">
+                    <div  className={"bg-green-50 px-1 rounded-3xl"}>
+                        <Card.Header className={"pb-0"}>
+                            <Text h3 className={"text-green-500"}>Solutions</Text>
+                        </Card.Header>
+
+                        {ideas.map((p, i) => <div key={i} className="flex w-full px-4 pb-4">
+                                <Input
+                                    underlined
+                                    css={{flexGrow: 1}}
+                                    value={p}
+                                    onChange={onChangeIdeas(i)}
+                                    required size={"lg"}/>
+                                {i === (ideas.length -1 ) ?
+                                    <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addIdeas}  disabled={p === ""} light color={"success"}
+                                            className={"ml-2 hover:text-green-800"} auto>
+                                        <AddToList size={24}/>
+                                    </Button>
+                                    :
+                                    <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeIdeas(i)} light color={"success"}
+                                            className={"ml-2 hover:text-green-800"} auto>
+                                        <Trash size={16}/>
+                                    </Button>
+                                }
+                            </div>
+                        )}
+                    </div>
+                    <div  className={"bg-red-50 px-1 rounded-3xl"}>
                         <Card.Header className={"pb-0"}>
                             <Text h3 className={"text-red-500"}>Problems</Text>
                         </Card.Header>
@@ -136,33 +150,18 @@ const Upload = () => {
                         )}
 
                     </div>
-                    <div  className={"bg-green-100 px-1 rounded-3xl"}>
-                        <Card.Header className={"pb-0"}>
-                            <Text h3 className={"text-green-500"}>Solutions</Text>
-                        </Card.Header>
-
-                        {ideas.map((p, i) => <div key={i} className="flex w-full px-4 pb-4">
-                            <Input
-                                underlined
-                                css={{flexGrow: 1}}
-                                value={p}
-                                onChange={onChangeIdeas(i)}
-                                required size={"lg"}/>
-                            {i === (ideas.length -1 ) ?
-                                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addIdeas}  disabled={p === ""} light color={"success"}
-                                        className={"ml-2 hover:text-green-800"} auto>
-                                    <AddToList size={24}/>
-                                </Button>
-                                :
-                                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeIdeas(i)} light color={"success"}
-                                        className={"ml-2 hover:text-green-800"} auto>
-                                    <Trash size={16}/>
-                                </Button>
-                            }
-                        </div>
-                        )}
-                    </div>
                 </div>
+
+                <Text h3 >Title</Text>
+                <Input
+                    // label={"Title"}
+                    value={formData.title}
+                    onChange={onChange("title")}
+                    required size={"xl"}
+                    fullWidth
+                    underlined
+                    className={"mb-6"}
+                    placeholder={"Choose a name or small explaination"}/>
 
                 <Button className={"mt-5"} onPress={onSubmit} disabled={disabled}>Save & Next</Button>
 

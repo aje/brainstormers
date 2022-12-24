@@ -1,5 +1,5 @@
 import mongoose, {Schema} from "mongoose";
-import {CommentSchema} from "./Comment";
+// import {CommentSchema} from "./Comment";
 
 const ideaStatuses = [{
     OPEN: {value: 'OPEN',  },
@@ -33,8 +33,8 @@ export const IdeaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    upsides: [CommentSchema],
-    downsides: [CommentSchema],
+    // upsides: [CommentSchema],
+    // downsides: [CommentSchema],
     problems: [String],
     solutions: [String],
     alternatives: [String],
@@ -47,10 +47,10 @@ export const IdeaSchema = new Schema({
 });
 
 IdeaSchema.virtual('comments', {
-    ref: 'comment',
+    ref: 'Comment',
     localField: '_id',
     foreignField: 'idea'
 });
 
-export const Idea  = mongoose.models.Idea ||  mongoose.model('idea', IdeaSchema);
+export const Idea  = mongoose.models.Idea ||  mongoose.model('Idea', IdeaSchema);
 export default Idea;

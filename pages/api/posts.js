@@ -4,6 +4,7 @@ import User from "../../models/User";
 import {unstable_getServerSession} from "next-auth/next";
 import {authOptions} from "./auth/[...nextauth]";
 import nextConnect from "next-connect";
+import {getSession} from "next-auth/react";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -48,10 +49,10 @@ apiRoute.put(async (req, res) => {
     // console.log("apiRoute.post");
 }).post(async (req, res) => {
     await dbConnect();
-    // console.log("POST AN IDEA")
-    const session = await unstable_getServerSession(req, res, authOptions)
+    const session = await getSession({ req });
     try {
         if(session) {
+            console.log(session.user);
             const data = await Idea.create({...req.body, author: session.user});
             res.status(201).json({data: data});
         }

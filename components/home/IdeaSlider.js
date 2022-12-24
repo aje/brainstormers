@@ -51,9 +51,11 @@ const IdeaSlider = () => {
         <div className={" py-20 text-center"}>
             <Container >
                 <main className={"flex  items-center"}>
-                    <Button ripple={false} light icon={<ChevronSmallLeft size={80} />} disabled={index===0} size="xl" onPress={onPrev} css={{ minWidth: 50}}  className={" hover:text-primary active:text-primary"}/>
+                    <Button ripple={false} light icon={<ChevronSmallLeft size={80} />} disabled={index===0} size="xl" onPress={onPrev} css={{ minWidth: 50}}  className={"z-0 hover:text-primary active:text-primary"}/>
                     <div className={"flex-1"}>
-                        <User size="sm" src={ideas[index].author.avatar}
+                        <User
+                            css={{zIndex: 0}}
+                            size="sm" src={ideas[index].author.avatar}
                               name={ideas[index].author.name}/>
 
                         <Text h2>Idea: <span className={"font-normal  font-sans"}>{ideas[index].title}</span></Text>
@@ -66,7 +68,7 @@ const IdeaSlider = () => {
                             <Button borderWeight={"bold"}  icon={<Check size={40} />} bordered size={"xl"} ghost color={"primary"} className={" font-bold text-2xl"}>LET'S DO IT</Button>
                         </div>
                     </div>
-                    <Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 50}}  onPress={onNext} auto light  className={"hover:text-primary active:text-primary"}/>
+                    <Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 50}}  onPress={onNext} auto light  className={"z-0 hover:text-primary active:text-primary"}/>
                 </main>
             </Container>
         </div>

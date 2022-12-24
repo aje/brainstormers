@@ -1,4 +1,4 @@
-import {model, models, Schema} from "mongoose";
+import mongoose, {Schema} from "mongoose";
 
 const commentTypes = [{
     SOLUTION: {value: 'SOLUTION',  },
@@ -15,12 +15,12 @@ export const CommentSchema = new Schema({
     },
     author: {
         type: Schema.Types.ObjectId,
-        ref: "user",
+        ref: "User",
         required: [true, 'Comment must have an author']
     },
     idea: {
         type: Schema.ObjectId,
-        ref: 'idea',
+        ref: 'Idea',
         required: [true, 'Comment must belong to a post']
     },
     type: {
@@ -29,7 +29,7 @@ export const CommentSchema = new Schema({
     },
     replyTo: {
         type: Schema.Types.ObjectId,
-        ref: "comment"
+        ref: "Comment"
     },
     createdAt: {
         type: Date,
@@ -106,5 +106,5 @@ export const CommentSchema = new Schema({
 // });
 
 
-export const Comment = models.Comment || model('comment', CommentSchema);
+export const Comment = mongoose.models.Comment || mongoose.model('Comment', CommentSchema);
 export default Comment;
