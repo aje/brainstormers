@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Loading, Textarea} from "@nextui-org/react";
+import {Button, Input, Loading} from "@nextui-org/react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
+// import {Input} from "postcss";
 
 const CommentForm = ({postId}) => {
     const { data: session } = useSession();
@@ -30,17 +31,17 @@ const CommentForm = ({postId}) => {
         }).finally(() => setLoading(false))
     };
 
-    return (<div className={"mb-10 flex items-end"}>
+    return (<div className={"mb-10 flex items-center w-full"}>
         <div className={"flex-1"}>
-        <Textarea
-            fullWidth
-            required
-            onChange={onChange("description")}
-            value={formData.description}
-            rows={1}
-            size={"lg"}
-            bordered
-            placeholder={"Write something usefull please"} />
+            <Input
+                fullWidth
+                required
+                onChange={onChange("description")}
+                value={formData.description}
+                rows={1}
+                size={"lg"}
+                bordered
+                placeholder={"Write something usefull please"} />
         </div>
             <Button
                 auto

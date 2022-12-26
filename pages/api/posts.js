@@ -20,12 +20,18 @@ apiRoute.patch(async (req, res) => {
     // findOneAndUpdate
     if (session) {
         await dbConnect();
+
+
         const update = {
             tags: req.body.tags,
+            title: req.body.title,
+            solutions: req.body.solutions,
+            problems: req.body.problems,
+            description: req.body.description,
             targetAudience: req.body.targetAudience,
             alternatives: req.body.alternatives
         }
-        console.log(update);
+        // console.log(update);
         const post = await Idea.findByIdAndUpdate(req.body._id, update)
         res.status(200).json(post);
     } else {
