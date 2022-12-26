@@ -64,6 +64,15 @@ apiRoute.patch(async (req, res) => {
     } catch (error) {
         res.status(400).json({error});
     }
+}).delete(async (req, res) => {
+    await dbConnect();
+    try {
+        console.log(req.query.id);
+        const deleted = await Idea.findByIdAndDelete(req.query.id);
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(400).json({error});
+    }
 });
 
 export default apiRoute;

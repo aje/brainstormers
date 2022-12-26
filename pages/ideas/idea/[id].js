@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-// import {useRouter} from "next/router";
 import {Button, Dropdown, Grid, Input, Text, Textarea, User,} from "@nextui-org/react"
 import {EmojiSad} from "@styled-icons/entypo/EmojiSad";
 import MyRating from "../../../components/MyRating";
@@ -20,6 +19,7 @@ import {Close} from "@styled-icons/remix-line";
 import FormList from "../../../components/FormList";
 import TagsInput from "react-tagsinput";
 import 'react-tagsinput/react-tagsinput.css'
+import DeleteConfirmation from "../../../components/DeleteConfirmation";
 
 CommentItem.propTypes = {
     item: PropTypes.shape({
@@ -196,10 +196,7 @@ const  IdeaPage = ({item, isOwner}) => {
     const [editable, setEditable] = useState(null);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState(item);
-
-    const [problems, setProblems] = useState(item.problems);
-    const [ideas, setIdeas] = useState(item.solutions);
-    const [alts, setAlts] = useState(item.alternatives);
+    const [visible, setVisible] = useState(false);
 
     const onDropdown = (key) => {
         switch (key) {
@@ -209,7 +206,8 @@ const  IdeaPage = ({item, isOwner}) => {
             case "edit":
                 // setEdit(true)
                 break;
-            case "logout":
+            case "delete":
+                setVisible(true)
                 // signOut({ callbackUrl: '/' });
                 break;
             default:
@@ -237,75 +235,25 @@ const  IdeaPage = ({item, isOwner}) => {
             toast.success("Successfully updated!");
             setEditable(null);
             refreshData();
-            // console.log(data);
-            // setFormData(data)
-            // setStep(1)
-            // router.push(`/ideas/idea/${res.data?.id}`)
         }).finally(() => setLoading(false))
     }
-    // const router = useRouter();
-    // const { id } = router.query;
 
-
-    const addProblem = () => {
-        const t = [...problems]
-        t.push("");
-        setProblems(t);
+    function onDelete() {
+        setLoading(true);
+        setVisible(false)
+        axios.delete(`/posts?id=${item.id}`).then((res)=>{
+            toast.success("Successfully deleted!");
+            router.push("/")
+        }).finally(() => setLoading(false))
     }
 
-    const removeProblem = (i) => e => {
-        const t = [...problems]
-        t.splice(i, 1);
-        setProblems(t);
-    }
-
-    const onChangeProblem = (i) => e => {
-        const t = [...problems]
-        t[i] = e.target.value;
-        setProblems(t);
-    }
-
-    const addIdeas = () => {
-        const t = [...ideas]
-        t.push("");
-        setIdeas(t);
-    }
-
-    const removeIdeas = (i) => e => {
-        const t = [...ideas]
-        t.splice(i, 1);
-        setIdeas(t);
-    }
-
-    const onChangeIdeas = (i) => e => {
-        const t = [...ideas]
-        t[i] = e.target.value;
-        setIdeas(t);
-    }
-
-    const addAlts = () => {
-        const t = [...alts]
-        t.push("");
-        setAlts(t);
-    }
-
-    const removeAlts = (i) => e => {
-        const t = [...alts]
-        t.splice(i, 1);
-        setAlts(t);
-    }
-
-    const onChangeAlts = (i) => e => {
-        const t = [...alts]
-        t[i] = e.target.value;
-        setAlts(t);
-    }
     if(!item) return <div className={"my-28"}><Empty label={"Error 404"} /></div>
-    console.log(editable);
 
     return (<Grid.Container
         style={{height: "calc(100vh - 117px)"}}
         gap={0} justify="center" className={"overflow-y-hidden"}>
+
+        <DeleteConfirmation loading={loading} visible={visible} closeHandler={()=>setVisible(false)} onDelete={onDelete}/>
         <Grid xs={5} className="bg-blue-50 pt-24 h-full">
             <div className="relative h-full flex flex-col w-full">
                 <div className="hsl px-6 flex-1 overflow-y-auto">
@@ -433,15 +381,7 @@ const  IdeaPage = ({item, isOwner}) => {
                                                                          className={"min-w-min px-2 -ml-2"}
                                                                          auto icon={<Check  size={22} />}/>}
                                                    fullWidth size={"xl"} className={""} bordered value={item.targetAudience}/> :
-                    <Text className={"cursor-pointer"} onClick={editItem("targetAudience")}>{item.targetAudience}</Text>}
-                    {/*{item.problems.map((p, i) => <Text className={""}>- {p}</Text>)}*/}
-
-                    {/*<Text h3 className={"mt-5"}>MarketSize:</Text>*/}
-                    {/*{item.problems.map((p, i) => <Text className={""}>- {p}</Text>)}*/}
-                    {/*<Text h3 className={"mt-5"}>Costs:</Text>*/}
-                    {/*{item.problems.map((p, i) => <Text className={""}>- {p}</Text>)}*/}
-
-
+                    <Text className={"cursor-pointer"} onClick={editItem("targetAudience")}>{item.targetAudience}</Text>}\
                 </div>
                 {isOwner ?
                 <div className=" to-blue-50 pt-0 p-5 bg-gradient-to-t from-white  w-full">
