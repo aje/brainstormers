@@ -19,7 +19,7 @@ export const CommentSchema = new Schema({
         required: [true, 'Comment must have an author']
     },
     idea: {
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Idea',
         required: [true, 'Comment must belong to a post']
     },

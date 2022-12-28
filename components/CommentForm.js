@@ -2,18 +2,15 @@ import React, {useState} from 'react';
 import {Button, Input, Loading} from "@nextui-org/react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
-import {useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
-// import {Input} from "postcss";
 
-const CommentForm = ({postId}) => {
-    const { data: session } = useSession();
+const CommentForm = ({ideaId}) => {
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         description: "",
-        post: postId,
+        idea: ideaId,
     });
 
     const router = useRouter();
@@ -24,8 +21,7 @@ const CommentForm = ({postId}) => {
 
     const onSubmit = () => {
         setLoading(true);
-        const data = {...formData, author: session?.user?._id};
-        axios.post(`/api/reviews`, data).then(()=>{
+        axios.post(`/api/reviews`, formData).then(()=>{
             router.replace(router.asPath);
             toast.success("Successfully posted!");
         }).finally(() => setLoading(false))

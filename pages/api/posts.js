@@ -1,8 +1,6 @@
 import Idea from "../../models/Idea";
 import dbConnect from "../../services/dbconnect";
 import User from "../../models/User";
-import {unstable_getServerSession} from "next-auth/next";
-import {authOptions} from "./auth/[...nextauth]";
 import nextConnect from "next-connect";
 import {getSession} from "next-auth/react";
 
@@ -16,7 +14,7 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.patch(async (req, res) => {
-    const session = await unstable_getServerSession(req, res, authOptions)
+    const session = await getSession({ req });
     // findOneAndUpdate
     if (session) {
         await dbConnect();
@@ -31,7 +29,6 @@ apiRoute.patch(async (req, res) => {
             targetAudience: req.body.targetAudience,
             alternatives: req.body.alternatives
         }
-        // console.log(update);
         const post = await Idea.findByIdAndUpdate(req.body._id, update)
         res.status(200).json(post);
     } else {
@@ -40,13 +37,11 @@ apiRoute.patch(async (req, res) => {
     }
 
     res.end()
-    // res.status(200).json({data: "success"});
-    // console.log("apiRoute.post");
 }).post(async (req, res) => {
-    await dbConnect();
     const session = await getSession({ req });
     try {
         if(session) {
+            await dbConnect();
             // console.log(session.user);
             const data = await Idea.create({...req.body, author: session.user});
             res.status(201).json(data);
@@ -55,6 +50,7 @@ apiRoute.patch(async (req, res) => {
     } catch (error) {
         res.status(400).json({error});
     }
+    res.end()
 }).get(async (req, res) => {
     await dbConnect();
     try {
@@ -64,15 +60,16 @@ apiRoute.patch(async (req, res) => {
     } catch (error) {
         res.status(400).json({error});
     }
+    res.end()
 }).delete(async (req, res) => {
     await dbConnect();
     try {
-        console.log(req.query.id);
         const deleted = await Idea.findByIdAndDelete(req.query.id);
         res.status(200).json(deleted);
     } catch (error) {
         res.status(400).json({error});
     }
+    res.end()
 });
 
 export default apiRoute;

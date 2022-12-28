@@ -1,5 +1,4 @@
 import mongoose, {Schema} from "mongoose";
-// import {CommentSchema} from "./Comment";
 
 const ideaStatuses = [{
     OPEN: {value: 'OPEN',  },

@@ -20,10 +20,10 @@ const DeleteConfirmation = ({visible, closeHandler, onDelete}) => {
             <Text>Are you sure that you want to delete this item?</Text>
         </Modal.Body>
         <Modal.Footer>
-            <Button auto flat color="error" onClick={closeHandler}>
+            <Button auto  flat onClick={closeHandler}>
                 Close
             </Button>
-            <Button auto onClick={onDelete}>
+            <Button auto color="error" onClick={onDelete}>
                 Delete
             </Button>
         </Modal.Footer>

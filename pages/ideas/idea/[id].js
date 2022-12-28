@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
+import * as models from "../../../models/models"
 import {Button, Dropdown, Grid, Input, Text, Textarea, User,} from "@nextui-org/react"
 import {EmojiSad} from "@styled-icons/entypo/EmojiSad";
 import MyRating from "../../../components/MyRating";
 import {Check} from "@styled-icons/entypo/Check";
-import * as PropTypes from "prop-types";
 import CommentItem from "../../../components/CommentItem";
 import CommentForm from "../../../components/CommentForm";
 import dbConnect from "../../../services/dbconnect";
 import Idea from "../../../models/Idea";
-import {models} from "mongoose";
 import Empty from "../../../components/Empty";
 import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
 import axios from "../../../services/axios";
@@ -21,17 +20,17 @@ import TagsInput from "react-tagsinput";
 import 'react-tagsinput/react-tagsinput.css'
 import DeleteConfirmation from "../../../components/DeleteConfirmation";
 
-CommentItem.propTypes = {
-    item: PropTypes.shape({
-        createdAt: PropTypes.number,
-        author: PropTypes.any,
-        replyTo: PropTypes.string,
-        description: PropTypes.string,
-        type: PropTypes.string
-    })
-};
+// CommentItem.propTypes = {
+//     item: PropTypes.shape({
+//         createdAt: PropTypes.number,
+//         author: PropTypes.any,
+//         replyTo: PropTypes.string,
+//         description: PropTypes.string,
+//         type: PropTypes.string
+//     })
+// };
 const  IdeaPage = ({item, isOwner}) => {
-    // console.log(item);
+    console.log(item);
     // const item ={
     //     ratingsAverage: 4,
     //     ratingsQuantity: 52 ,
@@ -430,10 +429,10 @@ const  IdeaPage = ({item, isOwner}) => {
                 <Grid xs={12} className={"p-7"}>
                     <div className={"w-full"}>
                         <Text h3>What do <span className={"text-primary"}>YOU</span> think about this idea?</Text>
-                        <CommentForm />
+                        <CommentForm ideaId={item._id}/>
                         <Text h3>{item.comments?.length} Comments</Text>
 
-                        {item.comments?.length > 0 ? item.comments?.map((u, i) => <CommentItem item={u} key={i}/>)
+                        {item.comments?.length > 0 ? item.comments?.map((u, i) => <CommentItem item={u} key={u._id}/>)
                             : <Empty />
                         }
 
@@ -445,7 +444,7 @@ const  IdeaPage = ({item, isOwner}) => {
 };
 
 export default IdeaPage;
-//
+
 export async function getServerSideProps({ params }) {
     const {id} = params;
     await dbConnect();
@@ -453,8 +452,15 @@ export async function getServerSideProps({ params }) {
     try {
         item = await Idea.findOne({ _id: id})
             .populate({ path: 'author', model: models.User})
-            // .populate({ path: 'reviews', select: 'post user rating description createdAt', options: { sort: { 'createdAt': -1 } }});
-        console.log(item);
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'author',
+                    model: models.User
+                },
+                select: 'idea  description createdAt' ,
+                options: { sort: { 'createdAt': -1 } }})
+        // console.log(item);
     } catch (e) {
         console.log(e);
     }

@@ -10,9 +10,9 @@ const CommentItem = ({item, dense}) => {
                 size={dense ? "xs" : "sm"}
                 src={item.author.image}
                 name={item.author.name}
-                // description={}
+                description={ <Text className={"text-xs text-gray-400"}><Moment format={"LL"}>{item.createdAt}</Moment></Text>}
             />
-            {!dense && <Text className={"text-xs text-gray-400"}><Moment format={"LL"}>{item.timestamp}</Moment></Text>}
+            {/*{!dense && <Text className={"text-xs text-gray-400"}><Moment format={"LL"}>{item.createdAt}</Moment></Text>}*/}
         </div>
         <Text className={clsx(!dense && "pl-10")}>{item.description}</Text>
 
