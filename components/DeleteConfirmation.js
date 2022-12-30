@@ -9,17 +9,14 @@ const DeleteConfirmation = ({visible, closeHandler, onDelete}) => {
         onClose={closeHandler}
     >
         <Modal.Header>
-            <Text id="modal-title" size={18}>
-                Welcome to
-                <Text b size={18}>
-                    NextUI
-                </Text>
+            <Text b id="modal-title" size={18}>
+                <Text color={"red"} b>Delete</Text> Confirmation
             </Text>
         </Modal.Header>
         <Modal.Body>
             <Text>Are you sure that you want to delete this item?</Text>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer >
             <Button auto  flat onClick={closeHandler}>
                 Close
             </Button>

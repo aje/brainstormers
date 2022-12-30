@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Input, Loading} from "@nextui-org/react";
+import {Button, Loading, Textarea} from "@nextui-org/react";
 import axios from "axios";
 import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
@@ -27,21 +27,21 @@ const CommentForm = ({ideaId}) => {
         }).finally(() => setLoading(false))
     };
 
-    return (<div className={"mb-10 flex items-center w-full"}>
-        <div className={"flex-1"}>
-            <Input
+    return (<div className={"mb-10 w-full"}>
+        {/*<div className={"flex-1"}>*/}
+            <Textarea
                 fullWidth
                 required
                 onChange={onChange("description")}
                 value={formData.description}
-                rows={1}
+                // rows={1}
                 size={"lg"}
                 bordered
                 placeholder={"Write something usefull please"} />
-        </div>
+        {/*</div>*/}
             <Button
                 auto
-                className={"ml-4"}
+                className={"mt-4"}
                 disabled={loading || formData.description === ""}
                 onPress={onSubmit}
                 iconRight={!loading && <SendPlane size={20}/>}>
