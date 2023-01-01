@@ -11,7 +11,7 @@ import DeleteConfirmation from "../DeleteConfirmation";
 import {useSession} from "next-auth/react";
 
 
-const CommentItem = ({item, dense, idea, withAction, isOwner}) => {
+const CommentItem = ({item, dense, idea, withAction, isOwner, action}) => {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
 
@@ -44,6 +44,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner}) => {
         setLoading(true);
         setVisible(false)
         axios.delete(`/reviews?id=${item._id}`).then((res)=>{
+
             toast.success("Successfully deleted!");
             refreshData();
         }).finally(() => setLoading(false))
@@ -60,33 +61,36 @@ const CommentItem = ({item, dense, idea, withAction, isOwner}) => {
                 description={ <Text className={"text-xs text-gray-400"}><Moment format={"LL"}>{item.createdAt}</Moment></Text>}
             />
 
-            {withAction && isAuthor &&
+            {action && <div className={"flex"}>{action}</div>}
+            {withAction &&
                 <div className={"flex"}>
-                    <Button onClick={()=>setVisible(true)} className={"mr-2"} size={"xs"} light color={"error"} auto><DeleteBin size={"14"}/></Button>
+                    {isAuthor && <Button onClick={()=>setVisible(true)}  size={"xs"} light color={"error"} auto><DeleteBin size={"14"}/></Button>}
                     {/*<Button className={"ml-2"} size={"xs"} light auto ><Edit size={14}/></Button>*/}
 
-                    <Dropdown placement={"bottom-right"}>
-                        <Dropdown.Button
-                            ripple={false} size={"xs"} color={false} className={"min-w-min"}
-                            icon={<Anticlockwise2 size={14}/>}>Set As</Dropdown.Button>
-                        <Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
-                            {/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
-                            {/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
-                            {/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
-                            <Dropdown.Item key={"upsides"} color="success">
-                                Upside
-                            </Dropdown.Item>
-                            <Dropdown.Item key={"downsides"} color="error">
-                                Downside
-                            </Dropdown.Item>
-                            <Dropdown.Item key={"solutions"} color="success">
-                                Solution
-                            </Dropdown.Item>
-                            <Dropdown.Item key={"problems"} color="error">
-                                Problem
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    {isOwner &&
+                        <Dropdown placement={"bottom-right"}>
+                            <Dropdown.Button
+                                ripple={false} size={"xs"} color={false} className={"min-w-min ml-2"}
+                                icon={<Anticlockwise2 size={14}/>}>Set As</Dropdown.Button>
+                            <Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
+                                {/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
+                                {/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
+                                {/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
+                                <Dropdown.Item key={"upsides"} color="success">
+                                    Upside
+                                </Dropdown.Item>
+                                <Dropdown.Item key={"downsides"} color="error">
+                                    Downside
+                                </Dropdown.Item>
+                                <Dropdown.Item key={"solutions"}>
+                                    Solution
+                                </Dropdown.Item>
+                                <Dropdown.Item key={"problems"}>
+                                    Problem
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    }
                     {/*<Button className={"ml-2"} size={"xs"} auto icon={<Anticlockwise2 size={14} />}>Set As</Button>*/}
                 </div>
             }

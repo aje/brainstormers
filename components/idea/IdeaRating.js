@@ -44,12 +44,12 @@ const IdeaRating = ({isOwner, item}) => {
     }
 
     return isOwner ?
-        <div className=" to-blue-50 pt-0 p-5 bg-gradient-to-t from-white  w-full">
+        <div className=" to-blue-50 pt-0 p-5 bsg-gradient-to-t sfrom-white  w-full">
             <Text className={"text-2xl text-gray-400 mt-5 font-light"}>Rating</Text>
             <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly/>
         </div>
         :
-        <div className=" to-blue-50 pt-0 p-5 bg-gradient-to-t from-white  w-full">
+        <div className=" to-blue-50 pt-0 p-5 sbg-gradient-to-t sfrom-white  w-full">
             <Text className={"text-2xl text-gray-400 mt-5 font-light"}>Rate this idea:</Text>
             <MyRating onChange={onReview} size={"xl"} />
             <div className={"justify-between mt-5 flex"}>

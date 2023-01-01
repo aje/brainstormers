@@ -195,15 +195,15 @@ const  IdeaPage = ({item, isOwner}) => {
         // className={"overflow-y-hidden"}
     >
 
-        <Grid sm={5} xs={12} className="bg-blue-50 pt-24 h-full">
-            <div className="relative h-full flex flex-col w-full">
+        <Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
+            <div className="relative h-full flex flex-col flex-1">
                 <IdeaInfoBar item={item} isOwner={isOwner}/>
                 <IdeaRating item={item} isOwner={isOwner}/>
             </div>
         </Grid>
-        <Grid xs={12} sm={7} className=" bg-red-50s pt-20 h-full">
+        <Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
             <Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
-                <IdeaSides item={item}/>
+                <IdeaSides item={item} isOwner={isOwner}/>
                 <Comments item={item} isOwner={isOwner}/>
             </Grid.Container>
         </Grid>
@@ -231,9 +231,9 @@ export async function getServerSideProps({params, req}) {
                 select: 'idea  description createdAt',
                 options: {sort: {'createdAt': -1}}
             })
-        // console.log(session);
-        isOwner = session?.user?._id === item.author._id;
-        // console.log(item);
+        // console.log(session.user);
+        isOwner = session?.user?._id === item?.author._id?.toString();
+        // console.log(item.author);
     } catch (e) {
         console.log(e);
     }

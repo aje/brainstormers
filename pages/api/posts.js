@@ -33,7 +33,7 @@ apiRoute.patch(async (req, res) => {
                     [req.query.set]: req.body.comment,
              },};
         }
-        console.log(update);
+        // console.log(update);
 
         const post = await Idea.findByIdAndUpdate(req.body._id, update)
         res.status(200).json(post);
@@ -89,9 +89,9 @@ export default apiRoute;
 //     switch (method) {
 //         case 'GET':
 //             try {
-//                 const posts = await Post.find({})
+//                 const post = await Post.find({})
 //                     .populate({ path: 'user', model: User});
-//                 res.status(200).json({ success: true, data: posts});
+//                 res.status(200).json({ success: true, data: post});
 //             } catch (error) {
 //                 res.status(400).json({ success: false });
 //             }

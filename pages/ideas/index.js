@@ -4,7 +4,7 @@ import Empty from "../../components/Empty";
 
 const Index = ({trips}) => {
     // useEffect(()=>{
-    //     axios.get(`/posts`).then(r => {
+    //     axios.get(`/post`).then(r => {
     //         console.log(r.data);
     //     })
     // }, []);

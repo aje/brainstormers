@@ -44,10 +44,10 @@ apiRoute.post(async (req, res) => {
 //     switch (method) {
 //         case 'GET':
 //             // try {
-//             //     const posts = await Post.find({})
+//             //     const post = await Post.find({})
 //             //         .populate({ path: 'user', model: User});
 //             //     // const totalElements = await Post.count({});
-//             //     res.status(200).json({ success: true, data: posts});
+//             //     res.status(200).json({ success: true, data: post});
 //             // } catch (error) {
 //             //     res.status(400).json({ success: false });
 //             // }
