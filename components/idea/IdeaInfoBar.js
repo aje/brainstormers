@@ -22,6 +22,9 @@ const IdeaInfoBar = ({item, isOwner}) => {
     const [visible, setVisible] = useState(false);
     const router = useRouter();
 
+    const refreshData = () => {
+        router.replace(router.asPath);
+    }
     const onDropdown = (key) => {
         switch (key) {
             case "upload":
@@ -35,12 +38,12 @@ const IdeaInfoBar = ({item, isOwner}) => {
 
         }
     };
-    const refreshData = () => {
-        router.replace(router.asPath);
-    }
     const editItem = (name) => e => {
         if (isOwner)
             setEditable(name)
+        if(name === null) {
+            setFormData(item)
+        }
     }
     const onChange = name => event => {
         setFormData({...formData, [name]: event?.target ? event.target.value : event});

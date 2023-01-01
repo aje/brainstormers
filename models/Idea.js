@@ -19,6 +19,10 @@ export const IdeaSchema = new Schema({
         type: Date,
         default: new Date(),
     },
+    raters: [Schema.Types.ObjectId],
+    rates: {
+        1:0, 2:0, 3:0, 4:0, 5:0
+    },
     ratingsQuantity: Number,
     ratingsAverage: Number,
     status: {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Text} from "@nextui-org/react";
 import MyRating from "../MyRating";
 import {EmojiSad} from "@styled-icons/entypo/EmojiSad";
@@ -7,11 +7,19 @@ import {useSession} from "next-auth/react";
 import {toast} from "react-hot-toast";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
+import axios from "../../services/axios";
+import {useRouter} from "next/router";
 
 const IdeaRating = ({isOwner, item}) => {
     const {data: session} = useSession()
     const state = useHookstate(loginPopper);
+    const [loading, setLoading] = useState(false);
 
+    const router = useRouter();
+
+    const refreshData = () => {
+        router.replace(router.asPath);
+    }
     const onDont = () => {
        if(!session)
            onNotLoggedIn();
@@ -32,7 +40,13 @@ const IdeaRating = ({isOwner, item}) => {
         if(!session)
             onNotLoggedIn();
         else {
-
+            setLoading(true);
+            axios.patch(`/posts?rate=${value}`, {_id: item._id}).then((res) => {
+                toast.success("Successfully updated!");
+                refreshData();
+            }).finally(() => setLoading(false)).catch(error => {
+                toast.error(error?.response?.data?.message);
+            })
         }
     }
 
@@ -43,7 +57,7 @@ const IdeaRating = ({isOwner, item}) => {
         }
     }
 
-    return isOwner ?
+    return !isOwner ?
         <div className=" to-blue-50 pt-0 p-5 bsg-gradient-to-t sfrom-white  w-full">
             <Text className={"text-2xl text-gray-400 mt-5 font-light"}>Rating</Text>
             <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly/>

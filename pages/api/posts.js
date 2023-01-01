@@ -16,7 +16,13 @@ const apiRoute = nextConnect({
 apiRoute.patch(async (req, res) => {
     const session = await getSession({ req });
     // findOneAndUpdate
-    if (session) {
+    const id = req.body?._id;
+    // console.log(res);
+    if(!id || !session) {
+        res.status(400);
+        res.end();
+        return;
+    } else {
         await dbConnect();
 
         let update = {
@@ -33,13 +39,28 @@ apiRoute.patch(async (req, res) => {
                     [req.query.set]: req.body.comment,
              },};
         }
+        if(req.query.rate) {
+            const isRated = await Idea.findById(id).exec()
+            const hasRated = isRated?.raters?.includes(id);
+            if(hasRated){
+                // res.send({ status: 402, message: 'Hello from Next.js!' });
+                res.status(402).json({message: "You can't rate twice!"})
+                res.end();
+                return;
+            } else {
+                update = {
+                    $inc: {['rates.' + req.query.rate]: 1},
+                    $addToSet: {
+                        raters: id,
+                    }
+                }
+            }
+        }
         // console.log(update);
 
-        const post = await Idea.findByIdAndUpdate(req.body._id, update)
-        res.status(200).json(post);
-    } else {
-        // Not Signed in
-        res.status(401)
+        const post = await Idea.findByIdAndUpdate(id, update , {new: true })
+        // console.log(post);
+        res.status(200).json(post)
     }
 
     res.end()

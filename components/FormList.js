@@ -37,11 +37,18 @@ const FormList = ({value, onChange, ...rest}) => {
                 onChange={onChangeValue(i)}
                 required size={"lg"}/>
             {i === (value.length - 1) ?
-                <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={add}
-                        disabled={p === ""} light
-                        className={"ml-2 hover:text-gray-500"} auto>
-                    <AddToList size={24}/>
-                </Button>
+                <>
+                    <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={remove(i)}
+                            light color={"error"}
+                            className={"ml-2 "} auto>
+                        <Trash size={16}/>
+                    </Button>
+                    <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={add}
+                            disabled={p === ""} light
+                            className={"ml-2 hover:text-gray-500"} auto>
+                        <AddToList size={24}/>
+                    </Button>
+                </>
                 :
                 <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={remove(i)}
                         light color={"error"}
