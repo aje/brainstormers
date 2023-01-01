@@ -9,6 +9,7 @@ import IdeaSides from "../../../components/idea/IdeaSides";
 import Comments from "../../../components/idea/Comments";
 import IdeaRating from "../../../components/idea/IdeaRating";
 import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
+import {getSession} from "next-auth/react";
 
 // CommentItem.propTypes = {
 //     item: PropTypes.shape({
@@ -20,7 +21,7 @@ import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
 //     })
 // };
 const  IdeaPage = ({item, isOwner}) => {
-    console.log(item);
+    // console.log(item);
     // const item ={
     //     ratingsAverage: 4,
     //     ratingsQuantity: 52 ,
@@ -189,19 +190,21 @@ const  IdeaPage = ({item, isOwner}) => {
     if(!item) return <div className={"my-28"}><Empty label={"Error 404"} /></div>
 
     return (<Grid.Container
-        style={{height: "calc(100vh - 117px)"}}
-        gap={0} justify="center" className={"overflow-y-hidden"}>
+        // style={{height: "calc(100vh - 117px)"}}
+        gap={0} justify="center"
+        // className={"overflow-y-hidden"}
+    >
 
-        <Grid xs={5} className="bg-blue-50 pt-24 h-full">
+        <Grid sm={5} xs={12} className="bg-blue-50 pt-24 h-full">
             <div className="relative h-full flex flex-col w-full">
                 <IdeaInfoBar item={item} isOwner={isOwner}/>
                 <IdeaRating item={item} isOwner={isOwner}/>
             </div>
         </Grid>
-        <Grid xs={7} className=" bg-red-50s pt-20 h-full">
+        <Grid xs={12} sm={7} className=" bg-red-50s pt-20 h-full">
             <Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
                 <IdeaSides item={item}/>
-                <Comments item={item}/>
+                <Comments item={item} isOwner={isOwner}/>
             </Grid.Container>
         </Grid>
     </Grid.Container>);
@@ -209,21 +212,27 @@ const  IdeaPage = ({item, isOwner}) => {
 
 export default IdeaPage;
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({params, req}) {
     const {id} = params;
     await dbConnect();
+    const session = await getSession({ req });
+
+    let isOwner = false;
     let item = null;
     try {
-        item = await Idea.findOne({ _id: id})
-            .populate({ path: 'author', model: models.User})
+        item = await Idea.findOne({_id: id})
+            .populate({path: 'author', model: models.User})
             .populate({
                 path: 'comments',
                 populate: {
                     path: 'author',
                     model: models.User
                 },
-                select: 'idea  description createdAt' ,
-                options: { sort: { 'createdAt': -1 } }})
+                select: 'idea  description createdAt',
+                options: {sort: {'createdAt': -1}}
+            })
+        // console.log(session);
+        isOwner = session?.user?._id === item.author._id;
         // console.log(item);
     } catch (e) {
         console.log(e);
@@ -231,7 +240,7 @@ export async function getServerSideProps({ params }) {
     return {
         props: {
             item: JSON.parse(JSON.stringify(item)),
-            isOwner: true
+            isOwner
         },
     };
 }

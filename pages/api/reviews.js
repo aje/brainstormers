@@ -25,7 +25,16 @@ apiRoute.post(async (req, res) => {
         res.status(400).json({ success: false, error });
     }
     res.end()
-})
+}).delete(async (req, res) => {
+    await dbConnect();
+    try {
+        const deleted = await models.Comment.findByIdAndDelete(req.query.id);
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(400).json({error});
+    }
+    res.end()
+});
 //
 // export default async function handler(req, res) {
 //     const { method } = req;

@@ -1,6 +1,6 @@
 import {Button, Modal, Text} from "@nextui-org/react";
 
-const DeleteConfirmation = ({visible, closeHandler, onDelete}) => {
+const DeleteConfirmation = ({visible, closeHandler, onDelete, renderItem}) => {
     return <Modal
         closeButton
         blur
@@ -15,6 +15,9 @@ const DeleteConfirmation = ({visible, closeHandler, onDelete}) => {
         </Modal.Header>
         <Modal.Body>
             <Text>Are you sure that you want to delete this item?</Text>
+            <div className="bg-gray-100 p-4 rounded-3xl">
+            {typeof renderItem === "function" && renderItem()}
+            </div>
         </Modal.Body>
         <Modal.Footer >
             <Button auto  flat onClick={closeHandler}>

@@ -19,8 +19,7 @@ apiRoute.patch(async (req, res) => {
     if (session) {
         await dbConnect();
 
-
-        const update = {
+        let update = {
             tags: req.body.tags,
             title: req.body.title,
             solutions: req.body.solutions,
@@ -29,6 +28,13 @@ apiRoute.patch(async (req, res) => {
             targetAudience: req.body.targetAudience,
             alternatives: req.body.alternatives
         }
+        if(req.query?.set) {
+             update = { $addToSet: {
+                    [req.query.set]: req.body.comment,
+             },};
+        }
+        console.log(update);
+
         const post = await Idea.findByIdAndUpdate(req.body._id, update)
         res.status(200).json(post);
     } else {

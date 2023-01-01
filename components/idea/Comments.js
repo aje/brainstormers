@@ -4,7 +4,7 @@ import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import Empty from "../Empty";
 
-const Comments = ({item}) => {
+const Comments = ({item, isOwner}) => {
     return (
         <>
             <Grid xs={12} className={"p-7"}>
@@ -13,7 +13,7 @@ const Comments = ({item}) => {
                     <CommentForm ideaId={item._id}/>
                     <Text h3>{item.comments?.length} Comments</Text>
 
-                    {item.comments?.length > 0 ? item.comments?.map((u, i) => <CommentItem item={u} key={u._id}/>)
+                    {item.comments?.length > 0 ? item.comments?.map((u, i) => <CommentItem isOwner={isOwner} withAction idea={item} item={u} key={u._id}/>)
                         : <Empty />
                     }
 

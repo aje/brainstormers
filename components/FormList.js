@@ -25,15 +25,15 @@ const FormList = ({value, onChange, ...rest}) => {
     return value.length === 0 ?
         <Button  ripple={false} icon={<AddToList size={24}/>} onPress={add} color={"gray"} className={"mb-2 "} auto>
             Add item
-
         </Button>
-        : value.map((p, i) => <div key={i} className="flex w-full  pb-4">
+        : value.map((p, i) =>  <div key={i} className="flex w-full  pb-4">
             <Input
                 placeholder={"Solutions or value"}
                 underlined
                 css={{flexGrow: 1}}
                 {...rest}
-                value={p}
+                disabled={typeof p !== "string"}
+                value={typeof p === "string" ? p : p.description}
                 onChange={onChangeValue(i)}
                 required size={"lg"}/>
             {i === (value.length - 1) ?

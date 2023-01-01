@@ -29,10 +29,10 @@ export const IdeaSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    // upsides: [CommentSchema],
-    // downsides: [CommentSchema],
-    problems: [String],
-    solutions: [String],
+    upsides: [],
+    downsides: [],
+    problems: [],
+    solutions: [],
 
     alternatives: [String],
     targetAudience: String,

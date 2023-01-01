@@ -62,7 +62,7 @@ export const authOptions = {
         //         return token;
         // },
         async signIn({ user, account, profile, email, credentials }) {
-            console.log(user, account, profile, email, credentials);
+            // console.log(user, account, profile, email, credentials);
             // await dbConnect();
             // try {
             //     const driverFromDB = await Driver.findOne({user: user.id});

@@ -11,6 +11,7 @@ const Nav = () => {
     return (<>
         <Navbar containerCss={{
             background: "transparent",
+            // filter: 'blur(5px)',
             // background: "#e5f4f0ab",
             position: "fixed", top: 0, zIndex: 1}} disableShadow disableBlur
                  // className={"fixed "}
