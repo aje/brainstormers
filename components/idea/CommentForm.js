@@ -4,9 +4,15 @@ import axios from "axios";
 import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
+import {useHookstate} from "@hookstate/core";
+import {loginPopper} from "../../pages/_app";
+import {useSession} from "next-auth/react";
 
 const CommentForm = ({ideaId}) => {
     const [loading, setLoading] = useState(false);
+    const state = useHookstate(loginPopper);
+    const {data: session} = useSession()
+
 
     const [formData, setFormData] = useState({
         description: "",
@@ -21,10 +27,16 @@ const CommentForm = ({ideaId}) => {
 
     const onSubmit = () => {
         setLoading(true);
-        axios.post(`/api/reviews`, formData).then(()=>{
-            router.replace(router.asPath);
-            toast.success("Successfully posted!");
-        }).finally(() => setLoading(false))
+        if(session) {
+            axios.post(`/api/reviews`, formData).then(() => {
+                router.replace(router.asPath);
+                toast.success("Successfully posted!");
+            }).finally(() => setLoading(false))
+        }else {
+            state.set(true);
+            setLoading(false)
+            toast.error("Please login first")
+        }
     };
 
     return (<div className={"mb-10 w-full"}>
@@ -43,7 +55,7 @@ const CommentForm = ({ideaId}) => {
                 auto
                 className={"mt-4"}
                 disabled={loading || formData.description === ""}
-                onPress={onSubmit}
+                onClick={onSubmit}
                 iconRight={!loading && <SendPlane size={20}/>}>
                 {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
                     "Post" }

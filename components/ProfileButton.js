@@ -12,7 +12,7 @@ const ProfileButton = () => {
         state.set(true)
         document.body.style.overflow = "hidden";
     }
-    return (<><Navbar.Link href="#" onPress={onOpen}>
+    return (<><Navbar.Link href="#" onClick={onOpen}>
             <User size={"sm"} src={session.user.image} name={session.user.name}/>
         </Navbar.Link>
     </>

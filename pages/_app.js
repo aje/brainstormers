@@ -36,6 +36,7 @@ const theme = createTheme({
 })
 
 export const sidebarState = hookstate(false);
+export const loginPopper = hookstate(false);
 
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     const router = useRouter();

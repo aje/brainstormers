@@ -119,7 +119,7 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My Ideas <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} auto flat onPress={()=> {
+                        <Button size={"sm"} auto flat onClick={()=> {
                             onClose();
                             router.push("/profile/ideas")
                         }}>See all ideas</Button>
@@ -147,7 +147,7 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My comments <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} auto flat onPress={()=> {
+                        <Button size={"sm"} auto flat onClick={()=> {
                             onClose()
                             router.push("/profile/comments")
                         }}>See all comments</Button>
@@ -164,7 +164,7 @@ const ProfileSidebar = () => {
                 <div className="mt-10">
                     <div className="flex justify-between mx-3">
                         <Text h4 className={"font-sans"}>My Bookmarks <span className={""}>(254)</span></Text>
-                        <Button size={"sm"} onPress={()=> {
+                        <Button size={"sm"} onClick={()=> {
                             onClose()
                             router.push("/profile/bookmarks")
                         }}  auto flat><span>See all bookmarks</span></Button>

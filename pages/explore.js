@@ -114,7 +114,7 @@ const Explore = () => {
                 {ideas.map((idea, i) => {
                     const state = index === i ? "ACTIVE" : index === i - 1 ? "NEXT" : index === i + 1 ? "PREV" : "HIDE";
                     return <Card
-                        // onPress={}
+                        // onClick={}
                         isPressable
                         style={{borderRadius: 34, height: "calc(100% - 150px)"}}
                         className={clsx("absolute  duration-500 w-80% top-0",
@@ -134,10 +134,10 @@ const Explore = () => {
                         </Card.Body>
                         <Card.Footer className={"justify-around p-10 "}>
                             <Button
-                                onPress={onDontDo} borderWeight={"bold"} icon={<EmojiSad size={34} />} bordered size={"xl"} ghost color={"error"} className={" font-bold text-2xl"}>DON'T DO IT</Button>
+                                onClick={onDontDo} borderWeight={"bold"} icon={<EmojiSad size={34} />} bordered size={"xl"} ghost color={"error"} className={" font-bold text-2xl"}>DON'T DO IT</Button>
                             <MyRating size={"xl"} />
                             <Button
-                                onPress={onDo} borderWeight={"bold"}  icon={<Check size={40} />} bordered size={"xl"} ghost color={"primary"} className={" font-bold text-2xl"}>LET'S DO IT</Button>
+                                onClick={onDo} borderWeight={"bold"}  icon={<Check size={40} />} bordered size={"xl"} ghost color={"primary"} className={" font-bold text-2xl"}>LET'S DO IT</Button>
                         </Card.Footer>
                     </Card>
                 })}
@@ -157,7 +157,7 @@ const Explore = () => {
                 {/*    </Card.Body>*/}
                 {/*    <Card.Footer className={"justify-around p-10"}>*/}
                 {/*        <Button*/}
-                {/*            onPress={onDontDo}*/}
+                {/*            onClick={onDontDo}*/}
                 {/*            borderWeight={"bold"}*/}
                 {/*            icon={<EmojiSad size={34} />}*/}
                 {/*            bordered*/}
@@ -167,7 +167,7 @@ const Explore = () => {
                 {/*            className={" font-bold text-2xl"}>DON'T DO IT</Button>*/}
                 {/*        <MyRating size={"xl"} />*/}
                 {/*        <Button*/}
-                {/*            onPress={onDo}*/}
+                {/*            onClick={onDo}*/}
                 {/*            borderWeight={"bold"}*/}
                 {/*            icon={<Check size={40} />}*/}
                 {/*            bordered*/}
@@ -193,7 +193,7 @@ const Explore = () => {
                 {/*    </Card.Body>*/}
                 {/*    <Card.Footer className={"justify-around p-10"}>*/}
                 {/*        <Button*/}
-                {/*            onPress={onDontDo}*/}
+                {/*            onClick={onDontDo}*/}
                 {/*            borderWeight={"bold"}*/}
                 {/*            icon={<EmojiSad size={34} />}*/}
                 {/*            bordered*/}
@@ -203,7 +203,7 @@ const Explore = () => {
                 {/*            className={" font-bold text-2xl"}>DON'T DO IT</Button>*/}
                 {/*        <MyRating size={"xl"} />*/}
                 {/*        <Button*/}
-                {/*            onPress={onDo}*/}
+                {/*            onClick={onDo}*/}
                 {/*            borderWeight={"bold"}*/}
                 {/*            icon={<Check size={40} />}*/}
                 {/*            bordered*/}

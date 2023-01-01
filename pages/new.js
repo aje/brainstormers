@@ -164,13 +164,13 @@ const Upload = () => {
                                         onChange={onChangeIdeas(i)}
                                         required size={"lg"}/>
                                     {i === (ideas.length - 1) ?
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addIdeas}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={addIdeas}
                                                 disabled={p === ""} light color={"success"}
                                                 className={"ml-2 hover:text-green-800"} auto>
                                             <AddToList size={24}/>
                                         </Button>
                                         :
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeIdeas(i)}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={removeIdeas(i)}
                                                 light color={"success"}
                                                 className={"ml-2 hover:text-green-800"} auto>
                                             <Trash size={16}/>
@@ -193,13 +193,13 @@ const Upload = () => {
                                         onChange={onChangeProblem(i)}
                                         required size={"lg"}/>
                                     {i === (problems.length - 1) ?
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addProblem}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={addProblem}
                                                 disabled={p === ""} light color={"error"}
                                                 className={"ml-2 hover:text-red-800"} auto>
                                             <AddToList size={24}/>
                                         </Button>
                                         :
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeProblem(i)}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={removeProblem(i)}
                                                 light color={"error"}
                                                 className={"ml-2 hover:text-red-800"} auto>
                                             <Trash size={16}/>
@@ -210,7 +210,7 @@ const Upload = () => {
 
                         </div>
                     </div>
-                    <Button className={"mt-5"} onPress={onSubmit}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
+                    <Button className={"mt-5"} onClick={onSubmit}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
                         {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> : "Save & Next"}
                     </Button>
                 </>}
@@ -253,13 +253,13 @@ const Upload = () => {
                                         onChange={onChangeAlts(i)}
                                         required size={"lg"}/>
                                     {i === (alts.length - 1) ?
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={addAlts}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={addAlts}
                                                 disabled={p === ""} light
                                                 className={"ml-2 hover:text-green-800"} auto>
                                             <AddToList size={24}/>
                                         </Button>
                                         :
-                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={removeAlts(i)}
+                                        <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={removeAlts(i)}
                                                 light
                                                 className={"ml-2 hover:text-green-800"} auto>
                                             <Trash size={16}/>
@@ -295,7 +295,7 @@ const Upload = () => {
                             value={formData.tags} onChange={onChange("tags")} />
 
 
-                        <Button className={"mt-5 "} onPress={onSubmitFinal}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
+                        <Button className={"mt-5 "} onClick={onSubmitFinal}  iconRight={!loading && <SendPlane size={20}/>} disabled={disabled}>
                             {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> : "Save"}
                         </Button>
                     </>
@@ -308,7 +308,7 @@ const Upload = () => {
 
             {/*<Input required value={formData.date} onChange={onChange("date")} size={"lg"} bordered className={"mb-3"} label={"Month of the trip *"} type="month"/>*/}
             {/*<div>*/}
-            {/*    <Button auto disabled={loading || disabled} onPress={onSubmit} className={"mb-10 mt-3"}  iconRight={!loading && <SendPlane size={20}/>}>*/}
+            {/*    <Button auto disabled={loading || disabled} onClick={onSubmit} className={"mb-10 mt-3"}  iconRight={!loading && <SendPlane size={20}/>}>*/}
             {/*        {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :*/}
             {/*        "Publish" }*/}
             {/*    </Button>*/}

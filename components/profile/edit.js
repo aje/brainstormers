@@ -51,7 +51,7 @@ const Edit = () => {
             </div>
             <Button
                 disabled={loading}
-                onPress={onSubmit} className={"mt-8"}>
+                onClick={onSubmit} className={"mt-8"}>
                 {loading ? <Loading  color="currentColor" size="sm" /> : "Save"}
             </Button>
             {/*<div className={"mt-4"}>*/}

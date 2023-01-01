@@ -23,7 +23,7 @@ const FormList = ({value, onChange, ...rest}) => {
     }
 
     return value.length === 0 ?
-        <Button  ripple={false} icon={<AddToList size={24}/>} onPress={add} color={"gray"} className={"mb-2 "} auto>
+        <Button  ripple={false} icon={<AddToList size={24}/>} onClick={add} color={"gray"} className={"mb-2 "} auto>
             Add item
         </Button>
         : value.map((p, i) =>  <div key={i} className="flex w-full  pb-4">
@@ -37,13 +37,13 @@ const FormList = ({value, onChange, ...rest}) => {
                 onChange={onChangeValue(i)}
                 required size={"lg"}/>
             {i === (value.length - 1) ?
-                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={add}
+                <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={add}
                         disabled={p === ""} light
                         className={"ml-2 hover:text-gray-500"} auto>
                     <AddToList size={24}/>
                 </Button>
                 :
-                <Button css={{minWidth: 24, width: 24}} ripple={false} onPress={remove(i)}
+                <Button css={{minWidth: 24, width: 24}} ripple={false} onClick={remove(i)}
                         light color={"error"}
                         className={"ml-2 "} auto>
                     <Trash size={16}/>
