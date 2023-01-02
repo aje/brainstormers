@@ -41,7 +41,7 @@ apiRoute.patch(async (req, res) => {
         }
         if(req.query.rate) {
             const isRated = await Idea.findById(id).exec()
-            const hasRated = isRated?.raters?.includes(id);
+            const hasRated = isRated?.raters?.includes(session.user._id);
             if(hasRated){
                 // res.send({ status: 402, message: 'Hello from Next.js!' });
                 res.status(402).json({message: "You can't rate twice!"})
@@ -51,7 +51,7 @@ apiRoute.patch(async (req, res) => {
                 update = {
                     $inc: {['rates.' + req.query.rate]: 1},
                     $addToSet: {
-                        raters: id,
+                        raters: session.user._id,
                     }
                 }
             }

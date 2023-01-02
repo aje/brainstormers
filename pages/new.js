@@ -19,7 +19,7 @@ const Upload = () => {
     const {problem, idea} = state.get();
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
-        title: "",
+        title: idea || problem,
         description: "",
         tags: [],
         targetAudience: "",

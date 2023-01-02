@@ -19,7 +19,7 @@ const MyRating = ({count, value, size = "sm", ...rest}) => {
             fullSymbol={<Star  size={sizeMap[size]} className={'-mr-1'} color={color}/>}
             emptySymbol={<StarOutlined   size={sizeMap[size]} className={'-mr-1'} color={color}/>}
         />
-        {(count || count === 0) && <Text span className={"ml-1 align-middle font-bold"} color={color}>({count})</Text>}
+        {(count || count === 0) && <Text span style={{fontSize: sizeMap[size] -5}} className={"ml-1 align-middle font-bold"} color={color}>({count})</Text>}
     </div>);
 };
 
