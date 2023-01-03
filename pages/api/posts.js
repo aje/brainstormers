@@ -3,6 +3,7 @@ import dbConnect from "../../services/dbconnect";
 import User from "../../models/User";
 import nextConnect from "next-connect";
 import {getSession} from "next-auth/react";
+import idea from "../../models/Idea";
 
 const apiRoute = nextConnect({
     onError(error, req, res) {
@@ -40,8 +41,10 @@ apiRoute.patch(async (req, res) => {
              },};
         }
         if(req.query.rate) {
-            const isRated = await Idea.findById(id).exec()
-            const hasRated = isRated?.raters?.includes(session.user._id);
+            const ideaFromServer = await Idea.findById(id).exec()
+            const hasRated = ideaFromServer?.raters?.includes(session.user._id);
+            const avg = ideaFromServer.ratingsAverage ? Math.round((ideaFromServer.ratingsAverage + parseInt(req.query.rate))/2) :  req.query.rate
+            // console.log(ideaFromServer.ratingsAverage, req.query.rate, avg, ideaFromServer.ratingsAverage + req.query.rate);
             if(hasRated){
                 // res.send({ status: 402, message: 'Hello from Next.js!' });
                 res.status(402).json({message: "You can't rate twice!"})
@@ -52,7 +55,8 @@ apiRoute.patch(async (req, res) => {
                     $inc: {['rates.' + req.query.rate]: 1},
                     $addToSet: {
                         raters: session.user._id,
-                    }
+                    },
+                    ratingsAverage: avg
                 }
             }
         }

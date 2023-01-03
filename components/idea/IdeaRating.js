@@ -9,19 +9,19 @@ import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
 import axios from "../../services/axios";
 import {useRouter} from "next/router";
-
-const avg = (r) => {
-    if(!r) return 0;
-    // r is the entire ratings object
-    let items = Object.entries(r); // get an array of key/value pairs of the object like this [[1:1], [2:1]...]
-    let sum = 0; // sum of weighted ratings
-    let total = 0; // total number of ratings
-    for(let [key,value] of items){
-        total += value;
-        sum += value * parseInt(key); // multiply the total number of ratings by it's weight in this case which is the key
-    }
-    return Math.round(sum / total)
-}
+//
+// const avg = (r) => {
+//     if(!r) return 0;
+//     // r is the entire ratings object
+//     let items = Object.entries(r); // get an array of key/value pairs of the object like this [[1:1], [2:1]...]
+//     let sum = 0; // sum of weighted ratings
+//     let total = 0; // total number of ratings
+//     for(let [key,value] of items){
+//         total += value;
+//         sum += value * parseInt(key); // multiply the total number of ratings by it's weight in this case which is the key
+//     }
+//     return Math.round(sum / total)
+// }
 
 const IdeaRating = ({isOwner, item}) => {
     const {data: session} = useSession()
@@ -30,7 +30,7 @@ const IdeaRating = ({isOwner, item}) => {
     const isRated = item.raters?.includes(session?.user?._id);
     const count =  item.rates && Object.values(item.rates).reduce((a, b) => a + b, 0)
     // console.log(avg(item.rates));?
-    const avgRating = avg(item.rates);
+    const avgRating = item.ratingsAverage;
     // console.log(item.raters, session.user);
 
     const router = useRouter();
