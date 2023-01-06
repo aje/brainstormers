@@ -21,7 +21,6 @@ import {getSession} from "next-auth/react";
 //     })
 // };
 const  IdeaPage = ({item, isOwner}) => {
-    // console.log(item);
     // const item ={
     //     ratingsAverage: 4,
     //     ratingsQuantity: 52 ,
@@ -231,11 +230,9 @@ export async function getServerSideProps({params, req}) {
                 select: 'idea  description createdAt',
                 options: {sort: {'createdAt': -1}}
             })
-        // console.log(session.user);
         isOwner = session?.user?._id === item?.author._id?.toString();
-        // console.log(item.author);
     } catch (e) {
-        console.log(e);
+
     }
     return {
         props: {

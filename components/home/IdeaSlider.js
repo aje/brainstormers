@@ -79,8 +79,8 @@ const IdeaSlider = ({latest:ideas}) => {
                     <div className={"flex-1"}>
                         <User
                             css={{zIndex: 0}}
-                            size="sm" src={ideas[index].author.avatar}
-                              name={ideas[index].author.name}/>
+                            size="sm" src={ideas[index].author?.avatar}
+                              name={ideas[index].author?.name}/>
 
                         <Text h2 className={"flex justify-center"}><Link href={`ideas/idea/${ideas[index]._id}`}  className={"font-normal font-sans"}>{ideas[index].title}</Link></Text>
                         <Text className={"text-2xl mb-5 px-6 text-gray-500"}>{ideas[index].description || "No description"}</Text>

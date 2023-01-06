@@ -1,4 +1,5 @@
 import mongoose, {Schema} from "mongoose";
+import User from "./User";
 
 const ideaStatuses = [{
     OPEN: {value: 'OPEN',  },
@@ -21,7 +22,6 @@ export const IdeaSchema = new Schema({
     },
     raters: [Schema.Types.ObjectId],
     rates: Schema.Types.Mixed,
-    ratingsQuantity: Number,
     ratingsAverage: Number,
     status: {
         type: String,
@@ -50,45 +50,53 @@ IdeaSchema.virtual('comments', {
     localField: '_id',
     foreignField: 'idea'
 });
+
+IdeaSchema.virtual('ratingsQuantity').get(function () {
+    return this.raters?.length || 0
+});
+
+
+IdeaSchema.statics.calcPostCount = async function(userId) {
+    // this points to current model
+    //
+    // const rates = await this.aggregate([
+    //     {
+    //         $match: { user: userId }
+    //     },
+    // ]);
+    const userPosts = await this.aggregate([
+        {
+            $match: { author: userId }
+        },
+        {
+            $count: "postCount"
+        }
+        ]);
+
+
+    try {
+        const t = await User.findByIdAndUpdate(userId, {
+            postCount: userPosts[0].postCount,
+        }, {new: true });
+    } catch (e) {
+
+    }
+};
+
+IdeaSchema.post('save', function() {
+    this.constructor.calcPostCount(this.author);
+});
+
+// IdeaSchema.post(/^findOneAnd/, function() {
+//     console.log('findOneAnd', this)
 //
-// IdeaSchema.statics.calcAverageRatings = async function(postId) {
-//     // console.log("[calcAverageRatings]",  userId);
-//     // this points to current model
-//     // console.log("[calcAverageRatings]");
-//     //
-//     const rates = await this.aggregate([
-//         {
-//             $match: { user: userId }
-//         },
-//     ]);
-//
-//     try {
-//         // const t = await myModels.Driver.findOneAndUpdate({user: userId}, {
-//         //     ratingsQuantity: statsDriver[0].nRatings,
-//         //     ratingsAverage: statsDriver[0].avgRating
-//         // });
-//     } catch (e) {
-//         console.log(e)
-//     }
-// };
-//
-// IdeaSchema.pre(/^findOneAnd/, async function(next) {
-//     this.r = await this.findOne();
-//     // console.log(r);
-//     next();
-// });
-//
-// IdeaSchema.post(/^findOneAnd/, async function(next) {
-//     await this.r.constructor.calcAverageRatings(this.r.post, this.r.user)
-// });
-//
-// IdeaSchema.post('save', function() {
-//     this.constructor.calcAverageRatings(this.post, this.user);
+//     this.constructor.calcPostCount(this.author);
 // });
 
-// IdeaSchema.post('create', function() {
-//     this.constructor.calcAverageRatings(this.post, this.user);
-// });
+IdeaSchema.pre('deleteOne', function() {
+    console.log('delete', this)
+    this.constructor.calcPostCount(this.author);
+});
 
 export const Idea  = mongoose.models.Idea ||  mongoose.model('Idea', IdeaSchema);
 export default Idea;

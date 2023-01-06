@@ -7,7 +7,6 @@ import ProfileButton from "./ProfileButton";
 
 const Nav = () => {
     const { data: session } = useSession();
-    // console.log(session, sidebar);
     return (<>
         <Navbar containerCss={{
             background: "transparent",

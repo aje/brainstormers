@@ -14,13 +14,10 @@ const apiRoute = nextConnect({
 apiRoute.delete(async (req, res) => {
 
     await dbConnect();
-    // console.log("id:", req.query,  );
     try {
-        // console.log("id:", req,  );
         const update = { $pull: {
                 [req.query.type]: {_id : req.query.commentId} ,
             },};
-        console.log(update);
         const deleted = await Idea.findByIdAndUpdate(req.query.id, update)
         res.status(200).json(deleted);
     } catch (error) {

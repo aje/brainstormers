@@ -7,7 +7,6 @@ import {sidebarState} from "../pages/_app";
 const ProfileButton = () => {
     const { data: session } = useSession();
     const state = useHookstate(sidebarState);
-    // console.log(state.get());
     const onOpen = () => {
         state.set(true)
         document.body.style.overflow = "hidden";

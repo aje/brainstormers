@@ -22,16 +22,20 @@ apiRoute.post(async (req, res) => {
             res.status(201).json(result);
         }
     } catch (error) {
-        res.status(400).json({ success: false, error });
+        res.status(400).json(error);
     }
     res.end()
 }).delete(async (req, res) => {
     await dbConnect();
+    const session = await getSession({ req });
     try {
-        const deleted = await models.Comment.findByIdAndDelete(req.query.id);
-        res.status(200).json(deleted);
+        if(session) {
+            // todo find by id and author
+            const deleted = await models.Comment.findByIdAndDelete(req.query.id);
+            res.status(200).json(deleted);
+        }
     } catch (error) {
-        res.status(400).json({error});
+        res.status(400).json(error);
     }
     res.end()
 });

@@ -29,9 +29,7 @@ const IdeaRating = ({isOwner, item}) => {
     const [loading, setLoading] = useState(false);
     const isRated = item.raters?.includes(session?.user?._id);
     const count =  item.rates && Object.values(item.rates).reduce((a, b) => a + b, 0)
-    // console.log(avg(item.rates));?
     const avgRating = item.ratingsAverage;
-    // console.log(item.raters, session.user);
 
     const router = useRouter();
 

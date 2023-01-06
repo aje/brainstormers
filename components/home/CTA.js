@@ -22,13 +22,6 @@ const Cta = () => {
                     {/*</h1>*/}
 
 
-                    {/*<Link href={'/pages/signin'}>*/}
-                    {/*    <a onClick={e=> {*/}
-                    {/*        e.preventDefault();*/}
-                    {/*        signIn().then(r => console.log(r))*/}
-                    {/*    }}>Sign In</a>*/}
-                    {/*</Link>*/}
-
                 </main>
             </div>
         </Container>

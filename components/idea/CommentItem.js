@@ -19,7 +19,6 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, action}) => {
 
 
     const isAuthor = item.author?._id === session?.user?._id;
-    // console.log(item.author, session.user);
 
     const router = useRouter();
     const refreshData = () => {

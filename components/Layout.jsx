@@ -8,7 +8,6 @@ import {sidebarState} from "../pages/_app";
 
 const Layout = ({children}) => {
     const state = useHookstate(sidebarState);
-    // console.log(state.get());
     return (<>
             <Nav  />
             <main>{children}</main>

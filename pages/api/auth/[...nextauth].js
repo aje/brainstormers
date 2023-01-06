@@ -62,12 +62,10 @@ export const authOptions = {
         //         return token;
         // },
         async signIn({ user, account, profile, email, credentials }) {
-            // console.log(user, account, profile, email, credentials);
             // await dbConnect();
             // try {
             //     const driverFromDB = await Driver.findOne({user: user.id});
             //     if(driverFromDB) {
-            //         // console.log("IT's Already a driver",driverFromDB);
             //         // todo check the driverFromDB.lastSignIn and if it's the same day don't update the xp
             //         driverFromDB.xp  += 100;
             //         driverFromDB.save();
@@ -77,10 +75,8 @@ export const authOptions = {
             //         driver.save();
             //     }
             // } catch (e) {
-            //     console.log(e);
             // }
 
-            // console.log(driver);
             return true
         },
         async session(session, token) {

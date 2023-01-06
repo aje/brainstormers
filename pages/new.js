@@ -52,10 +52,9 @@ const Upload = () => {
         if(alts.length > 1 ||  alts[0] !== "") data.alternatives = alts;
         axios.patch(`/posts`, data).then((res)=>{
             toast.success("Successfully updated!");
-            // console.log(data);
             // setFormData(data)
             // setStep(1)
-            router.push(`/ideas/idea/${res.data?.id}`)
+            router.push(`/ideas/idea/${res.data?._id}`)
         }).finally(() => setLoading(false))
     }
 
@@ -118,7 +117,7 @@ const Upload = () => {
     return (<>
         <div className={"py-20 bg-violet-50"} >
             <Container>
-                <Text h1 editable>Start <span className={"text-primary"}>Ideation</span> <span
+                <Text h1 >Start <span className={"text-primary"}>Ideation</span> <span
                     className={"font-normal"}>and brainstorm</span></Text>
                 {step === 0 && <>
 

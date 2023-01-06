@@ -3,11 +3,6 @@ import Empty from "../../components/Empty";
 // import {getIdeas} from "../../services/api_utils";
 
 const Index = ({trips}) => {
-    // useEffect(()=>{
-    //     axios.get(`/post`).then(r => {
-    //         console.log(r.data);
-    //     })
-    // }, []);
     return (<>
         {/*<PageTitle title={"Trips"}/>*/}
         <div  className={"px-5 pb-28 relative z-10"}>

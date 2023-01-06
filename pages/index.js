@@ -11,6 +11,7 @@ import dbConnect from "../services/dbconnect";
 import Idea from "../models/Idea";
 import User from "../models/User";
 import {getSession} from "next-auth/react";
+import moment from "moment";
 // import * as models from "../models/models"
 
 export const ideaFormData = hookstate({
@@ -18,8 +19,7 @@ export const ideaFormData = hookstate({
     idea: ""
 });
 
-export default function Home({latest}) {
-    console.log(latest);
+export default function Home({latest, topLastMonth, countLastMonth,topEnt , countTopEnt}) {
     // const { data: session } = useSession();
     // const {theme} = useTheme()
 
@@ -39,8 +39,8 @@ export default function Home({latest}) {
                 </Container>
             </div>
             <ProblemForm />
-            <LatestIdeas />
-            <LatestUsers />
+            <LatestIdeas topLastMonth={topLastMonth} countLastMonth={countLastMonth}/>
+            <LatestUsers topEnt={topEnt} countTopEnt={countTopEnt}/>
         </>
     )
 }
@@ -50,30 +50,37 @@ export async function getServerSideProps({params, req}) {
     await dbConnect();
     const session = await getSession({ req });
     let latest = [];
-    let topLastMonth = []
+    let topLastMonth = [];
+    let topEnt = [];
+    let countLastMonth = 0;
+    let countTopEnt = 0;
     try {
         //? get latest for slider
         const latestQuery = session ? {raters: {$not: {$elemMatch:  {$eq: session.user._id}}}} : '';
         latest = await Idea.find(latestQuery,  'title author description tags')
             .populate({path: 'author', model: User}).sort({'createdAt': -1}).limit(50)
-        // console.log("latest");
-        // console.log(latest);
         // const topQuery = ;
-        // todo get count
-        // topLastMonth = await Idea.find(topQuery,  'title author description tags')
-        //     .populate({path: 'author', model: User}).sort({'createdAt': -1}).limit(6)
+        // todo get count all last month
+        //? get count last month
+        const clmquery = {createdAt:{$gte:moment().subtract(1, 'months').format()}}
+        countLastMonth = await Idea.find(clmquery).count();
 
+        topLastMonth = await Idea.find({},  'title raters author description ratingsAverage ratingsQuantity tags')
+            .populate({path: 'author', model: User}).sort({'ratingsAverage': -1}).limit(6)
+
+        //? get entp of all time
+        topEnt = await User.find({}).sort({'postCount': 1})
+        countTopEnt = await User.find({createdAt:{$gte:moment().subtract(1, 'months').format()}}).count();
 
     } catch (e) {
-        console.log(e)
     }
     return {
         props: {
-            topLastMonth: [],
-            topEnt: [],
-
+            topLastMonth: JSON.parse(JSON.stringify(topLastMonth)),
+            topEnt: JSON.parse(JSON.stringify(topEnt)),
+            countLastMonth,
+            countTopEnt,
             latest: JSON.parse(JSON.stringify(latest)),
-
         },
     };
 }

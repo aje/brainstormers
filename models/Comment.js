@@ -38,9 +38,7 @@ export const CommentSchema = new Schema({
 });
 
 // CommentSchema.statics.calcAverageRatings = async function(postId, userId) {
-//     // console.log("[calcAverageRatings]",  userId);
 //     // this points to current model
-//     // console.log("[calcAverageRatings]");
 //
 //     const statsDriver = await this.aggregate([
 //         {
@@ -72,22 +70,18 @@ export const CommentSchema = new Schema({
 //         ratingsAverage: stats[0].avgRating
 //     });
 //     //
-//     // console.log("[StatsDriver]", statsDriver);
 //
 //     try {
 //         const t = await myModels.Driver.findOneAndUpdate({user: userId}, {
 //             ratingsQuantity: statsDriver[0].nRatings,
 //             ratingsAverage: statsDriver[0].avgRating
 //         });
-//         // console.log("[RESULT]",t);
 //     } catch (e) {
-//         console.log(e)
 //     }
 // };
 //
 // CommentSchema.pre(/^findOneAnd/, async function(next) {
 //     this.r = await this.findOne();
-//     // console.log(r);
 //     next();
 // });
 //
@@ -96,12 +90,10 @@ export const CommentSchema = new Schema({
 // });
 //
 // CommentSchema.post('save', function() {
-//     console.log("[POST SAVE]",  this.post);
 //     this.constructor.calcAverageRatings(this.post, this.user);
 // });
 //
 // CommentSchema.post('create', function() {
-//     console.log("[POST create]", this.user);
 //     this.constructor.calcAverageRatings(this.post, this.user);
 // });
 
