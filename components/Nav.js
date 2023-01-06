@@ -1,8 +1,10 @@
-import {Navbar} from "@nextui-org/react";
+import {Button, Navbar} from "@nextui-org/react";
 import Image from "next/image";
 import LoginPopover from "./LoginPopover";
 import {useSession} from "next-auth/react";
 import ProfileButton from "./ProfileButton";
+import {Plus} from "@styled-icons/entypo/Plus";
+import NotificationButton from "./NotificationButton";
 
 
 const Nav = () => {
@@ -23,7 +25,8 @@ const Nav = () => {
                 <Navbar.Link href="/">Home</Navbar.Link>
                 <Navbar.Link href="/explore">Explore</Navbar.Link>
                 {/*<Navbar.Link href="#">Blog</Navbar.Link>*/}
-                {session ? <ProfileButton /> :  <LoginPopover />}
+                <Navbar.Link href="/new"   ><Button auto color={"primary"} size={"sm"}><Plus size={26}/></Button></Navbar.Link>
+                {session ? <><NotificationButton /><ProfileButton /></> :  <LoginPopover />}
 
             </Navbar.Content>
         </Navbar>

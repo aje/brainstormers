@@ -78,15 +78,6 @@ const ProfileSidebar = () => {
     };
     return (session && <>
         <div onClick={onClose} style={{zIndex: 400, backdropFilter: "saturate(180%) blur(6px)"}} className={" bg-white/30 w-screen h-screen fixed top-0 left-0"} />
-        {/*<Modal*/}
-        {/*    // closeButton*/}
-        {/*    // fullScreen*/}
-        {/*    blur*/}
-        {/*    // visibale={state.get() || false}*/}
-        {/*    aria-labelledby="modal-title"*/}
-        {/*    open={state.get()}*/}
-        {/*    onClose={()=>state.set(false)}*/}
-        {/*>*/}
         <Card  css={{ borderRadius: 0}} style={{zIndex: 400}}
                className="fadeInAnimated bg-white h-screen w-2/3 fixed top-0 right-0"
         >
