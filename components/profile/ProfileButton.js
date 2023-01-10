@@ -1,7 +1,7 @@
 import {useSession} from "next-auth/react";
 import {Navbar, User} from "@nextui-org/react";
 import {useHookstate} from "@hookstate/core";
-import {sidebarState} from "../pages/_app";
+import {sidebarState} from "../../pages/_app";
 
 
 const ProfileButton = () => {

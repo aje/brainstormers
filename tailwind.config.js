@@ -38,7 +38,8 @@ module.exports = {
             },
         }
     },
-    plugins: [],
+    plugins: [
+        require('@headlessui/tailwindcss')],
     corePlugins: {
         preflight: false,
     }

@@ -2,7 +2,7 @@ import {Button, Navbar} from "@nextui-org/react";
 import Image from "next/image";
 import LoginPopover from "./LoginPopover";
 import {useSession} from "next-auth/react";
-import ProfileButton from "./ProfileButton";
+import ProfileButton from "./profile/ProfileButton";
 import {Plus} from "@styled-icons/entypo/Plus";
 import NotificationButton from "./NotificationButton";
 

@@ -1,7 +1,7 @@
 import Nav from './Nav'
 import Footer from './Footer'
 import {Toaster} from "react-hot-toast";
-import ProfileSidebar from "./ProfileSidebar";
+import ProfileSidebar from "./profile/ProfileSidebar";
 import {useHookstate} from '@hookstate/core';
 import {notificationState, sidebarState} from "../pages/_app";
 import NotificationSidebar from "./Notifications/NotificationSidebar";
