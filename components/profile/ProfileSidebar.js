@@ -1,4 +1,4 @@
-import {Button, Card, Divider, Dropdown, Grid, Navbar, Text, User} from "@nextui-org/react";
+import {Button, Card, Divider, Dropdown, Grid, Input, Navbar, Text, User} from "@nextui-org/react";
 import {signOut, useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {sidebarState} from "../../pages/_app";
@@ -8,7 +8,7 @@ import Moment from "react-moment";
 import Image from "next/image";
 import {Cog} from "@styled-icons/entypo/Cog";
 import {Heart} from "@styled-icons/entypo/Heart";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Edit from "./edit";
 import {useRouter} from "next/router";
 import useSWR from "swr";
@@ -16,15 +16,18 @@ import { Tab } from '@headlessui/react'
 import clsx from "clsx";
 import axios from "../../services/axios";
 import IdeaItem from "../IdeaItem";
-import {ChevronDown} from "@styled-icons/entypo";
+import {ChevronDown,LogOut, Blackboard} from "@styled-icons/entypo";
+import {Check} from "@styled-icons/entypo/Check";
 
 
 const ProfileSidebar = () => {
     const { data: session } = useSession();
     const [ideas, setIdeas] = useState([])
+    const [rated, setRated] = useState([])
+    const [sor, setSor] = useState("ranking")
     // const {data: myIdeas, error} = useSWR(`/api/profile/ideas`);
 
-    const router = useRouter();
+    // const router = useRouter();
     // console.log(myIdeas, error);
     const state = useHookstate(sidebarState);
     // const [edit, setEdit] = useState(false);
@@ -58,7 +61,10 @@ const ProfileSidebar = () => {
     // ]
 
     const onDropdown = (key) => {
-        switch (key) {
+        setSor(key)
+        let first = key.values().next();
+        let value = first.value;
+        switch (value) {
             case "new":
                 getIdeas({createdAt: "asc"})
                 break;
@@ -69,13 +75,12 @@ const ProfileSidebar = () => {
                 getIdeas({ratingsAverage: -1})
                 break;
             default:
-
         }
     };
 
     useEffect(()=> {
         getIdeas();
-
+        getRated()
     }, []);
 
     function getIdeas(params) {
@@ -83,6 +88,13 @@ const ProfileSidebar = () => {
             setIdeas(res.data);
         })
     }
+
+    function getRated() {
+        axios.get('/profile/rated').then(res=>{
+            setRated(res.data);
+        })
+    }
+
     return (session && <>
         <div onClick={onClose} style={{zIndex: 400, backdropFilter: "saturate(180%) blur(6px)"}} className={" bg-white/30 w-screen h-screen fixed top-0 left-0"} />
         <Card  css={{ borderRadius: 0}} style={{zIndex: 400}}
@@ -100,12 +112,13 @@ const ProfileSidebar = () => {
                             </div>
                         </div>
                     </div>
+
+                    <Button color={"error"} onClick={() => signOut()} light auto ><LogOut size={18} /> Logout</Button>
+
                     {/*<Dropdown  placement={"bottom-right"}>*/}
                     {/*    <Dropdown.Button ripple={false} light  icon={<Cog size={22} />}>Settings</Dropdown.Button>*/}
-                    {/*    <Dropdown.Menu aria-label="Static Actions"   onAction={onDropdown}>*/}
+                    {/*    <Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>*/}
                     {/*        <Dropdown.Item key="edit">Edit profile</Dropdown.Item>*/}
-                    {/*        /!*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*!/*/}
-                    {/*        /!*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*!/*/}
                     {/*        <Dropdown.Item key={"logout"} color="error" onClick={() => signOut()}>*/}
                     {/*            Logout*/}
                     {/*        </Dropdown.Item>*/}
@@ -123,7 +136,9 @@ const ProfileSidebar = () => {
                                     ? 'border-b-4 border-primary border-solid text-primary '
                                     : 'border-b-4 border-transparent border-solid'
                             )
-                        }>Ideas</Tab>
+                        }>
+                            <Blackboard size={20} className={"mr-2"}/>
+                            Ideas</Tab>
                         <Tab  className={({ selected }) =>
                             clsx(
                                 'w-full border-0 py-4 text-lg leading-5  bg-transparent',
@@ -134,16 +149,16 @@ const ProfileSidebar = () => {
 
                             )
                         }><Heart size={20} className={"mr-2"}/>Favorites</Tab>
-                        <Tab className={({ selected }) =>
-                            clsx(
-                                'w-full border-0 py-4 text-lg leading-5  bg-transparent',
-                                ' ',
-                                selected
-                                    ? 'border-b-4 border-primary border-solid text-primary'
-                                    : 'border-b-4 border-transparent border-solid'
+                        {/*<Tab className={({ selected }) =>*/}
+                        {/*    clsx(*/}
+                        {/*        'w-full border-0 py-4 text-lg leading-5  bg-transparent',*/}
+                        {/*        ' ',*/}
+                        {/*        selected*/}
+                        {/*            ? 'border-b-4 border-primary border-solid text-primary'*/}
+                        {/*            : 'border-b-4 border-transparent border-solid'*/}
 
-                            )
-                        } ><Cog size={20} className={"mr-2"}/>Settings</Tab>
+                        {/*    )*/}
+                        {/*} ><Cog size={20} className={"mr-2"}/>Settings</Tab>*/}
                     </Tab.List>
                     <Divider  />
                     <Tab.Panels className={"overflow-y-scroll"}>
@@ -156,36 +171,35 @@ const ProfileSidebar = () => {
                         >
                             {/*<Grid.Container gap={2}>*/}
                             <div className="flex justify-between">
-                                <Text h4 >My ideas </Text>
+                                <Text h4 >My ideas</Text>
                                 <Dropdown  placement={"bottom-right"}>
-                                    <Dropdown.Button ripple={false} light  icon={<ChevronDown size={22} />}>Sort by</Dropdown.Button>
-                                    <Dropdown.Menu aria-label="Static Actions"   onAction={onDropdown}>
+                                    <Dropdown.Button ripple={false} light icon={<ChevronDown size={22} />}>Sort by  <span className={"ml-2 text-primary"}> {sor}</span></Dropdown.Button>
+                                    <Dropdown.Menu
+                                        onSelectionChange={onDropdown}
+                                        selectionMode="single"
+                                        selectedKeys={sor}
+                                        aria-label="Static Actions"
+                                    >
                                         <Dropdown.Item key="new">Date Newest</Dropdown.Item>
                                         <Dropdown.Item key="old">Date Oldest</Dropdown.Item>
                                         <Dropdown.Item key="rank">Ranking</Dropdown.Item>
-                                        {/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
-                                        {/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
-                                        {/*<Dropdown.Item key={"logout"} color="error" onClick={() => signOut()}>*/}
-                                        {/*    Logout*/}
-                                        {/*</Dropdown.Item>*/}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </div>
-                                {ideas.map(idea => <IdeaItem noOwner onCallback={onClose} item={idea}/>)}
-
-                            {/*</Grid.Container>*/}
+                            {ideas.map(idea => <IdeaItem noOwner onCallback={onClose} item={idea}/>)}
+                        </Tab.Panel>
+                        <Tab.Panel className={"grid gap-4  p-4 md:grid-cols-2 md:gap-4"}>
+                            {rated.map(idea => <IdeaItem noOwner onCallback={onClose} item={idea}/>)}
+                        </Tab.Panel>
+                        <Tab.Panel className={"grid gap-4  p-4 md:grid-cols-2 md:gap-4"}>
+                            {/*<Input*/}
+                            {/*    onChange={onChange}*/}
+                            {/*    contentRight={<Button onClick={onSave} className={"min-w-min px-2 -ml-2"} auto icon={<Check size={22}/>}/>}*/}
+                            {/*    fullWidth*/}
+                            {/*    className={""}*/}
+                            {/*    bordered value={item.title}/>*/}
 
                         </Tab.Panel>
-                        <Tab.Panel
-                            className={clsx(
-                                'rounded-xl bg-white p-3',
-                                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-                            )}>Content 2</Tab.Panel>
-                        <Tab.Panel
-                            className={clsx(
-                                'rounded-xl bg-white p-3',
-                                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-                            )}>Content 3</Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
 

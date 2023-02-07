@@ -1,6 +1,5 @@
 import Idea from "../../../models/Idea";
-import dbConnect from "../../../services/dbconnect";
-import User from "../../../models/User";
+import dbConnect from "../../../services/dbconnect"
 import nextConnect from "next-connect";
 import {getSession} from "next-auth/react";
 
@@ -18,7 +17,7 @@ apiRoute.get(async (req, res) => {
     try {
         if(session) {
             await dbConnect();
-            const posts = await Idea.find({author: session.user._id}).sort(req.query)
+            const posts = await Idea.find({raters: {$elemMatch:  {$eq: session.user._id}}})
             res.status(200).json(posts);
         } else {
             res.status(401)

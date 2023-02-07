@@ -83,7 +83,7 @@ const IdeaSlider = ({latest:ideas}) => {
                         )}
 
                         slidesToShow={1} slideIndex={index} renderBottomCenterControls={false} >
-                        {ideas.map(item => <CarouselContent  item={item} onNext={onNext}/> )}
+                        {ideas.map(item => <CarouselContent key={item.id}  item={item} onNext={onNext}/> )}
                     </Carousel>
                     {/*<Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 40}}  onClick={onNext} auto light  className={"z-0 hover:text-primary active:text-primary"}/>*/}
                 </main>

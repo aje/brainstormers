@@ -35,7 +35,6 @@ export const IdeaSchema = new Schema({
     downsides: [],
     problems: [],
     solutions: [],
-
     alternatives: [String],
     targetAudience: String,
     tags: [String],
