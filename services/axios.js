@@ -40,6 +40,6 @@ instance.interceptors.response.use(
     return Promise.reject(error);
 });
 
-// export const swrFetcher = (url) => instance(url).then((res) => res.data);
+export const swrFetcher = (url) => instance(url).then((res) => res.data);
 
 export default instance;

@@ -1,10 +1,7 @@
 import {Button, Card, Container, Grid, Text, User} from "@nextui-org/react";
-import MyRating from "../MyRating";
-import {useRouter} from "next/router";
+import IdeaItem from "../IdeaItem";
 
 const LatestIdeas = ({topLastMonth: ideas, countLastMonth}) => {
-
-    const router = useRouter()
 
     return (<div className={"py-20"}>
         <Container >
@@ -15,18 +12,7 @@ const LatestIdeas = ({topLastMonth: ideas, countLastMonth}) => {
                 <h3>Last month <span className="font-normal"> best ideas ({countLastMonth})</span></h3>
                 <Grid.Container gap={2}>
                     {ideas.map(idea => <Grid sm={4} key={idea._id} xs={12}>
-                        <Card  isPressable onPress={()=>router.push(`/ideas/idea/${idea._id}`)} className={"bg-primary/10"}>
-                            <Card.Header className={"flex-col pb-0 mt-2 items-start"}>
-                                <User size={"xs"} className={"-ml-1 mb-2"}  src={idea.author?.avatar} name={idea.author?.name}/>
-                                <Text h5 className={"ml-2 mb-0"}> {idea.title}</Text>
-                            </Card.Header>
-                            <Card.Body>
-                                {idea.description}
-                            </Card.Body>
-                            <Card.Footer className={"justify-end pt-0 pb-5 pr-5"}>
-                                <MyRating value={idea.ratingsAverage} count={idea.ratingsQuantity} readonly size={"md"}/>
-                            </Card.Footer>
-                        </Card>
+                        <IdeaItem item={idea}/>
                     </Grid>)}
 
                 </Grid.Container>

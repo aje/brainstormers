@@ -20,8 +20,8 @@ apiRoute.post(async (req, res) => {
             await dbConnect();
             const data = await Idea.create({...req.body, author: session.user});
             res.status(200).json(data);
-        }
-        res.status(401)
+        } else
+            res.status(401)
     } catch (error) {
         res.status(400).json(error);
     }
@@ -90,7 +90,8 @@ apiRoute.post(async (req, res) => {
             // console.log(post);
             res.status(201).json(post)
         }
-        res.status(401).json({data: "Not authorized"})
+        else
+        res.status(401).json()
     } catch (e) {
         console.log("[Error posts.js]", e)
     }
