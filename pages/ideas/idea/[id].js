@@ -1,10 +1,10 @@
-import React from 'react';
-import * as models from "../../../models/models"
-import {Grid,} from "@nextui-org/react"
+import React from "react";
+import * as models from "../../../models/models";
+import {Grid} from "@nextui-org/react";
 import dbConnect from "../../../services/dbconnect";
 import Idea from "../../../models/Idea";
 import Empty from "../../../components/Empty";
-import 'react-tagsinput/react-tagsinput.css'
+import "react-tagsinput/react-tagsinput.css";
 import IdeaSides from "../../../components/idea/IdeaSides";
 import Comments from "../../../components/idea/Comments";
 import IdeaRating from "../../../components/idea/IdeaRating";
@@ -20,224 +20,59 @@ import {getSession} from "next-auth/react";
 //         type: PropTypes.string
 //     })
 // };
-const  IdeaPage = ({item, isOwner}) => {
-    // const item ={
-    //     ratingsAverage: 4,
-    //     ratingsQuantity: 52 ,
-    //     tags: ["Online", "Internet"],
-    //     problems: ["Porblems that can be solved ", "For example there is a problem with the social we can"],
-    //     upsides: [{
-    //         description: "The problem is we corblems that can be solved ",
-    //         author: {
-    //             name: "behjrooz", image: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-    //         },
-    //         type: "UPSIDE",
-    //         replyTo: "",
-    //         createdAt: 1663143033901,
-    //     },{
-    //         description: "The problem is we can not do that",
-    //         author: {
-    //             name: "behjrooz", image: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-    //         },
-    //         type: "UPSIDE",
-    //         replyTo: "",
-    //         createdAt: 1663143033901,
-    //     },{
-    //         description: "The problem is we can not do that",
-    //         author: {
-    //             name: "behjrooz", image: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-    //         },
-    //         type: "UPSIDE",
-    //         replyTo: "",
-    //         createdAt: 1663143033901,
-    //     },{
-    //         description: "The problem is we can not do that",
-    //         author: {
-    //             name: "behjrooz", image: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-    //         },
-    //         type: "UPSIDE",
-    //         replyTo: "",
-    //         createdAt: 1663143033901,
-    //     },
-    //     ],
-    //     downsides: [{
-    //         description: "The problem is we can not do that",
-    //         author: {
-    //             name: "behjrooz", image: "https://i.pravatar.cc/150?u=a04258114e29026702d"
-    //         },
-    //         type: "DOWNSIDE",
-    //         replyTo: "",
-    //         createdAt: 1663143033901,
-    //     }],
-    //     alternatives: ["GYMNER"],
-    //     costs: ["1000Rmb"],
-    //     targetAudience: ["Everyone"],
-    //     marketSize: 10,
-    //
-    //     title: "This was the great idea",
-    //     description: "Lorem  ipsum docolor lorem   Lorem  ipsum docolor lorem   Lorem  ipsum docolor lorem   Lorem  ipsum docolor lorem   Lorem  ipsum docolor lorem    ",
-    //     author: {
-    //         image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //         name: "Ariana Wattson",
-    //     },
-    //     status: "OPEN",
-    //     createdAt: 1663143033901,
-    //     comments: [
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //                 name: "Ariana Wattson Golabforoush",
-    //             },
-    //             rating: 5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             images: [
-    //                 "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    //                 "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    //                 "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    //             ],
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //         {
-    //             author: {
-    //                 image: "https://i.pravatar.cc/150?u=a04258114e29026702d",
-    //                 name: "Ariana Wattson",
-    //             },
-    //             rating: 2.5,
-    //             description: "This idea was great and Lorem ipsum dolor sit ame obcaecati omnis placeat quam, quisquam, recusandae sit ullam!",
-    //             timestamp: 1663143033901
-    //         },
-    //     ]
-    // };
+const IdeaPage = ({item, isOwner}) => {
+	if (!item)
+		return (
+			<div className={"my-28"}>
+				<Empty label={"Error 404"} />
+			</div>
+		);
 
-
-
-
-
-    if(!item) return <div className={"my-28"}><Empty label={"Error 404"} /></div>
-
-    return (<Grid.Container
-        // style={{height: "calc(100vh - 117px)"}}
-        gap={0} justify="center"
-        // className={"overflow-y-hidden"}
-    >
-
-        <Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
-            <div className="relative h-full flex flex-col flex-1">
-                <IdeaInfoBar item={item} isOwner={isOwner}/>
-                <IdeaRating item={item} isOwner={isOwner}/>
-            </div>
-        </Grid>
-        <Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
-            <Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
-                <IdeaSides item={item} isOwner={isOwner}/>
-                <Comments item={item} isOwner={isOwner}/>
-            </Grid.Container>
-        </Grid>
-    </Grid.Container>);
+	return (
+		<Grid.Container gap={0} justify="center">
+			<Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
+				<div className="relative h-full flex flex-col flex-1">
+					<IdeaInfoBar item={item} isOwner={isOwner} />
+					<IdeaRating item={item} isOwner={isOwner} />
+				</div>
+			</Grid>
+			<Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
+				<Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
+					<IdeaSides item={item} isOwner={isOwner} />
+					<Comments item={item} isOwner={isOwner} />
+				</Grid.Container>
+			</Grid>
+		</Grid.Container>
+	);
 };
 
 export default IdeaPage;
 
 export async function getServerSideProps({params, req}) {
-    const {id} = params;
-    await dbConnect();
-    const session = await getSession({ req });
+	const {id} = params;
+	await dbConnect();
+	const session = await getSession({req});
 
-    let isOwner = false;
-    let item = null;
-    try {
-        item = await Idea.findOne({_id: id})
-            .populate({path: 'author', model: models.User})
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'author',
-                    model: models.User
-                },
-                select: 'idea  description createdAt',
-                options: {sort: {'createdAt': -1}}
-            })
-        isOwner = session?.user?._id === item?.author._id?.toString();
-    } catch (e) {
-
-    }
-    return {
-        props: {
-            item: JSON.parse(JSON.stringify(item)),
-            isOwner
-        },
-    };
+	let isOwner = false;
+	let item = null;
+	try {
+		item = await Idea.findOne({_id: id})
+			.populate({path: "author", model: models.User})
+			.populate({
+				path: "comments",
+				populate: {
+					path: "author",
+					model: models.User,
+				},
+				select: "idea  description createdAt",
+				options: {sort: {createdAt: -1}},
+			});
+		isOwner = session?.user?._id === item?.author._id?.toString();
+	} catch (e) {}
+	return {
+		props: {
+			item: JSON.parse(JSON.stringify(item)),
+			isOwner,
+		},
+	};
 }
