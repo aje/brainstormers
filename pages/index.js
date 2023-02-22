@@ -12,7 +12,6 @@ import Idea from "../models/Idea";
 import User from "../models/User";
 import {getSession} from "next-auth/react";
 import moment from "moment";
-// import * as models from "../models/models"
 
 export const ideaFormData = hookstate({
     problem: "",
@@ -20,8 +19,6 @@ export const ideaFormData = hookstate({
 });
 
 export default function Home({latest, topLastMonth, countLastMonth,topEnt , countTopEnt}) {
-    // const { data: session } = useSession();
-    // const {theme} = useTheme()
 
     return (<>
             <CTA />
