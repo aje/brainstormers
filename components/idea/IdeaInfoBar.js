@@ -83,7 +83,18 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					{editable === "title" ? (
 						<Input
 							onChange={onChange("title")}
-							contentRight={<Button onClick={onSave} className={"min-w-min px-2 -ml-2"} auto icon={<Check size={22} />} />}
+							contentRight={
+								<div className={"-ml-14 flex"}>
+									<Button
+										onClick={() => setEditable(null)}
+										light
+										className={"min-w-min px-2 mr-2"}
+										auto
+										icon={<Close size={22} />}
+									/>
+									<Button onClick={onSave} className={"min-w-min px-2"} auto icon={<Check size={22} />} />
+								</div>
+							}
 							fullWidth
 							size={"xl"}
 							className={""}
@@ -172,13 +183,18 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			{/*? description */}
 			{editable === "description" ? (
 				<>
-					<Textarea onChange={onChange("description")} fullWidth bordered value={item.description} />
-					<Button onClick={onSave} className={"  mt-2"} auto icon={<Check size={22} />}>
-						Save
-					</Button>
+					<Textarea onChange={onChange("description")} fullWidth bordered minRows={8} value={item.description} />
+					<div className="flex mt-2">
+						<Button onClick={() => setEditable(null)} light auto>
+							Cancel
+						</Button>
+						<Button onClick={onSave} auto icon={<Check size={22} />}>
+							Save
+						</Button>
+					</div>
 				</>
 			) : (
-				<Text onClick={editItem("description")} className={"text-2xl mb-5 text-gray-500 font-light cursor-pointer"}>
+				<Text onClick={editItem("description")} className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
 					{item.description}
 				</Text>
 			)}

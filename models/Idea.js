@@ -93,7 +93,7 @@ IdeaSchema.post('save', function() {
 // });
 
 IdeaSchema.pre('deleteOne', function() {
-    console.log('delete', this)
+    // console.log('delete', this)
     this.constructor.calcPostCount(this.author);
 });
 
