@@ -9,7 +9,7 @@ import {getSession, useSession} from "next-auth/react";
 import Idea from "../models/Idea";
 import Empty from "../components/Empty";
 import * as models from "../models/models";
-import {ChevronSmallLeft, ChevronSmallRight} from "@styled-icons/entypo";
+import {ChevronSmallLeft, ChevronSmallRight, Plus} from "@styled-icons/entypo";
 import axios from "../services/axios";
 import {toast} from "react-hot-toast";
 import {useHookstate} from "@hookstate/core";
@@ -22,7 +22,8 @@ export default function Explore({ideas}) {
 	const [loading, setLoading] = useState(false);
 	const [rates, setRates] = useState(new Map());
 
-	const onRate = value => () => {
+	const onRate = value => {
+		console.log("onRate");
 		onNext();
 		onReview(value);
 	};
@@ -129,7 +130,7 @@ export default function Explore({ideas}) {
 								<Card.Footer className={"justify-around p-10 "}>
 									<Button
 										disabled={state !== "ACTIVE" || rates.has(idea._id)}
-										onClick={onRate(1)}
+										onClick={() => onRate(1)}
 										borderWeight={"bold"}
 										icon={<EmojiSad size={34} />}
 										bordered
@@ -142,7 +143,7 @@ export default function Explore({ideas}) {
 									<MyRating size={"xl"} onChange={onRate} value={rates.get(idea._id)} readonly={rates.has(idea._id)} />
 									<Button
 										disabled={state !== "ACTIVE" || rates.has(idea._id)}
-										onClick={onRate(5)}
+										onClick={() => onRate(5)}
 										borderWeight={"bold"}
 										icon={<Check size={40} />}
 										bordered
@@ -157,7 +158,12 @@ export default function Explore({ideas}) {
 						);
 					})
 				) : (
-					<Empty />
+					<div className={"justify-self-center w-full flex items-center justify-center flex-col self-center"}>
+						<Empty label={"We are out of ideas!"} />
+						<Button href="/new" as={"a"} className={"mt-8 cursor-pointer"} icon={<Plus size={22} />} size="lg">
+							Add New Idea
+						</Button>
+					</div>
 				)}
 			</div>
 		</div>

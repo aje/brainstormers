@@ -12,6 +12,7 @@ import {useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
 import Carousel from "nuka-carousel";
+import {Plus} from "@styled-icons/entypo";
 
 const CarouselContent = ({item, onNext}) => {
 	const {data: session} = useSession();
@@ -119,7 +120,12 @@ const IdeaSlider = ({latest:ideas}) => {
                     </Carousel>
                     {/*<Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 40}}  onClick={onNext} auto light  className={"z-0 hover:text-primary active:text-primary"}/>*/}
                 </main>
-                : <Empty label={"You rated all new Ideas"}/>
+                : <div className={"justify-self-center w-full flex items-center justify-center flex-col self-center"}>
+						<Empty label={"We are out of ideas!"} />
+						<Button bordered href="/new" as={"a"} className={"mt-8 cursor-pointer"} icon={<Plus size={22} />} size="lg">
+							Add New Idea
+						</Button>
+					</div>
                 }
             </Container>
         </div>

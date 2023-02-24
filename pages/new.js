@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {Button, Card, Container, Input, Loading, Text, Textarea} from "@nextui-org/react";
-import axios from "../services/axios"
+import axios from "../services/axios";
 import {toast} from "react-hot-toast";
 import {useHookstate} from "@hookstate/core";
-import {AddToList} from "@styled-icons/entypo/AddToList"
-import {Trash} from "@styled-icons/entypo/Trash"
-import {ideaFormData} from "./index";
+import {AddToList} from "@styled-icons/entypo/AddToList";
+import {Trash} from "@styled-icons/entypo/Trash";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
 import Empty from "../components/Empty";
-import TagsInput from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css'
+import TagsInput from "react-tagsinput";
+import "react-tagsinput/react-tagsinput.css";
 import {useRouter} from "next/router";
+import {ideaFormData} from "./_app";
 
 
 const Upload = () => {

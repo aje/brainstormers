@@ -1,7 +1,7 @@
 import {Button, Container} from "@nextui-org/react";
 import {Flag} from "@styled-icons/entypo/Flag";
 
-const Cta = () => {
+const Cta = ({shouldExplore}) => {
 	return (
 		<div
 			className={"bg-primary/10 pt-52 pb-32 text-center"}
@@ -21,13 +21,13 @@ const Cta = () => {
 						</p>
 						<Button
 							as={"a"}
-							href={"/explore"}
+							href={shouldExplore ? "/explore" : "/new"}
 							size={"xl"}
 							icon={<Flag size={30} />}
 							auto
 							className={"font-bold text-2xl"}
 							color="primary">
-							Explore Ideas
+							{shouldExplore ? "Explore Ideas" : "Create an Idea"}
 						</Button>
 					</main>
 				</div>

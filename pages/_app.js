@@ -1,6 +1,6 @@
-import '../styles/globals.css'
-import {SessionProvider} from "next-auth/react"
-import {createTheme, NextUIProvider} from '@nextui-org/react';
+import "../styles/globals.css";
+import {SessionProvider} from "next-auth/react";
+import {createTheme, NextUIProvider} from "@nextui-org/react";
 import Layout from "../components/Layout";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
@@ -39,6 +39,10 @@ export const sidebarState = hookstate(false);
 export const notificationState = hookstate(false);
 export const loginPopper = hookstate(false);
 
+export const ideaFormData = hookstate({
+    problem: "",
+    idea: "",
+});
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);

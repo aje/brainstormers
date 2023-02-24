@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {Button, Container, Textarea} from "@nextui-org/react";
 import {Plus} from "@styled-icons/entypo/Plus";
 import Image from "next/image";
 import {useHookstate} from "@hookstate/core";
-import {ideaFormData} from "../../pages";
 import {useRouter} from "next/router";
+import {ideaFormData} from "../../pages/_app";
 
 const ProblemForm = () => {
     const state = useHookstate(ideaFormData);
