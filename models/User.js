@@ -1,7 +1,6 @@
 import {model, models, Schema} from "mongoose";
-import Idea from "./Idea";
 
-export const userRoles = ['ENTREPRENEUR', 'ADMIN', 'USER', 'CRITIC'];
+export const userRoles = ["ENTREPRENEUR", "ADMIN", "USER", "CRITIC"];
 
 export const UserSchema = new Schema({
     name: { type: String, required: true},

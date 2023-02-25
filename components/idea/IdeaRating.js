@@ -42,12 +42,16 @@ const IdeaRating = ({isOwner, item}) => {
             onNotLoggedIn();
         else {
             setLoading(true);
-            axios.patch(`/posts?rate=${value}`, {_id: item._id}).then((res) => {
-                toast.success("Successfully updated!");
-                refreshData();
-            }).finally(() => setLoading(false)).catch(error => {
-                toast.error(error?.response?.data?.message);
-            })
+            axios
+				.post(`/rate?value=${value}&id=${item._id}`)
+				.then(res => {
+					toast.success("Successfully updated!");
+					refreshData();
+				})
+				.finally(() => setLoading(false))
+				.catch(error => {
+					toast.error(error?.response?.data?.message);
+				});
         }
     }
 

@@ -37,7 +37,7 @@ export default function Explore({ideas}) {
 		else {
 			setLoading(true);
 			axios
-				.patch(`/posts?rate=${value}`, {_id: ideas[index]._id})
+				.post(`/rate?value=${value}&id=${ideas[index]._id}`)
 				.then(res => {
 					const rat = rates;
 					rat.set(res.data.id, res.data.ratingsAverage);

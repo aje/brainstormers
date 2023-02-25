@@ -30,7 +30,7 @@ const CarouselContent = ({item, onNext}) => {
 		else {
 			setLoading(true);
 			axios
-				.patch(`/posts?rate=${value}`, {_id: item._id})
+				.post(`/rate?value=${value}&id=${item._id}`)
 				.then(res => {
 					toast.success("Successfully updated!");
 					onNext();

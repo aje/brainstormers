@@ -1,12 +1,14 @@
 import mongoose, {Schema} from "mongoose";
 import User from "./User";
 
-const ideaStatuses = [{
-    OPEN: {value: 'OPEN',  },
-    CLOSE: {value: 'CLOSE',  },
-    REOPEN: {value: 'REOPEN',  },
-    NONE_EXECUTABLE: {value: 'NONE_EXECUTABLE',  }
-}];
+const ideaStatuses = [
+	{
+		OPEN: {value: "OPEN"},
+		CLOSE: {value: "CLOSE"},
+		REOPEN: {value: "REOPEN"},
+		NONE_EXECUTABLE: {value: "NONE_EXECUTABLE"},
+	},
+];
 
 export const IdeaSchema = new Schema({
     title: {
@@ -78,18 +80,35 @@ IdeaSchema.statics.calcPostCount = async function(userId) {
             postCount: userPosts[0].postCount,
         }, {new: true });
     } catch (e) {
-
+        console.log(e);
     }
 };
+
+// IdeaSchema.statics.notifAuthor = async function (author) {
+//     try {
+//
+//         // if(idea.author.equals(content.author)) {
+//             await Notification.create({
+//                 type: notificationTypes.RATE.value,
+//                 // content: content,
+//                 user: author,
+//             });
+//         // } else {
+//         //     console.log("Same user");
+//         // }
+//     } catch (e) {
+//         console.log(e);
+//     }
+// };
 
 IdeaSchema.post('save', function() {
     this.constructor.calcPostCount(this.author);
 });
 
-// IdeaSchema.post(/^findOneAnd/, function() {
-//     console.log('findOneAnd', this)
+// IdeaSchema.post(/^findByIdAnd/, function() {
+//     console.log('findByIdAnd', this)
 //
-//     this.constructor.calcPostCount(this.author);
+//     this.constructor.notifAuthor(this.author);
 // });
 
 IdeaSchema.pre('deleteOne', function() {

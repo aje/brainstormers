@@ -6,9 +6,11 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import LoadingPage from "../components/LoadingPage";
 import {hookstate} from "@hookstate/core";
+import {swrFetcher} from "../services/axios";
+import {SWRConfig} from "swr";
 
 const fonts = {
-    sans: "'Proxima Nova',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
+	sans: "'Proxima Nova',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
 };
 const theme = createTheme({
     type: "light", // it could be "light" or "dark"
@@ -67,12 +69,18 @@ export default function App({Component,pageProps: { session, ...pageProps },}) {
     }, [router]);
     return (
         <NextUIProvider  theme={theme}>
+            <SWRConfig
+                value={{
+                    refreshInterval: 300000, fetcher: swrFetcher, errorRetryInterval: 120000
+                }}
+            >
             <SessionProvider session={session}>
                 <Layout>
                     {loading ? <LoadingPage/> :
                         <Component {...pageProps} />}
                 </Layout>
             </SessionProvider>
+            </SWRConfig>
         </NextUIProvider>
     )
 }
