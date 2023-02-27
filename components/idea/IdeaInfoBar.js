@@ -74,7 +74,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			{/*? Author */}
 			<div className="flex justify-between items-center">
 				<div className="flex flex-col -ml-3">
-					<User size="sm" src={item.author.image} name={item.author.name} />
+					<User size="sm" src={item.author?.image} name={item.author?.name} />
 				</div>
 				{!isOwner && <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly />}
 			</div>

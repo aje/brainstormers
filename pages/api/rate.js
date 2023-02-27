@@ -41,15 +41,18 @@ apiRoute.post(async (req, res) => {
 					ratingsAverage: avg,
 				};
 
-				await Notification.create({
-					type: notificationTypes.RATE.value,
-					content: new Object({
-						idea: id,
-						author: session.user._id,
-						rate: value
-					}),
-					user: ideaFromServer.author,
-				});
+				// console.log("Helo", session.user._id, ideaFromServer.author, session.user._id === session.user._id.toString());
+
+				if(!session.user._id === session.user._id.toString())
+					await Notification.create({
+						type: notificationTypes.RATE.value,
+						content: new Object({
+							idea: ideaFromServer._id,
+							author: session.user._id,
+							rate: value
+						}),
+						user: ideaFromServer.author,
+					});
 
 
 				const post = await Idea.findByIdAndUpdate(id, update, {new: true});

@@ -70,6 +70,7 @@ export async function getServerSideProps({params, req}) {
 				options: {sort: {createdAt: -1}},
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
+
 		if(isOwner) {
 			// Schema.Types.ObjectId
 			const tquery = {
