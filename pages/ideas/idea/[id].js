@@ -10,6 +10,9 @@ import Comments from "../../../components/idea/Comments";
 import IdeaRating from "../../../components/idea/IdeaRating";
 import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
 import {getSession} from "next-auth/react";
+import Notification from "../../../models/Notification"
+import mongoose from "mongoose";
+
 
 // CommentItem.propTypes = {
 //     item: PropTypes.shape({
@@ -56,7 +59,7 @@ export async function getServerSideProps({params, req}) {
 	let isOwner = false;
 	let item = null;
 	try {
-		item = await Idea.findOne({_id: id})
+		item = await Idea.findById(id)
 			.populate({path: "author", model: models.User})
 			.populate({
 				path: "comments",
@@ -68,7 +71,20 @@ export async function getServerSideProps({params, req}) {
 				options: {sort: {createdAt: -1}},
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
-	} catch (e) {}
+		if(isOwner) {
+			// Schema.Types.ObjectId
+			const tquery = {
+				user: mongoose.Types.ObjectId(session.user._id),
+				'content.idea': mongoose.Types.ObjectId(id),
+				seen: false
+			}
+			console.log("query:", tquery)
+			const t = await Notification.updateMany(tquery, {seen:true})
+			console.log(t);
+		}
+	} catch (e) {
+		console.log(e);
+	}
 	return {
 		props: {
 			item: JSON.parse(JSON.stringify(item)),

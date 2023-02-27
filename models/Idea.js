@@ -83,8 +83,8 @@ IdeaSchema.statics.calcPostCount = async function(userId) {
         console.log(e);
     }
 };
-
-// IdeaSchema.statics.notifAuthor = async function (author) {
+//
+// IdeaSchema.statics.markAsRead = async function (author) {
 //     try {
 //
 //         // if(idea.author.equals(content.author)) {
@@ -105,10 +105,10 @@ IdeaSchema.post('save', function() {
     this.constructor.calcPostCount(this.author);
 });
 
-// IdeaSchema.post(/^findByIdAnd/, function() {
-//     console.log('findByIdAnd', this)
+// IdeaSchema.post('findOne', function() {
+//     console.log('findOne', this)
 //
-//     this.constructor.notifAuthor(this.author);
+//     this.constructor.markAsRead(this.author);
 // });
 
 IdeaSchema.pre('deleteOne', function() {
