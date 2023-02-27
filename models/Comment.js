@@ -32,10 +32,7 @@ export const CommentSchema = new Schema({
 		type: String,
 		enum: Object.keys(commentTypes),
 	},
-	replyTo: {
-		type: Schema.Types.ObjectId,
-		ref: "Comment",
-	},
+	replies: [],
 	createdAt: {
 		type: Date,
 		default: Date.now,

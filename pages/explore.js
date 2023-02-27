@@ -23,7 +23,7 @@ export default function Explore({ideas}) {
 	const [rates, setRates] = useState(new Map());
 
 	const onRate = value => {
-		console.log("onRate");
+		// console.log("onRate");
 		onNext();
 		onReview(value);
 	};

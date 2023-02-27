@@ -7,7 +7,6 @@ import Empty from "../../../components/Empty";
 import "react-tagsinput/react-tagsinput.css";
 import IdeaSides from "../../../components/idea/IdeaSides";
 import Comments from "../../../components/idea/Comments";
-import IdeaRating from "../../../components/idea/IdeaRating";
 import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
 import {getSession} from "next-auth/react";
 import Notification from "../../../models/Notification"
@@ -36,7 +35,7 @@ const IdeaPage = ({item, isOwner}) => {
 			<Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
 				<div className="relative h-full flex flex-col flex-1">
 					<IdeaInfoBar item={item} isOwner={isOwner} />
-					<IdeaRating item={item} isOwner={isOwner} />
+
 				</div>
 			</Grid>
 			<Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
@@ -67,7 +66,7 @@ export async function getServerSideProps({params, req}) {
 					path: "author",
 					model: models.User,
 				},
-				select: "idea  description createdAt",
+				select: "idea  description replies createdAt",
 				options: {sort: {createdAt: -1}},
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
@@ -78,9 +77,7 @@ export async function getServerSideProps({params, req}) {
 				'content.idea': mongoose.Types.ObjectId(id),
 				seen: false
 			}
-			console.log("query:", tquery)
 			const t = await Notification.updateMany(tquery, {seen:true})
-			console.log(t);
 		}
 	} catch (e) {
 		console.log(e);

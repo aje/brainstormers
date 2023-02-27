@@ -13,6 +13,7 @@ import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
 import DeleteConfirmation from "../DeleteConfirmation";
 import CommentItem from "./CommentItem";
+import IdeaRating from "./IdeaRating";
 
 const IdeaInfoBar = ({item, isOwner}) => {
 	const [editable, setEditable] = useState(null);
@@ -194,9 +195,13 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					</div>
 				</>
 			) : (
-				<Text onClick={editItem("description")} className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
-					{item.description}
-				</Text>
+				item.description && (
+					<Text
+						onClick={editItem("description")}
+						className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
+						{item.description}
+					</Text>
+				)
 			)}
 		</>
 	);
@@ -287,6 +292,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 	return (
 		<div className="hsl px-6 flex-1 overflow-y-auto">
 			{renderHeader()}
+			<IdeaRating item={item} isOwner={isOwner} />
 			{renderSolutions()}
 			{renderProblems()}
 			{renderAlternatives()}
