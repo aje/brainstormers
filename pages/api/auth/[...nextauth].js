@@ -4,6 +4,8 @@ import {MongoDBAdapter} from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../services/mongodb";
 import dbConnect from "../../../services/dbconnect";
 import User from "../../../models/User";
+import GoogleProvider from "next-auth/providers/google";
+
 // import CredentialsProvider from "next-auth/providers/credentials"
 // import dbConnect from "../../../services/dbconnect";
 
@@ -14,6 +16,10 @@ export const authOptions = {
             clientId: process.env.GITHUB_ID,
             clientSecret: process.env.GITHUB_SECRET,
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_ID,
+            clientSecret: process.env.GOOGLE_SECRET
+        })
         // CredentialsProvider({
         //     // The name to display on the sign in form (e.g. 'Sign in with...')
         //     name: 'Credentials',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {Button, Loading, Navbar, Popover, Text} from "@nextui-org/react";
 import {Login} from "@styled-icons/entypo/Login";
 import {Github} from "@styled-icons/remix-line/Github";
@@ -14,7 +14,7 @@ const LoginPopover = ({ providers }) => {
 
     const onSocial = provider => () => {
         setLoading(true);
-        signIn("github").then(r => setLoading(false) )
+        signIn(provider).then(r => setLoading(false) )
     }
 
     return (<>
@@ -54,7 +54,7 @@ const LoginPopover = ({ providers }) => {
                 {/*{Object.values(providers).map((provider) =>*/}
                 {/*    <Button  onClick={() => signIn(provider.id)} key={provider.name} icon={<Google size={22} fill="currentColor" />} bordered className={"w-full"} >{provider.name} Login</Button>*/}
                 {/*)}*/}
-                <Button  onClick={() => signIn("github")} icon={<Google size={22} fill="currentColor" />} bordered className={"w-full"} >Google Login</Button>
+                <Button  onClick={onSocial("google")} icon={<Google size={22} fill="currentColor" />} bordered className={"w-full"} >Google Login</Button>
                 <Button  onClick={onSocial("github")} disabled={loading}  icon={<Github size={22} fill="currentColor" />} bordered className={"w-full mt-2"} >
                     {loading ? <Loading type="points-opacity" color="currentColor" size="sm" /> :
                         "Github Login" }

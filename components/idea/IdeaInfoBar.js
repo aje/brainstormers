@@ -328,10 +328,12 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					bordered
 					value={item.targetAudience}
 				/>
-			) : (
+			) : item.targetAudience ? (
 				<Text className={"cursor-pointer"} onClick={editItem("targetAudience")}>
-					{item.targetAudience || (isOwner ? "Click to add" : <Empty noIcon />)}
+					{item.targetAudience}
 				</Text>
+			) : (
+				<Empty noIcon />
 			)}
 		</div>
 	);
