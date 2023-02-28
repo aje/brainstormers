@@ -9,19 +9,9 @@ import IdeaSides from "../../../components/idea/IdeaSides";
 import Comments from "../../../components/idea/Comments";
 import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
 import {getSession} from "next-auth/react";
-import Notification from "../../../models/Notification"
+import Notification from "../../../models/Notification";
 import mongoose from "mongoose";
 
-
-// CommentItem.propTypes = {
-//     item: PropTypes.shape({
-//         createdAt: PropTypes.number,
-//         author: PropTypes.any,
-//         replyTo: PropTypes.string,
-//         description: PropTypes.string,
-//         type: PropTypes.string
-//     })
-// };
 const IdeaPage = ({item, isOwner}) => {
 	if (!item)
 		return (
@@ -35,7 +25,6 @@ const IdeaPage = ({item, isOwner}) => {
 			<Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
 				<div className="relative h-full flex flex-col flex-1">
 					<IdeaInfoBar item={item} isOwner={isOwner} />
-
 				</div>
 			</Grid>
 			<Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
