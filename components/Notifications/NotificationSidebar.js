@@ -32,7 +32,7 @@ const NotificationSidebar = () => {
 			<Card css={{borderRadius: 0}} style={{zIndex: 400}} className="fadeInAnimated bg-white h-screen  w-2/3 md:w-1/3 fixed top-0 right-0">
 				<Card.Body>
 					<div className="flex justify-between items-center">
-						<Text h3>Notifications ({data?.length})</Text>
+						<Text h3>Notifications {data?.length > 0 && ` (${data?.length})`}</Text>
 						<Button light size={"sm"} color={"primary"} icon={<Check size={18} />}>
 							Mark as read
 						</Button>
