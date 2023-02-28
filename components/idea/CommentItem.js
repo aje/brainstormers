@@ -96,9 +96,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 						<Text span className={clsx(dense ? "text-xs text-gray-500" : "  text-gray-600")}>
 							{item.author.name}{" "}
 							<Text span className={"font-normal text-xs text-gray-400"}>
-								<Moment from={new Date()} ago>
-									{item.createdAt}
-								</Moment>
+								<Moment from={new Date()}>{item.createdAt}</Moment>
 							</Text>
 						</Text>
 					}

@@ -14,6 +14,8 @@ import {useRouter} from "next/router";
 import DeleteConfirmation from "../DeleteConfirmation";
 import CommentItem from "./CommentItem";
 import IdeaRating from "./IdeaRating";
+import {useSession} from "next-auth/react";
+import Moment from "react-moment";
 
 const IdeaInfoBar = ({item, isOwner}) => {
 	const [editable, setEditable] = useState(null);
@@ -21,6 +23,8 @@ const IdeaInfoBar = ({item, isOwner}) => {
 	const [formData, setFormData] = useState(item);
 	const [visible, setVisible] = useState(false);
 	const router = useRouter();
+	const {data: session} = useSession();
+	const isRated = item.raters?.includes(session?.user?._id);
 
 	const refreshData = () => {
 		router.replace(router.asPath);
@@ -72,15 +76,16 @@ const IdeaInfoBar = ({item, isOwner}) => {
 	const renderHeader = () => (
 		<>
 			{/*? Author */}
-			<div className="flex justify-between items-center">
-				<div className="flex flex-col -ml-3">
-					<User size="sm" src={item.author?.image} name={item.author?.name} />
-				</div>
-				{!isOwner && <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly />}
-			</div>
+			<User
+				className={"-ml-3"}
+				description={<Moment from={new Date()}>{item.createdAt}</Moment>}
+				size="sm"
+				src={item.author?.image}
+				name={item.author?.name}
+			/>
 			{/*? title tags */}
 			<div className="flex justify-center">
-				<div className=" mt-d3 flex-1">
+				<div className="flex-1">
 					{editable === "title" ? (
 						<Input
 							onChange={onChange("title")}
@@ -110,6 +115,10 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					<div className={"mb-3 max-w-full"}>
 						{editable === "tags" ? (
 							<>
+								<Text h4>
+									Tags <small className={"text-gray-500 ml-1"}> Enter to add</small>
+								</Text>
+
 								<TagsInput
 									tagProps={{
 										className:
@@ -120,9 +129,14 @@ const IdeaInfoBar = ({item, isOwner}) => {
 									value={formData.tags}
 									onChange={onChange("tags")}
 								/>
-								<Button onClick={onSave} className={"  mt-2"} auto icon={<Check size={22} />}>
-									Save
-								</Button>
+								<div className="flex mt-2">
+									<Button onClick={() => setEditable(null)} light auto>
+										Cancel
+									</Button>
+									<Button onClick={onSave} auto icon={<Check size={22} />}>
+										Save
+									</Button>
+								</div>
 							</>
 						) : item.tags?.length > 0 ? (
 							<>
@@ -149,6 +163,8 @@ const IdeaInfoBar = ({item, isOwner}) => {
 						)}
 					</div>
 				</div>
+
+				<MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly={isRated} />
 				{/*? Delete button */}
 				{isOwner && (
 					<>
@@ -167,7 +183,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 						/>
 
 						<Dropdown placement={"bottom-right"}>
-							<Dropdown.Button ripple={false} light className={"min-w-min"} icon={<DotsThreeVertical size={22} />} />
+							<Dropdown.Button ripple={false} light className={"min-w-min ml-2"} icon={<DotsThreeVertical size={22} />} />
 							<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
 								{/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
 								{/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
@@ -194,13 +210,15 @@ const IdeaInfoBar = ({item, isOwner}) => {
 						</Button>
 					</div>
 				</>
+			) : item.description ? (
+				<Text onClick={editItem("description")} className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
+					{item.description}
+				</Text>
 			) : (
-				item.description && (
-					<Text
-						onClick={editItem("description")}
-						className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
-						{item.description}
-					</Text>
+				isOwner && (
+					<Button onClick={editItem("description")} color={"warning"} light auto icon={<Edit size={16} />}>
+						Add description
+					</Button>
 				)
 			)}
 		</>
@@ -290,9 +308,9 @@ const IdeaInfoBar = ({item, isOwner}) => {
 	);
 
 	return (
-		<div className="hsl px-6 flex-1 overflow-y-auto">
+		<div className="hsl px-6 pb-6 flex-1 overflow-y-auto">
 			{renderHeader()}
-			<IdeaRating item={item} isOwner={isOwner} />
+			{!isRated && <IdeaRating item={item} isOwner={isOwner} />}
 			{renderSolutions()}
 			{renderProblems()}
 			{renderAlternatives()}
