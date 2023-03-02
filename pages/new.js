@@ -175,11 +175,11 @@ const Upload = () => {
 									</Card.Header>
 									{problems.map((p, i) => (
 										<div key={i} className="flex w-full px-4 pb-4">
-											<form onSubmit={addProblem}>
+											<form onSubmit={addProblem} className={"flex-1"}>
 												<Input
 													autoFocus
 													underlined
-													css={{flexGrow: 1}}
+													fullWidth
 													value={p}
 													placeholder={"A problem to fix"}
 													onChange={onChangeProblem(i)}
@@ -224,12 +224,12 @@ const Upload = () => {
 
 									{ideas.map((p, i) => (
 										<div key={i} className="flex w-full px-4  pb-4">
-											<form onSubmit={addIdeas}>
+											<form onSubmit={addIdeas} className={"flex-1"}>
 												<Input
 													autoFocus
 													placeholder={"Solutions or ideas"}
 													underlined
-													css={{flexGrow: 1}}
+													fullWidth
 													value={p}
 													onChange={onChangeIdeas(i)}
 													required
@@ -313,6 +313,9 @@ const Upload = () => {
 							</div>
 
 							<Text h4>Existing Alternatives</Text>
+							<Text caption className={"-mt-2 mb-3"}>
+								List how these problems are solved today
+							</Text>
 							<div className="bg-white rounded-3xl pt-2 mb-5">
 								{alts.map((p, i) => (
 									<div key={i} className="flex w-full px-4  pb-4">
@@ -343,7 +346,10 @@ const Upload = () => {
 								))}
 							</div>
 
-							<Text h4>Target Audience</Text>
+							<Text h4>Early adopters ( Target audience )</Text>
+							<Text caption className={"-mt-2 mb-3"}>
+								List characteristics of your ideal customer
+							</Text>
 							<div className="bg-white rounded-3xl pt-2 px-4 mb-5">
 								<Input
 									value={formData.targetAudience}

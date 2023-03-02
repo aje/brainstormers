@@ -164,7 +164,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					</div>
 				</div>
 
-				<MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly={isRated} />
+				{isRated && <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly />}
 				{/*? Delete button */}
 				{isOwner && (
 					<>
