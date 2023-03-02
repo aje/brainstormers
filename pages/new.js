@@ -49,7 +49,10 @@ const Upload = () => {
 					setStep(1);
 					// router.push('/')
 				})
-				.finally(() => setLoading(false));
+				.finally(() => setLoading(false))
+				.catch(e => {
+					toast.error(e.message);
+				});
 		} else {
 			login.set(true);
 			setLoading(false);
@@ -69,7 +72,10 @@ const Upload = () => {
 				// setStep(1)
 				router.push(`/ideas/idea/${res.data?._id}`);
 			})
-			.finally(() => setLoading(false));
+			.finally(() => setLoading(false))
+			.catch(e => {
+				toast.error(e.message);
+			});
 	};
 
 	const addProblem = e => {
