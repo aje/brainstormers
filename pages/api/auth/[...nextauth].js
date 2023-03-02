@@ -18,7 +18,10 @@ export const authOptions = {
         }),
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET
+            clientSecret: process.env.GOOGLE_SECRET,
+            httpOptions: {
+                timeout: 20000,
+            }
         })
         // CredentialsProvider({
         //     // The name to display on the sign in form (e.g. 'Sign in with...')
@@ -93,6 +96,9 @@ export const authOptions = {
             }
             return session;
         },
+        async error(e) {
+            console.log(e);
+        }
     },
 }
 

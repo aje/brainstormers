@@ -49,7 +49,7 @@ export async function getServerSideProps({params, req}) {
 	let countTopEnt = 0;
 	try {
 		//? get latest for slider
-		const latestQuery = session ? {raters: {$not: {$elemMatch: {$eq: session.user._id}}}} : "";
+		const latestQuery = session ? {raters: {$not: {$elemMatch: {$eq: session.user._id}}}} : {};
 		latest = await Idea.find(latestQuery, "title author description tags")
 			.populate({path: "author", model: User})
 			.sort({createdAt: -1})
