@@ -164,7 +164,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					</div>
 				</div>
 
-				<MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly={isRated} />
+				{isRated && <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly />}
 				{/*? Delete button */}
 				{isOwner && (
 					<>
@@ -284,13 +284,16 @@ const IdeaInfoBar = ({item, isOwner}) => {
 	const renderAlternatives = () => (
 		<>
 			<Text h3 className={"mt-5  flex justify-between"}>
-				Alternatives{" "}
+				Existing Alternatives
 				{isOwner &&
 					(editable !== "alternatives" ? (
 						<Button onClick={editItem("alternatives")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
 					) : (
 						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
 					))}
+			</Text>
+			<Text caption className={"-mt-2 mb-3 text-gray-400"}>
+				List how these problems are solved today
 			</Text>
 			{editable === "alternatives" ? (
 				<>
@@ -315,8 +318,17 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			{renderProblems()}
 			{renderAlternatives()}
 
-			<Text h3 className={"mt-5"}>
+			<Text h3 className={"mt-5  flex justify-between"}>
 				TargetAudience
+				{isOwner &&
+					(editable !== "targetAudience" ? (
+						<Button onClick={editItem("targetAudience")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
+					) : (
+						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
+					))}
+			</Text>
+			<Text caption className={"-mt-2 mb-3  text-gray-400"}>
+				List characteristics of your ideal customer
 			</Text>
 			{editable === "targetAudience" ? (
 				<Input
