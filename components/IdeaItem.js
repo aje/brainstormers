@@ -21,7 +21,7 @@ const IdeaItem = ({item, noOwner, onCallback}) => {
 					{item.title}
 				</Text>
 			</Card.Header>
-			<Card.Body>{item.description.substring(0, 300)}</Card.Body>
+			<Card.Body>{item.description?.substring(0, 300)}</Card.Body>
 			<Card.Footer className={"justify-end pt-0 pb-5 pr-5"}>
 				<MyRating value={item.ratingsAverage} count={item.ratingsQuantity} readonly size={"md"} />
 			</Card.Footer>

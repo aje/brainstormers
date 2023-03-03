@@ -50,7 +50,7 @@ const CarouselContent = ({item, onNext}) => {
 					{item.title}
 				</Link>
 			</Text>
-			<Text className={"text-2xl mb-5 px-6 text-gray-500"}>{item.description.substring(0, 400) || "No description"}</Text>
+			<Text className={"text-2xl mb-5 px-6 text-gray-500"}>{item.description?.substring(0, 400) || "No description"}</Text>
 			{item.tags.map((t, io) => (
 				<a key={io} className={"hover:underline hover:text-gray-500 transition-all font-bold italic text-gray-300 mr-3"}>
 					{t}
