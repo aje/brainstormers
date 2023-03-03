@@ -40,7 +40,6 @@ export default function Home({latest, topLastMonth, countLastMonth, topEnt, coun
 }
 
 export async function getServerSideProps({params, req}) {
-	await dbConnect();
 	const session = await getSession({req});
 	let latest = [];
 	let topLastMonth = [];
@@ -48,6 +47,7 @@ export async function getServerSideProps({params, req}) {
 	let countLastMonth = 0;
 	let countTopEnt = 0;
 	try {
+		await dbConnect();
 		//? get latest for slider
 		const latestQuery = session ? {raters: {$not: {$elemMatch: {$eq: session.user._id}}}} : "";
 		latest = await Idea.find(latestQuery, "title author description tags")

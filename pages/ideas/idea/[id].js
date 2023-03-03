@@ -41,12 +41,12 @@ export default IdeaPage;
 
 export async function getServerSideProps({params, req}) {
 	const {id} = params;
-	await dbConnect();
 	const session = await getSession({req});
 
 	let isOwner = false;
 	let item = null;
 	try {
+		await dbConnect();
 		item = await Idea.findById(id)
 			.populate({path: "author", model: models.User})
 			.populate({

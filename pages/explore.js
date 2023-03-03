@@ -171,10 +171,10 @@ export default function Explore({ideas}) {
 }
 
 export async function getServerSideProps({params, req}) {
-	await dbConnect();
 	const session = await getSession({req});
 	let latest = [];
 	try {
+		await dbConnect();
 		//? get latest for slider
 		const latestQuery = session ? {raters: {$not: {$elemMatch: {$eq: session.user._id}}}} : "";
 		latest = await Idea.find(latestQuery, "title author description tags")

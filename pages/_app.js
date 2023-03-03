@@ -45,6 +45,8 @@ export const ideaFormData = hookstate({
     problem: "",
     idea: "",
 });
+
+
 export default function App({Component,pageProps: { session, ...pageProps },}) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
