@@ -62,7 +62,7 @@ const IdeaRating = ({isOwner, item}) => {
 					size={"xl"}
 					ghost
 					color={"error"}
-					className={" font-bold text-2xl"}>
+					className={"z-0 font-bold text-2xl"}>
 					DON'T DO IT
 				</Button>
 
@@ -75,7 +75,7 @@ const IdeaRating = ({isOwner, item}) => {
 					size={"xl"}
 					ghost
 					color={"primary"}
-					className={" font-bold text-2xl"}>
+					className={"z-0 font-bold text-2xl"}>
 					LET'S DO IT
 				</Button>
 			</div>

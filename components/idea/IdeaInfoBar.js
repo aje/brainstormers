@@ -94,11 +94,11 @@ const IdeaInfoBar = ({item, isOwner}) => {
 									<Button
 										onClick={() => setEditable(null)}
 										light
-										className={"min-w-min px-2 mr-2"}
+										className={"min-w-min px-2 mr-2 z-0"}
 										auto
 										icon={<Close size={22} />}
 									/>
-									<Button onClick={onSave} className={"min-w-min px-2"} auto icon={<Check size={22} />} />
+									<Button onClick={onSave} className={"min-w-min px-2 z-0"} auto icon={<Check size={22} />} />
 								</div>
 							}
 							fullWidth
@@ -130,10 +130,10 @@ const IdeaInfoBar = ({item, isOwner}) => {
 									onChange={onChange("tags")}
 								/>
 								<div className="flex mt-2">
-									<Button onClick={() => setEditable(null)} light auto>
+									<Button onClick={() => setEditable(null)} light auto z-0>
 										Cancel
 									</Button>
-									<Button onClick={onSave} auto icon={<Check size={22} />}>
+									<Button onClick={onSave} auto icon={<Check size={22} />} className={" z-0"}>
 										Save
 									</Button>
 								</div>
@@ -150,13 +150,13 @@ const IdeaInfoBar = ({item, isOwner}) => {
 										light
 										auto
 										icon={<Edit size={16} />}
-										className={"min-w-min inline-block"}
+										className={"min-w-min inline-block  z-0"}
 									/>
 								)}
 							</>
 						) : (
 							isOwner && (
-								<Button onClick={editItem("tags")} color={"warning"} light auto icon={<Edit size={16} />}>
+								<Button onClick={editItem("tags")} color={"warning"} className={" z-0"} light auto icon={<Edit size={16} />}>
 									Add tags
 								</Button>
 							)
@@ -231,16 +231,23 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					Solutions{" "}
 					{isOwner &&
 						(editable !== "solutions" ? (
-							<Button onClick={editItem("solutions")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
+							<Button
+								onClick={editItem("solutions")}
+								color={"warning"}
+								light
+								auto
+								icon={<Edit size={16} />}
+								className={"min-w-min z-0"}
+							/>
 						) : (
-							<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
+							<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min z-0"} />
 						))}
 				</Text>
 
 				{editable === "solutions" ? (
 					<>
 						<FormList value={formData.solutions} onChange={onChange("solutions")} placeholder={"Add solution"} />
-						<Button onClick={onSave} className={"  mb-2"} auto icon={<Check size={22} />}>
+						<Button onClick={onSave} className={" z-0 mb-2"} auto icon={<Check size={22} />}>
 							Save
 						</Button>
 					</>
@@ -260,15 +267,22 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					Problems{" "}
 					{isOwner &&
 						(editable !== "problems" ? (
-							<Button onClick={editItem("problems")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
+							<Button
+								onClick={editItem("problems")}
+								color={"warning"}
+								light
+								auto
+								icon={<Edit size={16} />}
+								className={"min-w-min z-0"}
+							/>
 						) : (
-							<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
+							<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min z-0"} />
 						))}
 				</Text>
 				{editable === "problems" ? (
 					<>
 						<FormList value={formData.problems} onChange={onChange("problems")} placeholder={"Add solution"} />
-						<Button onClick={onSave} className={"  mb-2"} auto icon={<Check size={22} />}>
+						<Button onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
 							Save
 						</Button>
 					</>
@@ -287,9 +301,16 @@ const IdeaInfoBar = ({item, isOwner}) => {
 				Existing Alternatives
 				{isOwner &&
 					(editable !== "alternatives" ? (
-						<Button onClick={editItem("alternatives")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
+						<Button
+							onClick={editItem("alternatives")}
+							color={"warning"}
+							light
+							auto
+							icon={<Edit size={16} />}
+							className={"min-w-min z-0"}
+						/>
 					) : (
-						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
+						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min z-0"} />
 					))}
 			</Text>
 			<Text caption className={"-mt-2 mb-3 text-gray-400"}>
@@ -298,7 +319,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			{editable === "alternatives" ? (
 				<>
 					<FormList value={formData.alternatives} onChange={onChange("alternatives")} placeholder={"Add solution"} />
-					<Button onClick={onSave} className={"  mb-2"} auto icon={<Check size={22} />}>
+					<Button onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
 						Save
 					</Button>
 				</>
@@ -322,9 +343,16 @@ const IdeaInfoBar = ({item, isOwner}) => {
 				TargetAudience
 				{isOwner &&
 					(editable !== "targetAudience" ? (
-						<Button onClick={editItem("targetAudience")} color={"warning"} light auto icon={<Edit size={16} />} className={"min-w-min"} />
+						<Button
+							onClick={editItem("targetAudience")}
+							color={"warning"}
+							light
+							auto
+							icon={<Edit size={16} />}
+							className={"min-w-min z-0"}
+						/>
 					) : (
-						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min"} />
+						<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={22} />} className={"min-w-min z-0"} />
 					))}
 			</Text>
 			<Text caption className={"-mt-2 mb-3  text-gray-400"}>

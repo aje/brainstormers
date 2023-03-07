@@ -25,7 +25,7 @@ const Cta = ({shouldExplore}) => {
 							size={"xl"}
 							icon={<Flag size={30} />}
 							auto
-							className={"font-bold text-2xl"}
+							className={"font-bold z-0 text-2xl"}
 							color="primary">
 							{shouldExplore ? "Explore Ideas" : "Create an Idea"}
 						</Button>

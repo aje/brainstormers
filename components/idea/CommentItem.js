@@ -89,7 +89,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 
 			<div className={"flex mb-2 justify-between  items-center"}>
 				<User
-					className={"pl-0"}
+					className={"pl-0 z-0"}
 					size={dense ? "xs" : "sm"}
 					src={item.author.image}
 					name={
@@ -104,18 +104,18 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				{action && <div className={"flex"}>{action}</div>}
 				{withAction && (
 					<div className={"flex"}>
-						<Button size={"xs"} light auto onClick={() => setRep(rep => !rep)}>
+						<Button size={"xs"} className={"z-0"} light auto onClick={() => setRep(rep => !rep)}>
 							{!rep ? <Reply size={14} /> : <Close size={16} />}
 						</Button>
 						{isAuthor && (
-							<Button className={"mx-2"} onClick={() => setVisible(true)} size={"xs"} light color={"error"} auto>
+							<Button className={"mx-2 z-0"} onClick={() => setVisible(true)} size={"xs"} light color={"error"} auto>
 								<DeleteBin size={"14"} />
 							</Button>
 						)}
 
 						{isOwner && (
 							<Dropdown placement={"bottom-right"}>
-								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min ml-2"}>
+								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min ml-2 z-0"}>
 									Set As
 								</Dropdown.Button>
 								<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
@@ -157,7 +157,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 							/>
 							<Button
 								auto
-								className={"mt-4"}
+								className={"mt-4 z-0"}
 								disabled={loading || reply === ""}
 								onClick={onSubmit}
 								iconRight={!loading && <SendPlane size={20} />}>
@@ -166,7 +166,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 						</>
 					)}
 					{item.replies?.length > 0 && !rep && (
-						<Button icon={<Reply size={14} />} onClick={() => setRep(true)} size={"xs"} light>
+						<Button icon={<Reply size={14} />} className={"z-0"} onClick={() => setRep(true)} size={"xs"} light>
 							Reply
 						</Button>
 					)}

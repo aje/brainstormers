@@ -33,7 +33,10 @@ const CommentForm = ({ideaId}) => {
 					router.replace(router.asPath);
 					toast.success("Successfully posted!");
 				})
-				.finally(() => setLoading(false));
+				.finally(() => {
+					onChange("description")("");
+					setLoading(false);
+				});
 		} else {
 			state.set(true);
 			setLoading(false);
@@ -57,7 +60,7 @@ const CommentForm = ({ideaId}) => {
 			{/*</div>*/}
 			<Button
 				auto
-				className={"mt-4"}
+				className={"mt-4 z-0"}
 				disabled={loading || formData.description === ""}
 				onClick={onSubmit}
 				iconRight={!loading && <SendPlane size={20} />}>

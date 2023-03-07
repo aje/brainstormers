@@ -49,12 +49,14 @@ export const ideaFormData = hookstate({
 export default function App({Component, pageProps: {session, ...pageProps}}) {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
+	const [currentUrl, setCurrentUrl] = useState();
 	useEffect(() => {
 		const handleStart = (url, {shallow}) => {
-			setLoading(true);
+			if (url !== currentUrl) setLoading(true);
 		};
 
 		const handleStop = (url, {shallow}) => {
+			setCurrentUrl(url);
 			setLoading(false);
 		};
 

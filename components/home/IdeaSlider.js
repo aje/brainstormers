@@ -43,7 +43,7 @@ const CarouselContent = ({item, onNext}) => {
 	};
 	return (
 		<div className={"flex-1 text-center"}>
-			<User css={{zIndex: 0}} size="sm" src={item.author?.avatar} name={item.author?.name} />
+			<User className={"z-0"} size="sm" src={item.author?.avatar} name={item.author?.name} />
 
 			<Text h2 className={"flex justify-center"}>
 				<Link href={`ideas/idea/${item._id}`} className={"font-normal font-sans"}>
@@ -67,7 +67,7 @@ const CarouselContent = ({item, onNext}) => {
 					size={"xl"}
 					ghost
 					color={"error"}
-					className={" font-bold text-2xl"}>
+					className={"z-0 font-bold text-2xl"}>
 					DON'T DO IT
 				</Button>
 				<MyRating onChange={onReview(item)} size={"xl"} />
@@ -80,7 +80,7 @@ const CarouselContent = ({item, onNext}) => {
 					size={"xl"}
 					ghost
 					color={"primary"}
-					className={" font-bold text-2xl"}>
+					className={"z-0 font-bold text-2xl"}>
 					LET'S DO IT
 				</Button>
 			</div>
@@ -88,48 +88,71 @@ const CarouselContent = ({item, onNext}) => {
 	);
 };
 
+const IdeaSlider = ({latest: ideas}) => {
+	const [index, setIndex] = useState(0);
 
-const IdeaSlider = ({latest:ideas}) => {
-    const [index, setIndex] = useState(0);
+	const onNext = () => {
+		if (index < ideas.length - 1) setIndex(index + 1);
+	};
 
+	const onPrev = () => {
+		if (index > 0) setIndex(index - 1);
+	};
 
-    const onNext = () => {
-        if(index < (ideas.length - 1)) setIndex(index + 1)
-    }
-
-    const onPrev = () => {
-        if(index > 0) setIndex(index - 1)
-    }
-
-    return (<>
-        <div className={" py-20 "}>
-            <Container >
-                {ideas?.length > 0 ?
-                <main>
-                    {/*<Button ripple={false} light icon={<ChevronSmallLeft size={80} />} disabled={index===0} size="xl" onClick={onPrev} css={{ minWidth: 40}}  className={"z-0 hover:text-primary active:text-primary"}/>*/}
-                    <Carousel
-                        renderCenterLeftControls={({ previousDisabled, previousSlide }) => (
-                            <Button onClick={previousSlide} disabled={previousDisabled} ripple={false} light icon={<ChevronSmallLeft size={80} />} size="xl"  css={{ minWidth: 40}}  className={"z-0 hover:text-primary active:text-primary"}/>
-                        )}
-                        renderCenterRightControls={({ nextDisabled, nextSlide }) => (
-                            <Button  onClick={nextSlide} disabled={nextDisabled} ripple={false} icon={<ChevronSmallRight size={80} />}  size="xl"  css={{ minWidth: 40}}  auto light  className={"z-0 hover:text-primary active:text-primary"}/>
-                        )}
-
-                        slidesToShow={1} slideIndex={index} renderBottomCenterControls={false} >
-                        {ideas.map(item => <CarouselContent key={item.id}  item={item} onNext={onNext}/> )}
-                    </Carousel>
-                    {/*<Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 40}}  onClick={onNext} auto light  className={"z-0 hover:text-primary active:text-primary"}/>*/}
-                </main>
-                : <div className={"justify-self-center w-full flex items-center justify-center flex-col self-center"}>
-						<Empty label={"We are out of ideas!"} />
-						<Button bordered href="/new" as={"a"} className={"mt-8 cursor-pointer"} icon={<Plus size={22} />} size="lg">
-							Add New Idea
-						</Button>
-					</div>
-                }
-            </Container>
-        </div>
-        </>);
+	return (
+		<>
+			<div className={" py-20 "}>
+				<Container lg>
+					{ideas?.length > 0 ? (
+						<main>
+							{/*<Button ripple={false} light icon={<ChevronSmallLeft size={80} />} disabled={index===0} size="xl" onClick={onPrev} css={{ minWidth: 40}}  className={"z-0 hover:text-primary active:text-primary"}/>*/}
+							<Carousel
+								renderCenterLeftControls={({previousDisabled, previousSlide}) => (
+									<Button
+										onClick={previousSlide}
+										disabled={previousDisabled}
+										ripple={false}
+										light
+										icon={<ChevronSmallLeft size={80} />}
+										size="xl"
+										css={{minWidth: 40}}
+										className={"z-0 hover:text-primary active:text-primary"}
+									/>
+								)}
+								renderCenterRightControls={({nextDisabled, nextSlide}) => (
+									<Button
+										onClick={nextSlide}
+										disabled={nextDisabled}
+										ripple={false}
+										icon={<ChevronSmallRight size={80} />}
+										size="xl"
+										css={{minWidth: 40}}
+										auto
+										light
+										className={"z-0 hover:text-primary active:text-primary"}
+									/>
+								)}
+								slidesToShow={1}
+								slideIndex={index}
+								renderBottomCenterControls={false}>
+								{ideas.map(item => (
+									<CarouselContent key={item.id} item={item} onNext={onNext} />
+								))}
+							</Carousel>
+							{/*<Button ripple={false} icon={<ChevronSmallRight size={80} />} disabled={index === (ideas.length - 1)} size="xl"  css={{ minWidth: 40}}  onClick={onNext} auto light  className={"z-0 hover:text-primary active:text-primary"}/>*/}
+						</main>
+					) : (
+						<div className={"justify-self-center w-full flex items-center justify-center flex-col self-center"}>
+							<Empty label={"We are out of ideas!"} />
+							<Button bordered href="/new" as={"a"} className={"mt-8 cursor-pointer"} icon={<Plus size={22} />} size="lg">
+								Add New Idea
+							</Button>
+						</div>
+					)}
+				</Container>
+			</div>
+		</>
+	);
 };
 
 export default IdeaSlider;
