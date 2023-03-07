@@ -78,8 +78,7 @@ const Upload = () => {
 			});
 	};
 
-	const addProblem = e => {
-		e?.preventDefault();
+	const addProblem = () => {
 		const t = [...problems];
 		t.push("");
 		setProblems(t);
@@ -97,8 +96,7 @@ const Upload = () => {
 		setProblems(t);
 	};
 
-	const addIdeas = e => {
-		e?.preventDefault();
+	const addIdeas = () => {
 		const t = [...ideas];
 		t.push("");
 		setIdeas(t);
@@ -181,7 +179,12 @@ const Upload = () => {
 									</Card.Header>
 									{problems.map((p, i) => (
 										<div key={i} className="flex w-full px-4 pb-4">
-											<form onSubmit={addProblem} className={"flex-1"}>
+											<form
+												onSubmit={e => {
+													e.preventDefault();
+													addProblem();
+												}}
+												className={"flex-1"}>
 												<Input
 													autoFocus
 													underlined
@@ -230,7 +233,12 @@ const Upload = () => {
 
 									{ideas.map((p, i) => (
 										<div key={i} className="flex w-full px-4  pb-4">
-											<form onSubmit={addIdeas} className={"flex-1"}>
+											<form
+												onSubmit={e => {
+													e.preventDefault();
+													addIdeas();
+												}}
+												className={"flex-1"}>
 												<Input
 													autoFocus
 													placeholder={"Solutions or ideas"}

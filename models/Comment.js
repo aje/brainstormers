@@ -42,7 +42,7 @@ export const CommentSchema = new Schema({
 CommentSchema.statics.notifAuthor = async function (ideaId, content) {
 	try {
 		const idea = await Idea.findById(ideaId);
-		if(!idea.author.equals(content.author)) {
+		if (idea.author.equals(content.author)) {
 			await Notification.create({
 				type: notificationTypes.COMMENT.value,
 				content: content,
