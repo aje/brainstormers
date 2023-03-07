@@ -14,28 +14,32 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.get(async (req, res) => {
-    await dbConnect();
-    const session = await getSession({ req });
-    try {
-        const data = await Notification.find({user: session.user._id, seen: false}).populate({
-            path: "content",
-            populate: {
-                path: "author",
-                model: models.User,
-            }
-        }).populate({
-            path: "content",
-            populate: {
-                path: "idea",
-                model: models.Idea,
-                select: "title",
-            }
-        }).sort({createdAt: -1})
-        res.status(200).json(data);
-    } catch (error) {
-        res.status(400).json(error);
-    }
-    res.end()
-})
+	await dbConnect();
+	const session = await getSession({req});
+	try {
+		const unreadCount = await Notification.find({user: session.user._id, seen: false}).count();
+		const data = await Notification.find({user: session.user._id})
+			.populate({
+				path: "content",
+				populate: {
+					path: "author",
+					model: models.User,
+				},
+			})
+			.populate({
+				path: "content",
+				populate: {
+					path: "idea",
+					model: models.Idea,
+					select: "title",
+				},
+			})
+			.sort({createdAt: -1});
+		res.status(200).json({data, unreadCount});
+	} catch (error) {
+		res.status(400).json(error);
+	}
+	res.end();
+});
 
-export default apiRoute
+export default apiRoute;
