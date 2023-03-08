@@ -1,4 +1,4 @@
-import {Button, Card, Divider, Dropdown, Text} from "@nextui-org/react";
+import {Button, Card, Divider, Dropdown, Loading, Text} from "@nextui-org/react";
 import {signOut, useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {sidebarState} from "../../pages/_app";
@@ -17,6 +17,7 @@ const ProfileSidebar = () => {
 	const [ideas, setIdeas] = useState([]);
 	const [rated, setRated] = useState([]);
 	const [sor, setSor] = useState("ranking");
+	const [loading, setLoading] = useState(false);
 	// const {data: myIdeas, error} = useSWR(`/api/profile/ideas`);
 
 	// const router = useRouter();
@@ -76,15 +77,23 @@ const ProfileSidebar = () => {
 	}, []);
 
 	function getIdeas(params) {
-		axios.get("/profile/ideas", {params}).then(res => {
-			setIdeas(res.data);
-		});
+		setLoading(true);
+		axios
+			.get("/profile/ideas", {params})
+			.then(res => {
+				setIdeas(res.data);
+			})
+			.finally(() => setLoading(false));
 	}
 
 	function getRated() {
-		axios.get("/profile/rated").then(res => {
-			setRated(res.data);
-		});
+		setLoading(true);
+		axios
+			.get("/profile/rated")
+			.then(res => {
+				setRated(res.data);
+			})
+			.finally(() => setLoading(false));
 	}
 
 	return (
@@ -201,15 +210,11 @@ const ProfileSidebar = () => {
 										</Dropdown>
 									</div>
 									<div className={"grid gap-4  p-4 md:grid-cols-2 md:gap-4"}>
-										{ideas.map(idea => (
-											<IdeaItem noOwner onCallback={onClose} item={idea} />
-										))}
+										{loading ? <Loading size={"lg"} /> : ideas.map(idea => <IdeaItem noOwner onCallback={onClose} item={idea} />)}
 									</div>
 								</Tab.Panel>
 								<Tab.Panel className={"grid gap-4  p-4 md:grid-cols-2 md:gap-4"}>
-									{rated.map(idea => (
-										<IdeaItem noOwner onCallback={onClose} item={idea} />
-									))}
+									{loading ? <Loading size={"lg"} /> : rated.map(idea => <IdeaItem noOwner onCallback={onClose} item={idea} />)}
 								</Tab.Panel>
 								<Tab.Panel className={"grid gap-4  p-4 md:grid-cols-2 md:gap-4"}>
 									{/*<Input*/}
