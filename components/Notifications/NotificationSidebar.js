@@ -1,7 +1,7 @@
 import React from "react";
 import {useHookstate} from "@hookstate/core";
 import {notificationState} from "../../pages/_app";
-import {Badge, Card, Divider, Text} from "@nextui-org/react";
+import {Badge, Card, Divider, Loading, Text} from "@nextui-org/react";
 import Empty from "../Empty";
 import useSWR from "swr";
 import CommentItem from "./CommentItem";
@@ -41,7 +41,9 @@ const NotificationSidebar = () => {
 					{/*	Mark as read*/}
 					{/*</Button>*/}
 				</div>
-				{notif?.data?.length > 0 ? (
+				{!notif && !error ? (
+					<Loading size={"lg"} />
+				) : notif?.data?.length > 0 ? (
 					notif?.data.map(item => (
 						<>
 							<>{mapToItem[item.type](item)}</>

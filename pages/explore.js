@@ -14,6 +14,7 @@ import axios from "../services/axios";
 import {toast} from "react-hot-toast";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "./_app";
+import {useRouter} from "next/router";
 
 export default function Explore({ideas}) {
 	const {data: session} = useSession();
@@ -21,9 +22,9 @@ export default function Explore({ideas}) {
 	const [index, setIndex] = useState(0);
 	const [loading, setLoading] = useState(false);
 	const [rates, setRates] = useState(new Map());
+	const router = useRouter();
 
 	const onRate = value => {
-		// console.log("onRate");
 		onNext();
 		onReview(value);
 	};
@@ -58,9 +59,15 @@ export default function Explore({ideas}) {
 		}
 	};
 
+	const onClickItem = (idea, i) => {
+		const state = index === i ? "ACTIVE" : index === i - 1 ? "NEXT" : index === i + 1 ? "PREV" : "HIDE";
+		if (state === "NEXT") setIndex(index + 1);
+		else router.push(`/ideas/idea/${idea.id}`);
+	};
+
 	return (
 		<div
-			className={"bg-pink-50 p-20"}
+			className={"bg-pink-50 pt-20 p-5 md:p-20"}
 			style={{
 				height: "calc(100vh - 117px)",
 				backgroundImage: "url(/explorebg.png)",
@@ -81,8 +88,8 @@ export default function Explore({ideas}) {
 						return (
 							<Card
 								key={idea.id}
-								onClick={() => setIndex(index + 1)}
-								isPressable={state === "NEXT"}
+								onClick={() => onClickItem(idea, i)}
+								isPressable
 								style={{borderRadius: 34, height: "calc(100% - 150px)"}}
 								className={clsx(
 									"absolute  duration-500 w-80% top-0",
@@ -159,7 +166,7 @@ export default function Explore({ideas}) {
 					})
 				) : (
 					<div className={"justify-self-center w-full flex items-center justify-center flex-col self-center"}>
-						<Empty label={"We are out of ideas!"} />
+						<Empty label={"You have rated all ideas. We are out of ideas for now!"} />
 						<Button href="/new" as={"a"} className={"mt-8 cursor-pointer"} icon={<Plus size={22} />} size="lg">
 							Add New Idea
 						</Button>
