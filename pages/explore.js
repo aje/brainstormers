@@ -62,7 +62,7 @@ export default function Explore({ideas}) {
 	const onClickItem = (idea, i) => {
 		const state = index === i ? "ACTIVE" : index === i - 1 ? "NEXT" : index === i + 1 ? "PREV" : "HIDE";
 		if (state === "NEXT") setIndex(index + 1);
-		else router.push(`/ideas/idea/${idea.id}`);
+		else router.push(`/ideas/${idea.id}`);
 	};
 
 	return (

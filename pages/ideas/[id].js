@@ -1,15 +1,15 @@
 import React from "react";
-import * as models from "../../../models/models";
+import * as models from "../../models/models";
 import {Grid} from "@nextui-org/react";
-import dbConnect from "../../../services/dbconnect";
-import Idea from "../../../models/Idea";
-import Empty from "../../../components/Empty";
+import dbConnect from "../../services/dbconnect";
+import Idea from "../../models/Idea";
+import Empty from "../../components/Empty";
 import "react-tagsinput/react-tagsinput.css";
-import IdeaSides from "../../../components/idea/IdeaSides";
-import Comments from "../../../components/idea/Comments";
-import IdeaInfoBar from "../../../components/idea/IdeaInfoBar";
+import IdeaSides from "../../components/idea/IdeaSides";
+import Comments from "../../components/idea/Comments";
+import IdeaInfoBar from "../../components/idea/IdeaInfoBar";
 import {getSession} from "next-auth/react";
-import Notification from "../../../models/Notification";
+import Notification from "../../models/Notification";
 import mongoose from "mongoose";
 
 const IdeaPage = ({item, isOwner}) => {
@@ -60,14 +60,14 @@ export async function getServerSideProps({params, req}) {
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
 
-		if(isOwner) {
+		if (isOwner) {
 			// Schema.Types.ObjectId
 			const tquery = {
 				user: mongoose.Types.ObjectId(session.user._id),
-				'content.idea': mongoose.Types.ObjectId(id),
-				seen: false
-			}
-			const t = await Notification.updateMany(tquery, {seen:true})
+				"content.idea": mongoose.Types.ObjectId(id),
+				seen: false,
+			};
+			const t = await Notification.updateMany(tquery, {seen: true});
 		}
 	} catch (e) {
 		console.log(e);

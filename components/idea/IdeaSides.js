@@ -44,7 +44,7 @@ const IdeaSides = ({item, isOwner}) => {
 					<Text h3 className={"text-green-500 mb-0"}>
 						{item.upsides?.length} Upside{item.upsides?.length > 1 && "s"}
 					</Text>
-					<Text className={"mb-4 text-green-400 inline-block"}>Set a comment as upside</Text>
+					<Text className={"mb-4 text-green-400 inline-block"}>Set a comment as an upside</Text>
 					{item.upsides?.length > 0 ? (
 						item.upsides?.map((u, i) => (
 							<CommentItem
@@ -77,9 +77,9 @@ const IdeaSides = ({item, isOwner}) => {
 			<Grid xs={6} className={"bg-red-50 p-5"}>
 				<div className={"w-full"}>
 					<Text h3 className={"text-red-500 mb-0"}>
-						{item.downsides?.length} Downside{item.downsides?.length > 1 && "s"}
+						{item.downsides?.length} Challanges{item.downsides?.length > 1 && "s"}
 					</Text>
-					<Text className={"mb-4 text-red-400 inline-block"}>Set a comment as downside</Text>
+					<Text className={"mb-4 text-red-400 inline-block"}>Set a comment as a challange</Text>
 
 					{item.downsides?.length > 0 ? (
 						item.downsides?.map((u, i) => (

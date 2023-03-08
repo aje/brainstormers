@@ -7,7 +7,7 @@ const IdeaItem = ({item, noOwner, onCallback}) => {
 	const router = useRouter();
 
 	const onPress = () => {
-		router.push(`/ideas/idea/${item._id}`);
+		router.push(`/ideas/${item._id}`);
 		if (typeof onCallback === "function") {
 			onCallback();
 		}

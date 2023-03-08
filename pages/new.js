@@ -70,7 +70,7 @@ const Upload = () => {
 				toast.success("Successfully updated!");
 				// setFormData(data)
 				// setStep(1)
-				router.push(`/ideas/idea/${res.data?._id}`);
+				router.push(`/ideas/${res.data?._id}`);
 			})
 			.finally(() => setLoading(false))
 			.catch(e => {

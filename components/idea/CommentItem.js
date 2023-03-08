@@ -12,6 +12,8 @@ import {Reply} from "@styled-icons/entypo";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
+import ReactMarkdown from "react-markdown";
+import {urlify} from "../utils";
 
 const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action}) => {
 	const {data: session} = useSession();
@@ -126,7 +128,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 										Upside
 									</Dropdown.Item>
 									<Dropdown.Item key={"downsides"} color="error">
-										Downside
+										Challange
 									</Dropdown.Item>
 									<Dropdown.Item key={"solutions"}>Solution</Dropdown.Item>
 									<Dropdown.Item key={"problems"}>Problem</Dropdown.Item>
@@ -138,7 +140,9 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				)}
 			</div>
 
-			<Text className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>{item.description}</Text>
+			<Text className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
+				<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+			</Text>
 			{(item.replies?.length > 0 || rep) && isComments && (
 				<div className={clsx("ml-10 mt-4")}>
 					{item.replies?.map((_, i) => (

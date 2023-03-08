@@ -16,6 +16,8 @@ import CommentItem from "./CommentItem";
 import IdeaRating from "./IdeaRating";
 import {useSession} from "next-auth/react";
 import Moment from "react-moment";
+import {urlify} from "../utils";
+import ReactMarkdown from "react-markdown";
 
 const IdeaInfoBar = ({item, isOwner}) => {
 	const [editable, setEditable] = useState(null);
@@ -164,7 +166,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					</div>
 				</div>
 
-				{isRated && <MyRating count={item.ratingsQuantity} size={"lg"} value={item.ratingsAverage} readonly />}
+				{<MyRating count={item.ratingsQuantity} size={"md"} value={item.ratingsAverage} readonly />}
 				{/*? Delete button */}
 				{isOwner && (
 					<>
@@ -211,9 +213,9 @@ const IdeaInfoBar = ({item, isOwner}) => {
 					</div>
 				</>
 			) : item.description ? (
-				<Text onClick={editItem("description")} className={"text-2xl max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
-					{item.description}
-				</Text>
+				<div onClick={editItem("description")} className={" max-h-96 overflow-y-auto mb-5 text-gray-500 font-light cursor-pointer"}>
+					<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+				</div>
 			) : (
 				isOwner && (
 					<Button onClick={editItem("description")} color={"warning"} light auto icon={<Edit size={16} />}>
@@ -264,7 +266,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 		<>
 			<div className={"bg-resd-50 mt-5 pxs-4 py-2 rounded-3xl"}>
 				<Text h3 className={"text-red-500 flex justify-between"}>
-					Problems{" "}
+					Problems to be solved{" "}
 					{isOwner &&
 						(editable !== "problems" ? (
 							<Button
@@ -335,8 +337,8 @@ const IdeaInfoBar = ({item, isOwner}) => {
 		<div className="hsl px-6 pb-6 flex-1 overflow-y-auto">
 			{renderHeader()}
 			{!isRated && <IdeaRating item={item} isOwner={isOwner} />}
-			{renderSolutions()}
 			{renderProblems()}
+			{renderSolutions()}
 			{renderAlternatives()}
 
 			<Text h3 className={"mt-5  flex justify-between"}>

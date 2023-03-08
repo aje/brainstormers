@@ -46,7 +46,7 @@ const CarouselContent = ({item, onNext}) => {
 			<User className={"z-0"} size="sm" src={item.author?.avatar} name={item.author?.name} />
 
 			<Text h2 className={"flex justify-center"}>
-				<Link href={`ideas/idea/${item._id}`} className={"font-normal font-sans"}>
+				<Link href={`ideas/${item._id}`} className={"font-normal font-sans"}>
 					{item.title}
 				</Link>
 			</Text>
