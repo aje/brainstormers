@@ -14,7 +14,7 @@ const LatestUsers = ({topEnt: users, countTopEnt}) => {
 					<Grid.Container gap={2}>
 						{users.map((user, i) => (
 							<Grid key={user.id} xs={12} sm={4} className={"flex flex-col text-center items-center mt-4 z-0"}>
-								<User size={"2xl"} src={user.image} name={""} />
+								<User size={"xl"} src={user.image} name={""}  />
 								<h3 className={"mt-4"}>
 									{user.name}{" "}
 									{user.role && (
