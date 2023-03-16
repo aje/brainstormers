@@ -248,7 +248,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 
 				{editable === "solutions" ? (
 					<>
-						<FormList value={formData.solutions} onChange={onChange("solutions")} placeholder={"Add solution"} />
+						<FormList value={formData.solutions} onChange={onChange("solutions")} placeholder={"Add a solution"} />
 						<Button onClick={onSave} className={" z-0 mb-2"} auto icon={<Check size={22} />}>
 							Save
 						</Button>
@@ -283,7 +283,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 				</Text>
 				{editable === "problems" ? (
 					<>
-						<FormList value={formData.problems} onChange={onChange("problems")} placeholder={"Add solution"} />
+						<FormList value={formData.problems} onChange={onChange("problems")} placeholder={"Add a problem"} />
 						<Button onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
 							Save
 						</Button>
@@ -320,7 +320,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			</Text>
 			{editable === "alternatives" ? (
 				<>
-					<FormList value={formData.alternatives} onChange={onChange("alternatives")} placeholder={"Add solution"} />
+					<FormList value={formData.alternatives} onChange={onChange("alternatives")} placeholder={"Add an alternative"} />
 					<Button onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
 						Save
 					</Button>
@@ -328,7 +328,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 			) : item.alternatives?.length === 0 ? (
 				<Empty noIcon />
 			) : (
-				item.alternatives.map((p, i) => <Text className={""}>{p}</Text>)
+				item.alternatives.map((p, i) =><ReactMarkdown linkTarget={"_blank"}>{urlify(p)}</ReactMarkdown>)
 			)}
 		</>
 	);

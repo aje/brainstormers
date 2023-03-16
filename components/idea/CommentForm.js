@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Loading, Text, Textarea} from "@nextui-org/react";
+import {Button, Loading, Textarea} from "@nextui-org/react";
 import axios from "../../services/axios";
 import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
@@ -46,8 +46,6 @@ const CommentForm = ({ideaId}) => {
 
 	return (
 		<div className={"mb-10 w-full"}>
-
-			{/*<div className={"flex-1"}>*/}
 			<Textarea
 				fullWidth
 				required
@@ -56,7 +54,7 @@ const CommentForm = ({ideaId}) => {
 				// rows={1}
 				size={"lg"}
 				bordered
-				placeholder={"Write something usefull please"}
+				placeholder={"We want your honest opinion!"}
 			/>
 			{/*</div>*/}
 			<Button

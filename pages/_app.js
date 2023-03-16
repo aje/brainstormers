@@ -73,7 +73,7 @@ export default function App({Component, pageProps: {session, ...pageProps}}) {
 	return (
 		<>
 			<Head>
-				<title>Brainstormers - ُSmall business startup ideaes</title>
+				<title>Brainstormers - Small business startup ideas</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 				<meta
