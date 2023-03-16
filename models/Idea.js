@@ -18,10 +18,10 @@ export const IdeaSchema = new Schema({
     description: {
         type: String,
     },
-    createdAt: {
-        type: Date,
-        default: new Date(),
-    },
+    // createdAt: {
+    //     type: Date,
+    //     default: new Date(),
+    // },
     raters: [Schema.Types.ObjectId],
     rates: Schema.Types.Mixed,
     ratingsAverage: Number,
@@ -45,6 +45,8 @@ export const IdeaSchema = new Schema({
     toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
     toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
+
+IdeaSchema.set("timestamps", true)
 
 IdeaSchema.virtual('comments', {
     ref: 'Comment',

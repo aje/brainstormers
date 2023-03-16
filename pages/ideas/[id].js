@@ -55,8 +55,8 @@ export async function getServerSideProps({params, req}) {
 					path: "author",
 					model: models.User,
 				},
-				select: "idea  description replies createdAt",
-				options: {sort: {createdAt: -1}},
+				select: "idea  description replies createdAt updatedAt",
+				options: {sort: {updatedAt: -1}},
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
 

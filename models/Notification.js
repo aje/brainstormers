@@ -19,15 +19,12 @@ export const NotificationSchema = new Schema({
         type: Boolean,
         default: false
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
 },{
     toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
     toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 });
 
+NotificationSchema.set("timestamps", true)
 
 
 export const  Notification = models.Notification || model('Notification', NotificationSchema);
