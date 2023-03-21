@@ -56,11 +56,14 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			axios
 				.post(`/reply?id=${item._id}&to=${item.author.id}`, formData)
 				.then(() => {
+					setRep(false);
+					setReply("")
 					router.replace(router.asPath);
 					toast.success("Successfully posted!");
 				})
 				.finally(() => setLoading(false));
 		} else {
+
 			state.set(true);
 			setLoading(false);
 			toast.error("Please login first");
@@ -110,14 +113,14 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 							{!rep ? <Reply size={14} /> : <Close size={16} />}
 						</Button>
 						{isAuthor && (
-							<Button className={"mx-2 z-0"} onClick={() => setVisible(true)} size={"xs"} light color={"error"} auto>
+							<Button className={"mx-2 z-0 opacity-40 hover:opacity-100 hover:text-red-400"} onClick={() => setVisible(true)} size={"xs"} light auto>
 								<DeleteBin size={"14"} />
 							</Button>
 						)}
 
 						{isOwner && (
 							<Dropdown placement={"bottom-right"}>
-								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min ml-2 z-0"}>
+								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min ml-2 z-0  opacity-70 hover:opacity-100"}>
 									Set As
 								</Dropdown.Button>
 								<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
@@ -157,7 +160,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 								value={reply}
 								minRows={1}
 								bordered
-								placeholder={"Write something usefull please"}
+								placeholder={"What do you think?"}
 							/>
 							<Button
 								auto

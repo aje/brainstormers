@@ -11,7 +11,7 @@ const Comments = ({item, isOwner}) => {
 				<div className={"w-full"}>
 					<Text h3>
 						What do <span className={"text-primary"}>YOU</span> think about this idea?
-						<small> ( You can use Markdown )</small>
+						<small> ( You can use Markdown ) <a target={"_blank"} href={"https://www.markdownguide.org/cheat-sheet/"}>Markdown cheatsheet</a></small>
 					</Text>
 					<CommentForm ideaId={item._id} />
 					<Text h3>{item.comments?.length} Comments</Text>
