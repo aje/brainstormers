@@ -54,7 +54,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				description: reply,
 			};
 			axios
-				.post(`/reply?id=${item._id}`, formData)
+				.post(`/reply?id=${item._id}&to=${item.author.id}`, formData)
 				.then(() => {
 					router.replace(router.asPath);
 					toast.success("Successfully posted!");

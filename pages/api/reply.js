@@ -1,4 +1,5 @@
 import * as models from "../../models/models";
+import {notificationTypes} from "../../models/models";
 import dbConnect from "../../services/dbconnect";
 import nextConnect from "next-connect";
 import {getSession} from "next-auth/react";
@@ -13,36 +14,29 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.post(async (req, res) => {
-    const session = await getSession({ req });
-    try {
-        if(session) {
-            await dbConnect();
-            const reply = {...req.body, author: session.user, createdAt: new Date()}
+	const session = await getSession({req});
+	try {
+		if (session) {
+			await dbConnect();
+			const reply = {...req.body, author: session.user, createdAt: new Date()};
 
-            const update = {
-                $push: {
-                    replies: reply,
-                },
-            };
-            const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
-            res.status(201).json(result);
-        }
-    } catch (error) {
-        res.status(400).json(error);
-    }
-    res.end()
-}).delete(async (req, res) => {
-    await dbConnect();
-    const session = await getSession({ req });
-    // try {
-    //     if(session) {
-    //         // todo find by id and author
-    //         const deleted = await models.Comment.findByIdAndDelete(req.query.id);
-    //         res.status(200).json(deleted);
-    //     }
-    // } catch (error) {
-    //     res.status(400).json(error);
-    // }
-    res.end()
+			const update = {
+				$push: {
+					replies: reply,
+				},
+			};
+			const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
+			const sendNotif = await models.Notification.create({
+				type: notificationTypes.REPLY.value,
+				content: req.body,
+				user: req.query.to,
+			});
+			console.log(sendNotif);
+			res.status(201).json(result);
+		}
+	} catch (error) {
+		res.status(400).json(error);
+	}
+	res.end();
 });
-export default apiRoute
+export default apiRoute;
