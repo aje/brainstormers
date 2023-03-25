@@ -10,6 +10,7 @@ import RateItem from "./RateItem";
 const mapToItem = {
 	COMMENT: item => <CommentItem item={item} />,
 	RATE: item => <RateItem item={item} />,
+	REPLY: item => <CommentItem item={item} />,
 };
 
 const NotificationSidebar = () => {

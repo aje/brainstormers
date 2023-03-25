@@ -5,12 +5,12 @@ import dbConnect from "../../services/dbconnect";
 import Idea from "../../models/Idea";
 import Empty from "../../components/Empty";
 import "react-tagsinput/react-tagsinput.css";
-import IdeaSides from "../../components/idea/IdeaSides";
 import Comments from "../../components/idea/Comments";
 import IdeaInfoBar from "../../components/idea/IdeaInfoBar";
 import {getSession} from "next-auth/react";
 import Notification from "../../models/Notification";
 import mongoose from "mongoose";
+import IdeaSides from "../../components/idea/IdeaSides";
 
 const IdeaPage = ({item, isOwner}) => {
 	if (!item)
@@ -21,15 +21,17 @@ const IdeaPage = ({item, isOwner}) => {
 		);
 
 	return (
-		<Grid.Container gap={0} justify="center">
-			<Grid sm={5} xs={12} className="bg-blue-50 pt-24 ">
+		<Grid.Container gap={0} justify="center" className=" bg-gray-300 md:pt-20 -full">
+			<Grid sm={4} xs={12} className="bg-blue-50 ">
 				<div className="relative h-full flex flex-col flex-1">
 					<IdeaInfoBar item={item} isOwner={isOwner} />
 				</div>
 			</Grid>
-			<Grid xs={12} sm={7} className=" bg-red-50s md:pt-20 -full">
+			<Grid sm={3} xs={12}>
+				<IdeaSides item={item} isOwner={isOwner} />
+			</Grid>
+			<Grid xs={12} sm={5}>
 				<Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
-					<IdeaSides item={item} isOwner={isOwner} />
 					<Comments item={item} isOwner={isOwner} />
 				</Grid.Container>
 			</Grid>
@@ -56,6 +58,11 @@ export async function getServerSideProps({params, req}) {
 					model: models.User,
 				},
 				select: "idea  description replies createdAt updatedAt",
+				options: {sort: {updatedAt: -1}},
+			})
+			.populate({
+				path: "customField",
+				model: models.CustomField,
 				options: {sort: {updatedAt: -1}},
 			});
 		isOwner = session?.user?._id === item?.author._id?.toString();
