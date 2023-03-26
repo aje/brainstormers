@@ -40,7 +40,7 @@ export const IdeaSchema = new Schema(
 		problems: [],
 		solutions: [],
 		alternatives: [String],
-		targetAudience: String,
+		targetAudience: [String],
 		tags: [String],
 	},
 	{

@@ -39,7 +39,7 @@ export const CommentSchema = new Schema({
 	// },
 });
 
-CommentSchema.set("timestamps", true)
+CommentSchema.set("timestamps", true);
 
 CommentSchema.statics.notifAuthor = async function (ideaId, content) {
 	try {
@@ -51,10 +51,10 @@ CommentSchema.statics.notifAuthor = async function (ideaId, content) {
 				user: idea.author,
 			});
 		} else {
-			console.log("Same user");
+			// console.log("Same user");
 		}
 	} catch (e) {
-		console.log(e);
+		// console.log(e);
 	}
 };
 

@@ -31,6 +31,16 @@ apiRoute
 			res.status(400).json({error});
 		}
 		res.end();
+	})
+	.delete(async (req, res) => {
+		await dbConnect();
+		try {
+			const response = await CustomField.findByIdAndDelete(req.query.customId);
+			res.status(200).json(response);
+		} catch (error) {
+			res.status(400).json({error});
+		}
+		res.end();
 	});
 
 export default apiRoute;

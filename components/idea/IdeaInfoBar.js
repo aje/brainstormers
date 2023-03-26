@@ -4,15 +4,12 @@ import MyRating from "../MyRating";
 import {Check} from "@styled-icons/entypo/Check";
 import TagsInput from "react-tagsinput";
 import {Edit} from "@styled-icons/entypo";
-import Empty from "../Empty";
 import {DotsThreeVertical} from "@styled-icons/entypo/DotsThreeVertical";
 import {Close} from "@styled-icons/remix-line";
-import FormList from "../FormList";
 import axios from "../../services/axios";
 import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
 import DeleteConfirmation from "../DeleteConfirmation";
-import CommentItem from "./CommentItem";
 import IdeaRating from "./IdeaRating";
 import {useSession} from "next-auth/react";
 import Moment from "react-moment";
@@ -54,15 +51,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 		setFormData({...formData, [name]: event?.target ? event.target.value : event});
 	};
 	function onSave() {
-		setLoading(true);
-		axios
-			.patch(`/posts`, formData)
-			.then(res => {
-				toast.success("Successfully updated!");
-				setEditable(null);
-				refreshData();
-			})
-			.finally(() => setLoading(false));
+		return axios.patch(`/posts`, formData);
 	}
 	function onDelete() {
 		setLoading(true);
@@ -193,9 +182,7 @@ const IdeaInfoBar = ({item, isOwner}) => {
 						<DeleteConfirmation
 							renderItem={() => (
 								<div>
-									<Text h5 onClick={editItem("title")}>
-										{item.title}
-									</Text>
+									<Text h5>{item.title}</Text>
 								</div>
 							)}
 							loading={loading}
@@ -242,139 +229,6 @@ const IdeaInfoBar = ({item, isOwner}) => {
 						Add description
 					</Button>
 				)
-			)}
-		</>
-	);
-
-	const renderSolutions = () => (
-		<>
-			<div className={" px-s4 py-2 mt-5 rounded-3xl"}>
-				<Text h4 className={"mb-0 text-green-500 flex items-center"}>
-					Solutions{" "}
-					{isOwner &&
-						(editable !== "solutions" ? (
-							<Button
-								onClick={editItem("solutions")}
-								color={"warning"}
-								light
-								auto
-								size="xs"
-								icon={<Edit size={16} />}
-								className={"min-w-min ml-2 z-0"}
-							/>
-						) : (
-							<Button
-								size="xs"
-								onClick={editItem(null)}
-								light
-								auto
-								color={"error"}
-								icon={<Close size={16} />}
-								className={"min-w-min ml-2 z-0"}
-							/>
-						))}
-				</Text>
-
-				{editable === "solutions" ? (
-					<>
-						<FormList value={formData.solutions} onChange={onChange("solutions")} placeholder={"Add a solution"} />
-						<Button onClick={onSave} className={" z-0 mb-2"} auto icon={<Check size={22} />}>
-							Save
-						</Button>
-					</>
-				) : item.solutions?.length === 0 ? (
-					<Empty noIcon />
-				) : (
-					item.solutions.map((p, i) => (typeof p === "string" ? <Text>{p}</Text> : <CommentItem item={p} dense />))
-				)}
-			</div>
-		</>
-	);
-
-	const renderProblems = () => (
-		<>
-			<div className={"bg-resd-50 mt-5 pxs-4 py-2 rounded-3xl"}>
-				<Text h4 className={"mb-0 text-red-500 flex items-center"}>
-					Problems to be solved{" "}
-					{isOwner &&
-						(editable !== "problems" ? (
-							<Button
-								onClick={editItem("problems")}
-								color={"warning"}
-								light
-								auto
-								icon={<Edit size={16} />}
-								className={"min-w-min z-0"}
-							/>
-						) : (
-							<Button
-								size="xs"
-								onClick={editItem(null)}
-								light
-								auto
-								color={"error"}
-								icon={<Close size={18} />}
-								className={"min-w-min z-0"}
-							/>
-						))}
-				</Text>
-				{editable === "problems" ? (
-					<>
-						<FormList value={formData.problems} onChange={onChange("problems")} placeholder={"Add a problem"} />
-						<Button size="xs" onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
-							Save
-						</Button>
-					</>
-				) : item.problems?.length === 0 ? (
-					<Empty noIcon />
-				) : (
-					item.problems.map((p, i) => (typeof p === "string" ? <Text>{p}</Text> : <CommentItem item={p} dense />))
-				)}
-			</div>
-		</>
-	);
-
-	const renderAlternatives = () => (
-		<>
-			<Text h4 className={"mt-5  flex items-center"}>
-				Existing Alternatives
-				{isOwner &&
-					(editable !== "alternatives" ? (
-						<Button
-							onClick={editItem("alternatives")}
-							color={"warning"}
-							light
-							auto
-							size="xs"
-							icon={<Edit size={16} />}
-							className={"min-w-min z-0"}
-						/>
-					) : (
-						<Button
-							size="xs"
-							onClick={editItem(null)}
-							light
-							auto
-							color={"error"}
-							icon={<Close size={18} />}
-							className={"min-w-min z-0"}
-						/>
-					))}
-			</Text>
-			<Text caption className={"-mt-2 mb-3 text-gray-400"}>
-				List how these problems are solved today
-			</Text>
-			{editable === "alternatives" ? (
-				<>
-					<FormList value={formData.alternatives} onChange={onChange("alternatives")} placeholder={"Add an alternative"} />
-					<Button onClick={onSave} className={"z-0  mb-2"} auto icon={<Check size={22} />}>
-						Save
-					</Button>
-				</>
-			) : item.alternatives?.length === 0 ? (
-				<Empty noIcon />
-			) : (
-				item.alternatives.map((p, i) => <ReactMarkdown linkTarget={"_blank"}>{urlify(p)}</ReactMarkdown>)
 			)}
 		</>
 	);
@@ -443,47 +297,6 @@ const IdeaInfoBar = ({item, isOwner}) => {
 				formData={formData}
 				itemKey={"targetAudience"}
 			/>
-
-			{/*{renderProblems()}*/}
-			{/*{renderSolutions()}*/}
-			{/*{renderAlternatives()}*/}
-
-			{/*<Text h4 className={"mt-5  flex items-center"}>*/}
-			{/*	<span>Early adopters</span>*/}
-			{/*	{isOwner &&*/}
-			{/*		(editable !== "targetAudience" ? (*/}
-			{/*			<Button*/}
-			{/*				onClick={editItem("targetAudience")}*/}
-			{/*				color={"warning"}*/}
-			{/*				light*/}
-			{/*				auto*/}
-			{/*				icon={<Edit size={16} />}*/}
-			{/*				className={"min-w-min z-0"}*/}
-			{/*			/>*/}
-			{/*		) : (*/}
-			{/*			<Button onClick={editItem(null)} light auto color={"error"} icon={<Close size={18} />} className={"min-w-min z-0"} />*/}
-			{/*		))}*/}
-			{/*</Text>*/}
-			{/*<Text caption className={"-mt-2 mb-3  text-gray-400"}>*/}
-			{/*	List characteristics of your ideal customer*/}
-			{/*</Text>*/}
-			{/*{editable === "targetAudience" ? (*/}
-			{/*	<Input*/}
-			{/*		onChange={onChange("targetAudience")}*/}
-			{/*		contentRight={<Button onClick={onSave} className={"min-w-min px-2 -ml-2"} auto icon={<Check size={22} />} />}*/}
-			{/*		fullWidth*/}
-			{/*		size={"xl"}*/}
-			{/*		className={""}*/}
-			{/*		bordered*/}
-			{/*		value={item.targetAudience}*/}
-			{/*	/>*/}
-			{/*) : item.targetAudience ? (*/}
-			{/*	<Text className={"cursor-pointer"} onClick={editItem("targetAudience")}>*/}
-			{/*		{item.targetAudience}*/}
-			{/*	</Text>*/}
-			{/*) : (*/}
-			{/*	<Empty noIcon />*/}
-			{/*)}*/}
 		</div>
 	);
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from "react-hot-toast";
 
 export const headers = {
 	"Access-Control-Allow-Origin": "*",
@@ -28,6 +29,7 @@ instance.interceptors.response.use(
 		return response;
 	},
 	function (error) {
+		toast.error("No connection");
 		if (error.response) {
 			if (error.response.status === 400) {
 			}

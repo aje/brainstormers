@@ -31,7 +31,6 @@ apiRoute.post(async (req, res) => {
 				content: req.body,
 				user: req.query.to,
 			});
-			console.log(sendNotif);
 			res.status(201).json(result);
 		}
 	} catch (error) {

@@ -147,9 +147,9 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				)}
 			</div>
 
-			<Text className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
+			<div className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
 				<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
-			</Text>
+			</div>
 			{(item.replies?.length > 0 || rep) && isComments && (
 				<div className={clsx("ml-10 mt-4")}>
 					{item.replies?.map((_, i) => (

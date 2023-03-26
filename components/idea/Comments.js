@@ -13,10 +13,11 @@ const Comments = ({item, isOwner}) => {
 						What do <span className={"text-primary"}>YOU</span> think about this idea?
 						<small>
 							{" "}
-							( You can use Markdown ){" "}
+							( You can use Markdown{" "}
 							<a target={"_blank"} href={"https://www.markdownguide.org/cheat-sheet/"}>
 								Markdown cheatsheet
 							</a>
+							)
 						</small>
 					</Text>
 					<CommentForm ideaId={item._id} />

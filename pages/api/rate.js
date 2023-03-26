@@ -14,14 +14,14 @@ const apiRoute = nextConnect({
 });
 
 apiRoute.post(async (req, res) => {
-    const session = await getSession({ req });
-    try {
+	const session = await getSession({req});
+	try {
 		const {id, value} = req.query;
 		if (id && session) {
 			await dbConnect();
 			try {
 				const ideaFromServer = await Idea.findById(id).exec();
-				if(!ideaFromServer) {
+				if (!ideaFromServer) {
 					res.status(402).json({message: "Idea not found"});
 					res.end();
 					return;
@@ -43,32 +43,28 @@ apiRoute.post(async (req, res) => {
 
 				// console.log("Helo", session.user._id, ideaFromServer.author, session.user._id === session.user._id.toString());
 
-				if(!session.user._id === session.user._id.toString())
+				if (!session.user._id === session.user._id.toString())
 					await Notification.create({
 						type: notificationTypes.RATE.value,
 						content: new Object({
 							idea: ideaFromServer._id,
 							author: session.user._id,
-							rate: value
+							rate: value,
 						}),
 						user: ideaFromServer.author,
 					});
-
 
 				const post = await Idea.findByIdAndUpdate(id, update, {new: true});
 				// console.log(post);
 				res.status(201).json(post);
 			} catch (e) {
-				console.log(e);
 				res.status(401).json(e);
 			}
-
 		} else res.status(401).json();
 	} catch (e) {
-        console.log("[Error posts.js]", e)
-    }
-    res.end()
+		console.log("[Error posts.js]", e);
+	}
+	res.end();
 });
 
 export default apiRoute;
-

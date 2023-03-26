@@ -1,16 +1,14 @@
 import React from "react";
-import * as models from "../../models/models";
 import {Grid} from "@nextui-org/react";
-import dbConnect from "../../services/dbconnect";
-import Idea from "../../models/Idea";
 import Empty from "../../components/Empty";
 import "react-tagsinput/react-tagsinput.css";
 import Comments from "../../components/idea/Comments";
 import IdeaInfoBar from "../../components/idea/IdeaInfoBar";
-import {getSession} from "next-auth/react";
-import Notification from "../../models/Notification";
-import mongoose from "mongoose";
 import IdeaSides from "../../components/idea/IdeaSides";
+import {getSession} from "next-auth/react";
+import dbConnect from "../../services/dbconnect";
+import Idea from "../../models/Idea";
+import * as models from "../../models/models";
 
 const IdeaPage = ({item, isOwner}) => {
 	if (!item)
@@ -79,10 +77,12 @@ export async function getServerSideProps({params, req}) {
 	} catch (e) {
 		console.log(e);
 	}
+
 	return {
 		props: {
 			item: JSON.parse(JSON.stringify(item)),
 			isOwner,
+			id,
 		},
 	};
 }

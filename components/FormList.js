@@ -11,7 +11,6 @@ const FormList = ({value, onChange, ...rest}) => {
 	};
 
 	useEffect(() => {
-		console.log(value);
 		if (!value || value.length === 0) add();
 	}, []);
 
@@ -30,6 +29,7 @@ const FormList = ({value, onChange, ...rest}) => {
 	return value?.map((p, i) => (
 		<div key={i} className="flex w-full  pb-4">
 			<Input
+				autoFocus
 				placeholder={"Solutions or value"}
 				underlined
 				css={{flexGrow: 1}}

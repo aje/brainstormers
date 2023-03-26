@@ -25,20 +25,16 @@ const CustomList = ({item, isOwner}) => {
 		axios
 			.post(`/post/${item.id}/customLists`, {title})
 			.then(r => {
+				setOpenAdd(false);
 				router.replace(router.asPath);
 			})
-			.finally(() => setLoading(false));
+			.finally(() => {
+				setLoading(false);
+			});
 	};
 
 	const onSave = item => () => {
-		setLoading(true);
-		axios
-			.patch(`/post/${item.id}/customLists`, item)
-			.then(r => {
-				setLoading(false);
-				router.replace(router.asPath);
-			})
-			.finally(() => setLoading(false));
+		return axios.patch(`/post/${item.id}/customLists`, item);
 	};
 
 	return (
@@ -52,12 +48,9 @@ const CustomList = ({item, isOwner}) => {
 				)}
 			</div>
 
-			{/*<Button ripple={false} color={""} icon={<Plus size={20} />} className={"mt-2 z-0 "} auto>*/}
-			{/*	Add a list*/}
-			{/*</Button>*/}
-
 			{openAdd && (
 				<Input
+					autoFocus
 					bordered
 					label={"List title"}
 					// placeholder={"List title"}
@@ -79,14 +72,16 @@ const CustomList = ({item, isOwner}) => {
 				/>
 			)}
 			{!!formData &&
-				formData?.map((item, index) => {
+				formData?.map((_, index) => {
 					return (
 						<CustomListItem
-							onSaveOverride={onSave(item)}
+							deletable
+							onSave={onSave(_)}
 							custom
-							key={item.id}
-							items={item.items}
-							title={item.title}
+							key={_.id}
+							items={_.items}
+							title={_.title}
+							item={_}
 							isOwner={isOwner}
 							onChange={onChangeItem(index)}
 						/>

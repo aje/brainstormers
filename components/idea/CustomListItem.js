@@ -1,54 +1,91 @@
 import React, {useState} from "react";
 import {Button, Loading, Text} from "@nextui-org/react";
 import {Edit} from "@styled-icons/entypo";
-import {Close} from "@styled-icons/remix-line";
+import {Close, DeleteBin} from "@styled-icons/remix-line";
 import {Check} from "@styled-icons/entypo/Check";
 import Empty from "../Empty";
 import CommentItem from "./CommentItem";
 import {AddToList} from "@styled-icons/entypo/AddToList";
-import axios from "../../services/axios";
 import {toast} from "react-hot-toast";
-import {useRouter} from "next/router";
 import FormList from "../FormList";
+import axios from "../../services/axios";
+import DeleteConfirmation from "../DeleteConfirmation";
+import {useRouter} from "next/router";
 
-const CustomListItem = ({title, custom, helper, itemKey, onSaveOverride, isOwner, items, onChange, formData}) => {
+const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deletable, item, items, onChange, formData}) => {
 	const [editable, setEditable] = useState(false);
 	const [loading, setLoading] = useState(false);
+	const [visible, setVisible] = useState(false);
 	const router = useRouter();
 
-	function onSave() {
+	function onDelete() {
 		setLoading(true);
-		if (typeof onSaveOverride === "function") onSaveOverride();
-		else
-			axios
-				.patch(`/posts`, formData)
-				.then(res => {
-					toast.success("Successfully updated!");
-					setEditable(false);
-					router.replace(router.asPath);
-				})
-				.finally(() => setLoading(false));
+		setVisible(false);
+		axios
+			.delete(`/post/${item.idea}/customLists?customId=${item._id}`)
+			.then(res => {
+				toast.success("Successfully deleted!");
+				router.replace(router.asPath);
+			})
+			.finally(() => setLoading(false));
 	}
+
+	const onSubmit = async () => {
+		setLoading(true);
+		onSave()
+			.then(() => {
+				toast.success("Successfully updated!");
+				setEditable(false);
+				router.replace(router.asPath);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	};
 
 	return (
 		<div className={"mt-6  hider"}>
+			<DeleteConfirmation
+				renderItem={() => (
+					<div>
+						<Text h5>{title}</Text>
+					</div>
+				)}
+				loading={loading}
+				visible={visible}
+				closeHandler={() => setVisible(false)}
+				onDelete={onDelete}
+			/>
+
 			<div className={"flex items-center"}>
 				<Text className={"mb-0"} h4>
 					{title}
 				</Text>
 
 				{isOwner &&
-					items.length > 0 &&
 					(!editable ? (
-						<Button
-							onClick={() => setEditable(true)}
-							color={"warning"}
-							light
-							auto
-							size="xs"
-							icon={<Edit size={14} />}
-							className={"min-w-min hid ml-2 z-0"}
-						/>
+						<>
+							<Button
+								onClick={() => setEditable(true)}
+								color={"warning"}
+								light
+								auto
+								size="xs"
+								icon={<Edit size={14} />}
+								className={"min-w-min hid ml-2 z-0"}
+							/>
+							{deletable && (
+								<Button
+									onClick={() => setVisible(true)}
+									color={"error"}
+									light
+									auto
+									size="xs"
+									icon={<DeleteBin size={14} />}
+									className={"min-w-min hid ml-2 z-0"}
+								/>
+							)}
+						</>
 					) : (
 						<Button
 							size="xs"
@@ -77,7 +114,7 @@ const CustomListItem = ({title, custom, helper, itemKey, onSaveOverride, isOwner
 						<Button
 							disabled={loading}
 							size={"xs"}
-							onClick={onSave}
+							onClick={onSubmit}
 							className={" z-0 ml-2 mb-2"}
 							auto
 							icon={!loading && <Check size={16} />}>
