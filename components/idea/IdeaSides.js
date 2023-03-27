@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Grid, Text} from "@nextui-org/react";
+import {Button, Text} from "@nextui-org/react";
 import CommentItem from "./CommentItem";
 import Empty from "../Empty";
 import {DeleteBin} from "@styled-icons/remix-line";
@@ -7,6 +7,7 @@ import DeleteConfirmation from "../DeleteConfirmation";
 import axios from "../../services/axios";
 import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
+import CustomList from "./CustomList";
 
 const IdeaSides = ({item, isOwner}) => {
 	const [delConfirm, setDelConfirm] = useState(null);
@@ -30,7 +31,7 @@ const IdeaSides = ({item, isOwner}) => {
 	};
 
 	return (
-		<>
+		<div className={"flex-1 w-full bg-gray-50"}>
 			<DeleteConfirmation
 				renderItem={() => <CommentItem item={comment} />}
 				loading={loading}
@@ -39,10 +40,10 @@ const IdeaSides = ({item, isOwner}) => {
 				onDelete={onDelete}
 			/>
 
-			<Grid xs={6} className={"bg-green-50 p-5"}>
+			<div className={"bg-green-50 p-5 w-full"}>
 				<div className={"w-full"}>
-					<Text h3 className={"text-green-500 mb-0"}>
-						{item.upsides?.length} Upside{item.upsides?.length > 1 && "s"}
+					<Text h4 className={"text-green-500 mb-0"}>
+						{item.upsides?.length} Unique Value Proposition{item.upsides?.length > 1 && "s"}
 					</Text>
 					<Text className={"mb-4 text-green-400 inline-block"}>Set a comment as an upside</Text>
 					{item.upsides?.length > 0 ? (
@@ -70,13 +71,13 @@ const IdeaSides = ({item, isOwner}) => {
 							/>
 						))
 					) : (
-						<Empty noIcon />
+						<Empty inline />
 					)}
 				</div>
-			</Grid>
-			<Grid xs={6} className={"bg-red-50 p-5"}>
+			</div>
+			<div className={"bg-red-50 p-5 w-full"}>
 				<div className={"w-full"}>
-					<Text h3 className={"text-red-500 mb-0"}>
+					<Text h4 className={"text-red-500 mb-0"}>
 						{item.downsides?.length} Challanges{item.downsides?.length > 1 && "s"}
 					</Text>
 					<Text className={"mb-4 text-red-400 inline-block"}>Set a comment as a challange</Text>
@@ -106,11 +107,13 @@ const IdeaSides = ({item, isOwner}) => {
 							/>
 						))
 					) : (
-						<Empty noIcon />
+						<Empty inline />
 					)}
 				</div>
-			</Grid>
-		</>
+			</div>
+
+			<CustomList item={item} isOwner={isOwner} />
+		</div>
 	);
 };
 

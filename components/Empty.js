@@ -1,14 +1,15 @@
-import {CircleWithCross} from "@styled-icons/entypo/CircleWithCross";
 import {Text} from "@nextui-org/react";
+import clsx from "clsx";
+import {Block} from "@styled-icons/entypo";
 
-const Empty = ({label, noIcon}) => {
+const Empty = ({label, noIcon, inline}) => {
 	return (
-		<span className={"flex py-2 flex-col w-full justify-center items-center"}>
-			{!noIcon && <CircleWithCross color={"#aaa"} size={40} />}
-			<Text h5 className={"mt-2"} color={"#aaa"}>
-				{label || "No data"}
+		<div className={clsx(" py-2 flex  w-full ", inline ? "items-center" : "flex-col justify-center items-center")}>
+			{!noIcon && <Block color={"#aaa"} size={inline ? 20 : 40} />}
+			<Text h5 className={"mb-0 ml-2"} color={"#aaa"}>
+				{label || " Empty"}
 			</Text>
-		</span>
+		</div>
 	);
 };
 

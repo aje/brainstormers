@@ -28,3 +28,11 @@ html {
         transform: translateX(0) scale(1);
     }
 }
+
+.hider .hid {
+    opacity: 0;
+    transition-duration: 200ms;
+}
+.hider:hover .hid {
+    opacity: inherit;
+}

@@ -54,16 +54,15 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				description: reply,
 			};
 			axios
-				.post(`/reply?id=${item._id}`, formData)
+				.post(`/reply?id=${item._id}&to=${item.author.id}`, formData)
 				.then(() => {
 					setRep(false);
-					setReply("")
+					setReply("");
 					router.replace(router.asPath);
 					toast.success("Successfully posted!");
 				})
 				.finally(() => setLoading(false));
 		} else {
-
 			state.set(true);
 			setLoading(false);
 			toast.error("Please login first");
@@ -83,7 +82,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 	}
 
 	return (
-		<div className={"mb-5 "}>
+		<div className={"mb-5 hider"}>
 			<DeleteConfirmation
 				renderItem={() => <CommentItem item={item} />}
 				loading={loading}
@@ -109,18 +108,23 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				{action && <div className={"flex"}>{action}</div>}
 				{withAction && (
 					<div className={"flex"}>
-						<Button size={"xs"} className={"z-0"} light auto onClick={() => setRep(rep => !rep)}>
+						<Button size={"xs"} className={"z-0 hid"} light auto onClick={() => setRep(rep => !rep)}>
 							{!rep ? <Reply size={14} /> : <Close size={16} />}
 						</Button>
 						{isAuthor && (
-							<Button className={"mx-2 z-0 opacity-40 hover:opacity-100 hover:text-red-400"} onClick={() => setVisible(true)} size={"xs"} light auto>
+							<Button
+								className={"mx-2 hid z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
+								onClick={() => setVisible(true)}
+								size={"xs"}
+								light
+								auto>
 								<DeleteBin size={"14"} />
 							</Button>
 						)}
 
 						{isOwner && (
 							<Dropdown placement={"bottom-right"}>
-								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min ml-2 z-0  opacity-70 hover:opacity-100"}>
+								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min hid ml-2 z-0  opacity-70 hover:opacity-100"}>
 									Set As
 								</Dropdown.Button>
 								<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
@@ -143,9 +147,9 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				)}
 			</div>
 
-			<Text className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
+			<div className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
 				<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
-			</Text>
+			</div>
 			{(item.replies?.length > 0 || rep) && isComments && (
 				<div className={clsx("ml-10 mt-4")}>
 					{item.replies?.map((_, i) => (
