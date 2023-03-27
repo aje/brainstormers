@@ -18,7 +18,7 @@ apiRoute.post(async (req, res) => {
 	try {
 		if (session) {
 			await dbConnect();
-			const reply = {...req.body, author: session.user, createdAt: new Date()};
+			const reply = {description: req.body.description, author: session.user, createAt: new Date()};
 
 			const update = {
 				$push: {
@@ -26,11 +26,13 @@ apiRoute.post(async (req, res) => {
 				},
 			};
 			const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
-			const sendNotif = await models.Notification.create({
-				type: notificationTypes.REPLY.value,
-				content: req.body,
-				user: req.query.to,
-			});
+			// console.log("to:", req.query.to, session.user._id);
+			if (req.query.to !== session.user._id)
+				await models.Notification.create({
+					type: notificationTypes.REPLY.value,
+					content: {...req.body, author: session.user},
+					user: req.query.to,
+				});
 			res.status(201).json(result);
 		}
 	} catch (error) {

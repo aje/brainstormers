@@ -14,6 +14,7 @@ import {loginPopper} from "../../pages/_app";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
 import ReactMarkdown from "react-markdown";
 import {urlify} from "../utils";
+// import mongoose from "mongoose";
 
 const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action}) => {
 	const {data: session} = useSession();
@@ -53,6 +54,10 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 		if (session) {
 			const formData = {
 				description: reply,
+				idea: {
+					_id: idea._id,
+					title: idea.title,
+				},
 			};
 			axios
 				.post(`/reply?id=${item._id}&to=${item.author.id}`, formData)
@@ -81,8 +86,6 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			})
 			.finally(() => setLoading(false));
 	}
-
-	function toggleReplies() {}
 
 	return (
 		<div className={clsx(!dense && "mt-5", "hider")}>
