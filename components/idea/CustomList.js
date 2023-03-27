@@ -25,8 +25,8 @@ const CustomList = ({item, isOwner}) => {
 		axios
 			.post(`/post/${item.id}/customLists`, {title})
 			.then(r => {
-				setOpenAdd(false);
 				router.replace(router.asPath);
+				setOpenAdd(false);
 			})
 			.finally(() => {
 				setLoading(false);

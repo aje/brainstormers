@@ -8,7 +8,7 @@ import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
 import DeleteConfirmation from "../DeleteConfirmation";
 import {useSession} from "next-auth/react";
-import {Reply} from "@styled-icons/entypo";
+import {ChevronDown, ChevronUp, Reply} from "@styled-icons/entypo";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
@@ -24,6 +24,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 	const [visible, setVisible] = useState(false);
 	const [reply, setReply] = useState("");
 	const [rep, setRep] = useState(false);
+	const [toggle, setToggle] = useState(false);
 
 	const isAuthor = item.author?._id === session?.user?._id;
 	const refreshData = () => {
@@ -81,8 +82,10 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			.finally(() => setLoading(false));
 	}
 
+	function toggleReplies() {}
+
 	return (
-		<div className={"mb-5 hider"}>
+		<div className={clsx(!dense && "mt-5", "hider")}>
 			<DeleteConfirmation
 				renderItem={() => <CommentItem item={item} />}
 				loading={loading}
@@ -91,67 +94,99 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				onDelete={onDelete}
 			/>
 
-			<div className={"flex mb-2 justify-between  items-center"}>
-				<User
-					className={"pl-0 z-0"}
-					size={dense ? "xs" : "sm"}
-					src={item.author.image}
-					name={
-						<Text span className={clsx(dense ? "text-xs text-gray-500" : "  text-gray-600")}>
-							{item.author.name}{" "}
-							<Text span className={"font-normal text-xs text-gray-400"}>
-								<Moment from={new Date()}>{item.createdAt}</Moment>
-							</Text>
-						</Text>
-					}
-				/>
-				{action && <div className={"flex"}>{action}</div>}
-				{withAction && (
-					<div className={"flex"}>
-						<Button size={"xs"} className={"z-0 hid"} light auto onClick={() => setRep(rep => !rep)}>
-							{!rep ? <Reply size={14} /> : <Close size={16} />}
-						</Button>
-						{isAuthor && (
-							<Button
-								className={"mx-2 hid z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
-								onClick={() => setVisible(true)}
-								size={"xs"}
-								light
-								auto>
-								<DeleteBin size={"14"} />
+			{!dense && (
+				<div className={"flex mb-2 justify-between  items-center"}>
+					{!dense && (
+						<User
+							className={"pl-0 z-0"}
+							size={dense ? "xs" : "sm"}
+							src={item.author.image}
+							name={
+								<Text span className={clsx(dense ? "text-xs text-gray-500" : "  text-gray-600")}>
+									{item.author.name}{" "}
+									<Text span className={"font-normal text-xs text-gray-400"}>
+										<Moment from={new Date()}>{item.createdAt}</Moment>
+									</Text>
+								</Text>
+							}
+						/>
+					)}
+					{action && <div className={"flex"}>{action}</div>}
+					{withAction && (
+						<div className={"flex"}>
+							<Button size={"xs"} className={"z-0 hid"} light auto onClick={() => setRep(rep => !rep)}>
+								{!rep ? <Reply size={14} /> : <Close size={16} />}
 							</Button>
-						)}
+							{isAuthor && (
+								<Button
+									className={"mx-2 hid z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
+									onClick={() => setVisible(true)}
+									size={"xs"}
+									light
+									auto>
+									<DeleteBin size={"14"} />
+								</Button>
+							)}
 
-						{isOwner && (
-							<Dropdown placement={"bottom-right"}>
-								<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min hid ml-2 z-0  opacity-70 hover:opacity-100"}>
-									Set As
-								</Dropdown.Button>
-								<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
-									{/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
-									{/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
-									{/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
-									<Dropdown.Item key={"upsides"} color="success">
-										Upside
-									</Dropdown.Item>
-									<Dropdown.Item key={"downsides"} color="error">
-										Challange
-									</Dropdown.Item>
-									<Dropdown.Item key={"solutions"}>Solution</Dropdown.Item>
-									<Dropdown.Item key={"problems"}>Problem</Dropdown.Item>
-								</Dropdown.Menu>
-							</Dropdown>
-						)}
-						{/*<Button className={"ml-2"} size={"xs"} auto icon={<Anticlockwise2 size={14} />}>Set As</Button>*/}
-					</div>
+							{isOwner && (
+								<Dropdown placement={"bottom-right"}>
+									<Dropdown.Button ripple={false} size={"xs"} className={"min-w-min hid ml-2 z-0  opacity-70 hover:opacity-100"}>
+										Set As
+									</Dropdown.Button>
+									<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
+										{/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
+										{/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
+										{/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
+										<Dropdown.Item key={"upsides"} color="success">
+											Upside
+										</Dropdown.Item>
+										<Dropdown.Item key={"downsides"} color="error">
+											Challange
+										</Dropdown.Item>
+										<Dropdown.Item key={"solutions"}>Solution</Dropdown.Item>
+										<Dropdown.Item key={"problems"}>Problem</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							)}
+							{/*<Button className={"ml-2"} size={"xs"} auto icon={<Anticlockwise2 size={14} />}>Set As</Button>*/}
+						</div>
+					)}
+				</div>
+			)}
+			<div className="flex-1 flex relative">
+				{item.replies?.length > 0 && !dense && (
+					<Button onClick={() => setToggle(!toggle)} size={"xs"} className={"px-2.5  -left-1 top-1 absolute"} auto light>
+						{!toggle ? <ChevronUp size={20} className={"hid"} /> : <ChevronDown size={20} />}
+					</Button>
 				)}
-			</div>
+				<div
+					className={clsx(
+						isComments && dense && "bg-gray-50",
+						isComments && " bg-gray-100 py-1 px-2",
+						dense ? " ml-0 flex" : "ml-10",
+						" flex-1"
+					)}>
+					{dense && (
+						<User
+							className={"p-0 z-0"}
+							size={dense ? "xs" : "sm"}
+							src={item.author.image}
+							name={
+								<Text span className={clsx("text-xs mr-2 text-gray-500")}>
+									{item.author.name}
+								</Text>
+							}
+						/>
+					)}
 
-			<div className={clsx(isComments && " bg-gray-50 py-1 px-2", dense ? "ml-8" : "ml-10", " flex-1")}>
-				<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+					<div className={"flex-1"}>
+						<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+					</div>
+					{dense && <div className={"hid"}>{action}</div>}
+				</div>
 			</div>
-			{(item.replies?.length > 0 || rep) && isComments && (
-				<div className={clsx("ml-10 mt-4")}>
+			{(item.replies?.length > 0 || rep) && isComments && !toggle && (
+				<div className={clsx("ml-10 mt-2")}>
 					{item.replies?.map((_, i) => (
 						<CommentItem isComments key={i} dense item={_} />
 					))}
@@ -162,6 +197,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 								autoFocus
 								onChange={e => setReply(e.target.value)}
 								value={reply}
+								className={"mt-3"}
 								minRows={1}
 								bordered
 								placeholder={"What do you think?"}
@@ -177,7 +213,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 						</>
 					)}
 					{item.replies?.length > 0 && !rep && (
-						<Button icon={<Reply size={14} />} className={"z-0"} onClick={() => setRep(true)} size={"xs"} light>
+						<Button icon={<Reply size={14} />} className={"z-0 mt-2"} onClick={() => setRep(true)} size={"xs"} light>
 							Reply
 						</Button>
 					)}
