@@ -64,7 +64,7 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 					{title} <span className={"text-gray-400 font-normal text-sm"}> ( {items.length} )</span>
 				</Text>
 
-				{items.length > 1 && (
+				{items.length > 1 && !editable && (
 					<Button
 						icon={!toggle ? <ChevronUp size={20} className={"hid"} /> : <ChevronDown size={20} />}
 						onClick={() => setToggle(!toggle)}

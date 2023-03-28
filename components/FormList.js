@@ -28,17 +28,24 @@ const FormList = ({value, onChange, ...rest}) => {
 
 	return value?.map((p, i) => (
 		<div key={i} className="flex w-full  pb-4">
-			<Input
-				autoFocus
-				placeholder={"Solutions or value"}
-				underlined
-				css={{flexGrow: 1}}
-				{...rest}
-				disabled={typeof p !== "string"}
-				value={typeof p === "string" ? p : p.description}
-				onChange={onChangeValue(i)}
-				required
-			/>
+			<form
+				onSubmit={e => {
+					e.preventDefault();
+					add();
+				}}
+				className={" w-full"}>
+				<Input
+					autoFocus
+					underlined
+					fullWidth
+					css={{flexGrow: 1}}
+					{...rest}
+					disabled={typeof p !== "string"}
+					value={typeof p === "string" ? p : p.description}
+					onChange={onChangeValue(i)}
+					required
+				/>
+			</form>
 			{i === value.length - 1 ? (
 				<>
 					<Button css={{minWidth: 18, width: 18}} ripple={false} onClick={remove(i)} light color={"error"} className={"ml-2 "} auto>
