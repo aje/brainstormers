@@ -30,10 +30,14 @@ apiRoute
 				};
 				const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
 				// console.log("to:", req.query.to, session.user._id);
-				if (req.query.to !== session.user._id)
+				if (req.query.to)
 					await models.Notification.create({
 						type: notificationTypes.REPLY.value,
-						content: {...req.body, author: session.user},
+						content: new Object({
+							description: req.body.description,
+							idea: mongoose.Types.ObjectId(req.body.idea),
+							author: mongoose.Types.ObjectId(session.user._id),
+						}),
 						user: req.query.to,
 					});
 				res.status(201).json(result);

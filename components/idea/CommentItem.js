@@ -57,10 +57,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 		if (session) {
 			const formData = {
 				description: reply,
-				idea: {
-					_id: idea._id,
-					title: idea.title,
-				},
+				idea: idea._id,
 			};
 			axios
 				.post(`/reply?id=${item._id}&to=${item.author.id}`, formData)

@@ -59,7 +59,6 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 			/>
 
 			<div className={"flex items-center relative"}>
-				{}
 				<Text className={"mb-0"} h4>
 					{title} <span className={"text-gray-400 font-normal text-sm"}> ( {items.length} )</span>
 				</Text>
