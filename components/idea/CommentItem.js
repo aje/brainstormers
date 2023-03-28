@@ -8,12 +8,13 @@ import {toast} from "react-hot-toast";
 import {useRouter} from "next/router";
 import DeleteConfirmation from "../DeleteConfirmation";
 import {useSession} from "next-auth/react";
-import {ChevronDown, ChevronUp, Reply} from "@styled-icons/entypo";
+import {ChevronDown, ChevronUp, Edit, Reply} from "@styled-icons/entypo";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../../pages/_app";
 import {SendPlane} from "@styled-icons/remix-line/SendPlane";
 import ReactMarkdown from "react-markdown";
 import {urlify} from "../utils";
+import {Check} from "@styled-icons/entypo/Check";
 // import mongoose from "mongoose";
 
 const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action}) => {
@@ -22,6 +23,8 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 	const router = useRouter();
 
 	const [loading, setLoading] = useState(false);
+	const [description, setDescription] = useState(item.description);
+	const [edit, setEdit] = useState(false);
 	const [visible, setVisible] = useState(false);
 	const [reply, setReply] = useState("");
 	const [rep, setRep] = useState(false);
@@ -75,7 +78,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 		}
 	};
 
-	function onDelete() {
+	const onDelete = () => {
 		setLoading(true);
 		setVisible(false);
 		axios
@@ -85,15 +88,26 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 				refreshData();
 			})
 			.finally(() => setLoading(false));
-	}
+	};
 
 	const deleteReply = _ => () => {
-		console.log(_);
 		setLoading(true);
 		setVisible(false);
 		axios
 			.delete(`/reply?commentId=${item._id}&createdAt=${_.createdAt}`)
 			.then(res => {
+				toast.success("Successfully deleted!");
+				refreshData();
+			})
+			.finally(() => setLoading(false));
+	};
+
+	const onEdit = () => {
+		setLoading(true);
+		axios
+			.put(`/comments/${item._id}`, {description})
+			.then(res => {
+				setEdit(false);
 				toast.success("Successfully deleted!");
 				refreshData();
 			})
@@ -134,14 +148,19 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 								{!rep ? <Reply size={14} /> : <Close size={16} />}
 							</Button>
 							{isAuthor && (
-								<Button
-									className={"mx-2 hid z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
-									onClick={() => setVisible(true)}
-									size={"xs"}
-									light
-									auto>
-									<DeleteBin size={"14"} />
-								</Button>
+								<>
+									<Button className={"ml-2 hid z-0 "} onClick={() => setEdit(!edit)} size={"xs"} light auto>
+										{edit ? <Close size={16} /> : <Edit size={14} />}
+									</Button>
+									<Button
+										className={"mx-2 hid z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
+										onClick={() => setVisible(true)}
+										size={"xs"}
+										light
+										auto>
+										<DeleteBin size={14} />
+									</Button>
+								</>
 							)}
 
 							{isOwner && (
@@ -150,9 +169,6 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 										Set As
 									</Dropdown.Button>
 									<Dropdown.Menu aria-label="Static Actions" onAction={onDropdown}>
-										{/*<Dropdown.Item key="edit">Edit</Dropdown.Item>*/}
-										{/*<Dropdown.Item key="copy">Copy link</Dropdown.Item>*/}
-										{/*<Dropdown.Item key="edit">Edit file</Dropdown.Item>*/}
 										<Dropdown.Item key={"upsides"} color="success">
 											Upside
 										</Dropdown.Item>
@@ -196,7 +212,29 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 					)}
 
 					<div className={"flex-1"}>
-						<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+						{edit ? (
+							<div className={"py-2"}>
+								<Textarea
+									fullWidth
+									autoFocus
+									onChange={e => setDescription(e.target.value)}
+									value={description}
+									// minRows={1}
+									bordered
+								/>
+
+								<div className={"items-center mt-4 flex"}>
+									<Button onClick={() => setEdit(false)} light className={"min-w-min px-2 mr-2 z-0"} auto>
+										Cancel
+									</Button>
+									<Button onClick={onEdit} className={"min-w-min px-2 z-0"} auto icon={<Check size={22} />}>
+										Save
+									</Button>
+								</div>
+							</div>
+						) : (
+							<ReactMarkdown linkTarget={"_blank"}>{urlify(item.description)}</ReactMarkdown>
+						)}
 					</div>
 					{dense && <div className={"hid"}>{action}</div>}
 				</div>
@@ -206,7 +244,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 					{item.replies?.map((_, i) => (
 						<CommentItem
 							isComments
-							key={i}
+							key={_.id}
 							dense
 							item={_}
 							action={

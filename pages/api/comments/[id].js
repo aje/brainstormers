@@ -1,8 +1,7 @@
-import Idea from "../../../models/Idea";
-import dbConnect from "../../../services/dbconnect";
-import User from "../../../models/User";
 import nextConnect from "next-connect";
+import dbConnect from "../../../services/dbconnect";
 import {getSession} from "next-auth/react";
+import * as models from "../../../models/models";
 
 const apiRoute = nextConnect({
 	onError(error, req, res) {
@@ -13,18 +12,19 @@ const apiRoute = nextConnect({
 	},
 });
 
-apiRoute.get(async (req, res) => {
+apiRoute.put(async (req, res) => {
 	const session = await getSession({req});
+	if (!session) {
+		res.status(401).json();
+		res.end();
+		return;
+	}
 	try {
-		if (session) {
-			await dbConnect();
-			const posts = await Idea.find({author: session.user._id}).sort(req.query);
-			res.status(200).json(posts);
-		} else {
-			res.status(401);
-		}
+		await dbConnect();
+		const response = await models.Comment.findByIdAndUpdate(req.query.id, req.body);
+		res.status(200).json(response);
 	} catch (error) {
-		res.status(400).json(error);
+		res.status(400).json({error});
 	}
 	res.end();
 });
