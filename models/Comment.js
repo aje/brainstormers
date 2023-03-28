@@ -3,16 +3,6 @@ import User from "./User";
 import Idea from "./Idea";
 import Notification, {notificationTypes} from "./Notification";
 
-const commentTypes = [
-	{
-		SOLUTION: {value: "SOLUTION"},
-		BENEFITS: {value: "BENEFITS"},
-		UNIQUENESS: {value: "UNIQUENESS"},
-		UPSIDE: {value: "UPSIDE"},
-		DOWNSIDE: {value: "DOWNSIDE"},
-	},
-];
-
 export const CommentSchema = new Schema({
 	description: {
 		type: String,
@@ -28,11 +18,7 @@ export const CommentSchema = new Schema({
 		ref: "Idea",
 		required: [true, "Comment must belong to a post"],
 	},
-	type: {
-		type: String,
-		enum: Object.keys(commentTypes),
-	},
-	replies: [],
+	replies: {type: Schema.Types.Array},
 	// createdAt: {
 	// 	type: Date,
 	// 	default: Date.now,

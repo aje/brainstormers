@@ -9,6 +9,7 @@ import {getSession} from "next-auth/react";
 import dbConnect from "../../services/dbconnect";
 import Idea from "../../models/Idea";
 import * as models from "../../models/models";
+import mongoose from "mongoose";
 
 const IdeaPage = ({item, isOwner}) => {
 	if (!item)
@@ -72,7 +73,7 @@ export async function getServerSideProps({params, req}) {
 				"content.idea": mongoose.Types.ObjectId(id),
 				seen: false,
 			};
-			const t = await Notification.updateMany(tquery, {seen: true});
+			const t = await models.Notification.updateMany(tquery, {seen: true});
 		}
 	} catch (e) {
 		console.log(e);

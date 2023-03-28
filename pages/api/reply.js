@@ -3,6 +3,7 @@ import {notificationTypes} from "../../models/models";
 import dbConnect from "../../services/dbconnect";
 import nextConnect from "next-connect";
 import {getSession} from "next-auth/react";
+import mongoose from "mongoose";
 
 const apiRoute = nextConnect({
 	onError(error, req, res) {
@@ -13,31 +14,48 @@ const apiRoute = nextConnect({
 	},
 });
 
-apiRoute.post(async (req, res) => {
-	const session = await getSession({req});
-	try {
-		if (session) {
-			await dbConnect();
-			const reply = {description: req.body.description, author: session.user, createAt: new Date()};
+apiRoute
+	.post(async (req, res) => {
+		const session = await getSession({req});
+		try {
+			if (session) {
+				await dbConnect();
+				const reply = {description: req.body.description, author: session.user, createdAt: new Date()};
+				// {description: req.body.description, author: session.user, createAt: new Date()};
 
-			const update = {
-				$push: {
-					replies: reply,
-				},
-			};
-			const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
-			// console.log("to:", req.query.to, session.user._id);
-			if (req.query.to !== session.user._id)
-				await models.Notification.create({
-					type: notificationTypes.REPLY.value,
-					content: {...req.body, author: session.user},
-					user: req.query.to,
-				});
-			res.status(201).json(result);
+				const update = {
+					$push: {
+						replies: reply,
+					},
+				};
+				const result = await models.Comment.findByIdAndUpdate(req.query.id, update);
+				// console.log("to:", req.query.to, session.user._id);
+				if (req.query.to !== session.user._id)
+					await models.Notification.create({
+						type: notificationTypes.REPLY.value,
+						content: {...req.body, author: session.user},
+						user: req.query.to,
+					});
+				res.status(201).json(result);
+			}
+		} catch (error) {
+			res.status(400).json(error);
 		}
-	} catch (error) {
-		res.status(400).json(error);
-	}
-	res.end();
-});
+		res.end();
+	})
+	.delete(async (req, res) => {
+		const session = await getSession({req});
+		try {
+			if (session) {
+				await dbConnect();
+				const deleted = await models.Comment.findByIdAndUpdate(mongoose.Types.ObjectId(req.query.commentId), {
+					$pull: {replies: {createdAt: new Date(req.query.createdAt)}},
+				});
+				res.status(200).json(deleted);
+			}
+		} catch (error) {
+			res.status(400).json(error);
+		}
+		res.end();
+	});
 export default apiRoute;

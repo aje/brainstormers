@@ -87,6 +87,19 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			.finally(() => setLoading(false));
 	}
 
+	const deleteReply = _ => () => {
+		console.log(_);
+		setLoading(true);
+		setVisible(false);
+		axios
+			.delete(`/reply?commentId=${item._id}&createdAt=${_.createdAt}`)
+			.then(res => {
+				toast.success("Successfully deleted!");
+				refreshData();
+			})
+			.finally(() => setLoading(false));
+	};
+
 	return (
 		<div className={clsx(!dense && "mt-5", "hider")}>
 			<DeleteConfirmation
@@ -191,7 +204,24 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			{(item.replies?.length > 0 || rep) && isComments && !toggle && (
 				<div className={clsx("ml-10 mt-2")}>
 					{item.replies?.map((_, i) => (
-						<CommentItem isComments key={i} dense item={_} />
+						<CommentItem
+							isComments
+							key={i}
+							dense
+							item={_}
+							action={
+								isAuthor && (
+									<Button
+										className={"mx-2 z-0 opacity-40 hover:opacity-100 hover:text-red-400"}
+										onClick={deleteReply(_)}
+										size={"xs"}
+										light
+										auto>
+										<DeleteBin size={"14"} />
+									</Button>
+								)
+							}
+						/>
 					))}
 					{rep && (
 						<>
