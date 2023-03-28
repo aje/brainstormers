@@ -30,4 +30,5 @@ yarn-error.log*
 package-lock.json
 .env.production.local
 package-lock.json
-.idea
+.idea/*
+!.idea/rcb-settings.xml

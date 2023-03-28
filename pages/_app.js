@@ -9,6 +9,8 @@ import {hookstate} from "@hookstate/core";
 import {swrFetcher} from "../services/axios";
 import {SWRConfig} from "swr";
 import Head from "next/head";
+import {DevSupport} from "@react-buddy/ide-toolbox-next";
+import {ComponentPreviews, useInitial} from "../components/dev";
 
 const fonts = {
 	sans: "'Proxima Nova',  'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;",
@@ -93,7 +95,15 @@ export default function App({Component, pageProps: {session, ...pageProps}}) {
 						errorRetryInterval: 120000,
 					}}>
 					<SessionProvider session={session}>
-						<Layout>{loading ? <LoadingPage /> : <Component {...pageProps} />}</Layout>
+						<Layout>
+							{loading ? (
+								<LoadingPage />
+							) : (
+								<DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
+									<Component {...pageProps} />
+								</DevSupport>
+							)}
+						</Layout>
 					</SessionProvider>
 				</SWRConfig>
 			</NextUIProvider>

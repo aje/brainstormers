@@ -158,7 +158,7 @@ const CommentItem = ({item, dense, idea, withAction, isOwner, isComments, action
 			)}
 			<div className="flex-1 flex relative">
 				{item.replies?.length > 0 && !dense && (
-					<Button onClick={() => setToggle(!toggle)} size={"xs"} className={"px-2.5  -left-1 top-1 absolute"} auto light>
+					<Button onClick={() => setToggle(!toggle)} size={"xs"} className={"min-w-min -left-1 top-1 absolute"} auto light>
 						{!toggle ? <ChevronUp size={20} className={"hid"} /> : <ChevronDown size={20} />}
 					</Button>
 				)}
