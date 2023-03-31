@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Button, Loading, Text} from "@nextui-org/react";
-import {Edit} from "@styled-icons/entypo";
+import {ChevronDown, ChevronUp, Edit} from "@styled-icons/entypo";
 import {Close, DeleteBin} from "@styled-icons/remix-line";
 import {Check} from "@styled-icons/entypo/Check";
 import Empty from "../Empty";
@@ -16,6 +16,7 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 	const [editable, setEditable] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [visible, setVisible] = useState(false);
+	const [toggle, setToggle] = useState(false);
 	const router = useRouter();
 
 	function onDelete() {
@@ -57,10 +58,21 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 				onDelete={onDelete}
 			/>
 
-			<div className={"flex items-center"}>
+			<div className={"flex items-center relative"}>
 				<Text className={"mb-0"} h4>
-					{title}
+					{title} <span className={"text-gray-400 font-normal text-sm"}> ( {items.length} )</span>
 				</Text>
+
+				{items.length > 1 && !editable && (
+					<Button
+						icon={!toggle ? <ChevronUp size={20} className={"hid"} /> : <ChevronDown size={20} />}
+						onClick={() => setToggle(!toggle)}
+						size={"xs"}
+						className={"min-w-min  ml-2"}
+						auto
+						light
+					/>
+				)}
 
 				{isOwner &&
 					(!editable ? (
@@ -138,7 +150,7 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 					<Empty inline />
 				)
 			) : (
-				items.map((p, i) => (typeof p === "string" ? <Text>{p}</Text> : <CommentItem item={p} dense />))
+				!toggle && items.map((p, i) => (typeof p === "string" ? <Text>{p}</Text> : <CommentItem item={p} dense />))
 			)}
 		</div>
 	);

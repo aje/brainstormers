@@ -6,6 +6,7 @@ import {Close} from "@styled-icons/remix-line";
 import axios from "../../services/axios";
 import {useRouter} from "next/router";
 import CustomListItem from "./CustomListItem";
+import Empty from "../Empty";
 
 const CustomList = ({item, isOwner}) => {
 	const [title, setListTitle] = useState("");
@@ -25,8 +26,8 @@ const CustomList = ({item, isOwner}) => {
 		axios
 			.post(`/post/${item.id}/customLists`, {title})
 			.then(r => {
-				setOpenAdd(false);
 				router.replace(router.asPath);
+				setOpenAdd(false);
 			})
 			.finally(() => {
 				setLoading(false);
@@ -71,7 +72,7 @@ const CustomList = ({item, isOwner}) => {
 					required
 				/>
 			)}
-			{!!formData &&
+			{!!formData && formData.length > 0 ? (
 				formData?.map((_, index) => {
 					return (
 						<CustomListItem
@@ -86,7 +87,10 @@ const CustomList = ({item, isOwner}) => {
 							onChange={onChangeItem(index)}
 						/>
 					);
-				})}
+				})
+			) : (
+				<Empty />
+			)}
 		</div>
 	);
 };

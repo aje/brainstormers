@@ -9,16 +9,15 @@ const Comments = ({item, isOwner}) => {
 		<>
 			<Grid xs={12} className={"p-7 bg-white"}>
 				<div className={"w-full"}>
-					<Text h3>
+					<Text h3 className={"mb-0"}>
 						What do <span className={"text-primary"}>YOU</span> think about this idea?
-						<small>
-							{" "}
-							( You can use Markdown{" "}
-							<a target={"_blank"} href={"https://www.markdownguide.org/cheat-sheet/"}>
-								Markdown cheatsheet
-							</a>
-							)
-						</small>
+					</Text>
+					<Text caption className={"mb-3"}>
+						{" "}
+						You can use{" "}
+						<a target={"_blank"} href={"https://www.markdownguide.org/cheat-sheet/"}>
+							Markdown cheatsheet
+						</a>
 					</Text>
 					<CommentForm ideaId={item._id} />
 					<Text h3>{item.comments?.length} Comments</Text>
