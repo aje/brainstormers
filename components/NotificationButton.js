@@ -1,15 +1,14 @@
 import React from "react";
 import {Badge, Navbar} from "@nextui-org/react";
 import {Notification} from "@styled-icons/remix-line";
-import {useHookstate} from "@hookstate/core";
-import {notificationState} from "../pages/_app";
 import useSWR from "swr";
+import {useGlobalToggle} from "../store";
 
 const NotificationButton = () => {
-	const state = useHookstate(notificationState);
+	const state = useGlobalToggle();
 	const {data} = useSWR(`/stats`);
 	const onOpen = () => {
-		state.set(true);
+		state.toggleOn("notificationSidebar");
 		document.body.style.overflow = "hidden";
 	};
 	return (

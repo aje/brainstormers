@@ -43,6 +43,10 @@ instance.interceptors.response.use(
 	}
 );
 
-export const swrFetcher = url => instance(url).then(res => res.data);
+// export const swrFetcher = url => instance(url).then(res => res.data);
+export const swrFetcher = p => {
+	const t = typeof p === "string" ? p : {url: p[0], params: p[1]};
+	return instance(t).then(res => res.data);
+};
 
 export default instance;

@@ -3,14 +3,13 @@ import {Avatar, Text} from "@nextui-org/react";
 import Moment from "react-moment";
 import clsx from "clsx";
 import Link from "next/link";
-import {useHookstate} from "@hookstate/core";
-import {notificationState} from "../../pages/_app";
 import ReactMarkdown from "react-markdown";
+import {useGlobalToggle} from "../../store";
 
 const CommentItem = ({item}) => {
-	const state = useHookstate(notificationState);
+	const state = useGlobalToggle();
 	const onClick = () => {
-		state.set(false);
+		state.toggleOff("notificationSidebar");
 		document.body.style.overflow = "auto";
 	};
 	return (

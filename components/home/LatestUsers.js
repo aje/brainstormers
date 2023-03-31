@@ -1,6 +1,16 @@
 import {Container, Grid, Text, User} from "@nextui-org/react";
+import {selectedUserState, useGlobalToggle} from "../../store";
+import {useHookstate} from "@hookstate/core";
 
 const LatestUsers = ({topEnt: users, countTopEnt}) => {
+	const state = useGlobalToggle();
+	const selectedUser = useHookstate(selectedUserState);
+
+	const onClickUser = user => e => {
+		selectedUser.set(user);
+		state.toggleOn("userSidebar");
+	};
+
 	return (
 		<div className={"py-20 bg-gray-100"} style={{backgroundImage: "url(/ent.png)", backgroundSize: "cover", backgroundPosition: "bottom"}}>
 			<Container lg>
@@ -13,8 +23,13 @@ const LatestUsers = ({topEnt: users, countTopEnt}) => {
 					</h3>
 					<Grid.Container gap={2}>
 						{users.map((user, i) => (
-							<Grid key={user.id} xs={12} sm={4} className={"flex flex-col text-center items-center mt-4 z-0"}>
-								<User size={"xl"} src={user.image} name={""}  />
+							<Grid
+								onClick={onClickUser(user)}
+								key={user.id}
+								xs={12}
+								sm={4}
+								className={"cursor-pointer flex flex-col text-center items-center mt-4 z-0"}>
+								<User size={"xl"} src={user.image} name={""} />
 								<h3 className={"mt-4"}>
 									{user.name}{" "}
 									{user.role && (

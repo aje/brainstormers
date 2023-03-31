@@ -10,6 +10,7 @@ const IdeaForm = () => {
 	const state = useHookstate(ideaFormData);
 	const {idea} = state.get();
 	const router = useRouter();
+
 	const onChange = e => {
 		state.set(prevState => ({...prevState, idea: e.target.value}));
 	};
@@ -18,6 +19,7 @@ const IdeaForm = () => {
 		e.preventDefault();
 		router.push("/new");
 	};
+
 	return (
 		<div className={"bg-blue-50"} id={"ideaform"}>
 			<Container lg>

@@ -1,11 +1,10 @@
 import React from "react";
-import {useHookstate} from "@hookstate/core";
-import {notificationState} from "../../pages/_app";
 import {Badge, Card, Divider, Loading, Text} from "@nextui-org/react";
 import Empty from "../Empty";
 import useSWR from "swr";
 import CommentItem from "./CommentItem";
 import RateItem from "./RateItem";
+import {useGlobalToggle} from "../../store";
 
 const mapToItem = {
 	COMMENT: item => <CommentItem item={item} />,
@@ -14,10 +13,10 @@ const mapToItem = {
 };
 
 const NotificationSidebar = () => {
-	const state = useHookstate(notificationState);
+	const state = useGlobalToggle();
 	const {data: notif, error} = useSWR("/notifications");
 	const onClose = () => {
-		state.set(false);
+		state.toggleOff("notificationSidebar");
 		document.body.style.overflow = "auto";
 	};
 

@@ -39,8 +39,12 @@ const theme = createTheme({
 	},
 });
 
-export const sidebarState = hookstate(false);
-export const notificationState = hookstate(false);
+export const toggles = hookstate({
+	userSidebar: false,
+	notificationSidebar: false,
+	profileSidebar: false,
+	loginPopper: false,
+});
 export const loginPopper = hookstate(false);
 
 export const ideaFormData = hookstate({

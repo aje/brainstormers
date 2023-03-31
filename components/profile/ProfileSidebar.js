@@ -1,7 +1,5 @@
 import {Button, Card, Divider, Dropdown, Loading, Text} from "@nextui-org/react";
 import {signOut, useSession} from "next-auth/react";
-import {useHookstate} from "@hookstate/core";
-import {sidebarState} from "../../pages/_app";
 import MyRating from "../MyRating";
 import Image from "next/image";
 import {Heart} from "@styled-icons/entypo/Heart";
@@ -11,6 +9,7 @@ import clsx from "clsx";
 import axios from "../../services/axios";
 import IdeaItem from "../IdeaItem";
 import {Blackboard, ChevronDown, LogOut} from "@styled-icons/entypo";
+import {useGlobalToggle} from "../../store";
 
 const ProfileSidebar = () => {
 	const {data: session} = useSession();
@@ -18,40 +17,12 @@ const ProfileSidebar = () => {
 	const [rated, setRated] = useState([]);
 	const [sor, setSor] = useState("ranking");
 	const [loading, setLoading] = useState(false);
-	// const {data: myIdeas, error} = useSWR(`/api/profile/ideas`);
 
-	// const router = useRouter();
-	// console.log(myIdeas, error);
-	const state = useHookstate(sidebarState);
-	// const [edit, setEdit] = useState(false);
+	const state = useGlobalToggle();
 	const onClose = () => {
-		state.set(false);
+		state.toggleOff("profileSidebar");
 		document.body.style.overflow = "auto";
 	};
-	// const ideas = [
-	//     {
-	//         author: {
-	//             name: "behrooz",
-	//             avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
-	//         },
-	//         ratingsQuantity: 3,
-	//         ratingsAverage: 3,
-	//         title: "Gym app that also motivates",
-	//         description: "All gyms are paid by yearly or 6 month, better to create an app to also motivates them to go to the gym",
-	//         tags: ["TECH", "INTERNET", "ONLINE"]
-	//     },
-	//     {
-	//         author: {
-	//             name: "Ame behroz",
-	//             avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d"
-	//         },
-	//         ratingsQuantity: 3,
-	//         ratingsAverage: 3,
-	//         title: "Business of a club or somethign",
-	//         description: "All gyms are paid by yearly or 6 month, better to create an app to also motivates them to go to the gym",
-	//         tags: ["INTERNET", "ONLINE"]
-	//     },
-	// ]
 
 	const onDropdown = key => {
 		setSor(key);
@@ -59,10 +30,10 @@ const ProfileSidebar = () => {
 		let value = first.value;
 		switch (value) {
 			case "new":
-				getIdeas({createdAt: "asc"});
+				getIdeas({createdAt: "desc"});
 				break;
 			case "old":
-				getIdeas({createdAt: "desc"});
+				getIdeas({createdAt: "asc"});
 				break;
 			case "rank":
 				getIdeas({ratingsAverage: -1});
