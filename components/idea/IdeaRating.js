@@ -49,10 +49,10 @@ const IdeaRating = ({isOwner, item}) => {
 	};
 
 	return (
-		<div className=" to-blue-50 pt-0  sbg-gradient-to-t sfrom-white  w-full">
+		<div className="pt-0 w-full">
 			<Text className={"text-2xl text-gray-400 mt-5 font-light"}>Rate this idea:</Text>
 			<MyRating count={count} onChange={onReview} size={"xl"} value={isRated && avgRating} />
-			<div className={"justify-between mt-5 flex"}>
+			<div className={"mt-5 flex justify-between overflow-hidden"}>
 				<Button
 					onClick={() => onReview(1)}
 					auto

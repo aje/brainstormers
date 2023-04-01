@@ -33,7 +33,7 @@ const Nav = () => {
 				disableBlur
 				// className={"fixed "}
 			>
-				<Navbar.Brand as={"a"} href={"/"}>
+				<Navbar.Brand className={"cursor-pointer"} onClick={() => router.push("/")}>
 					<Image src={"/logo.png"} width={200} quality={100} height={60} />
 				</Navbar.Brand>
 

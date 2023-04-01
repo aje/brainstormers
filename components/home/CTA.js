@@ -1,7 +1,10 @@
 import {Button, Container} from "@nextui-org/react";
 import {Flag} from "@styled-icons/entypo/Flag";
+import {useRouter} from "next/router";
 
 const Cta = ({shouldExplore}) => {
+	const router = useRouter();
+
 	return (
 		<div
 			className={"bg-primary/10 pt-52 pb-32 text-center"}
@@ -20,8 +23,7 @@ const Cta = ({shouldExplore}) => {
 							Start your journey by brainstorming your ideas with other people around the globe or your friends
 						</p>
 						<Button
-							as={"a"}
-							href={shouldExplore ? "/explore" : "/new"}
+							onPress={() => router.push(shouldExplore ? "/explore" : "/new")}
 							size={"xl"}
 							icon={<Flag size={30} />}
 							auto

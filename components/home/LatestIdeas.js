@@ -1,7 +1,10 @@
 import {Button, Container, Grid} from "@nextui-org/react";
 import IdeaItem from "../IdeaItem";
+import {useRouter} from "next/router";
 
 const LatestIdeas = ({topLastMonth: ideas, countLastMonth}) => {
+	const router = useRouter();
+
 	return (
 		<div className={"py-20"}>
 			<Container lg>
@@ -22,7 +25,7 @@ const LatestIdeas = ({topLastMonth: ideas, countLastMonth}) => {
 					</Grid.Container>
 
 					<div className="flex justify-center mt-5">
-						<Button ghost size={"lg"} className={"z-0"}>
+						<Button onPress={() => router.push("/search")} ghost size={"lg"} className={"z-0"}>
 							SEE ALL
 						</Button>
 					</div>
