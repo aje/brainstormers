@@ -48,7 +48,7 @@ export async function getServerSideProps({params, req}) {
 	let latest = [];
 	try {
 		await dbConnect();
-		latest = await Idea.find({}).populate({path: "author", model: models.User}).sort({createdAt: -1}).limit(50);
+		latest = await Idea.find({}).populate({path: "author", model: models.User}).sort({createdAt: -1});
 	} catch (e) {
 		console.log(e);
 	}

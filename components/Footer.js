@@ -1,4 +1,5 @@
 import {Container, Navbar, Text} from "@nextui-org/react";
+import Link from "next/link";
 
 const Footer = () => {
 	return (
@@ -8,11 +9,18 @@ const Footer = () => {
 					All right reserved for IdeaStorm
 				</Text>
 				<Navbar.Content>
-					<Navbar.Link href="/">Home</Navbar.Link>
-					<Navbar.Link href="/explore">Explore</Navbar.Link>
-					{/*<Navbar.Link href="#">Blog</Navbar.Link>*/}
-					<Navbar.Link href="/about">About</Navbar.Link>
-					<Navbar.Link href="/contact">Support</Navbar.Link>
+					<Link href="/">
+						<Navbar.Link>Home</Navbar.Link>
+					</Link>
+					<Link href="/explore">
+						<Navbar.Link>Explore</Navbar.Link>
+					</Link>
+					<Link href="/about">
+						<Navbar.Link>About</Navbar.Link>
+					</Link>
+					<Link href="/contact">
+						<Navbar.Link>Support</Navbar.Link>
+					</Link>
 				</Navbar.Content>
 			</Container>
 		</div>
