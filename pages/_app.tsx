@@ -39,15 +39,15 @@ const theme = createTheme({
 	},
 });
 
-export const toggles = hookstate({
+export const toggles: {[key: string]: boolean} = hookstate({
 	userSidebar: false,
 	notificationSidebar: false,
 	profileSidebar: false,
 	loginPopper: false,
 });
-export const loginPopper = hookstate(false);
+export const loginPopper: boolean = hookstate(false);
 
-export const ideaFormData = hookstate({
+export const ideaFormData: {problem?: string; idea?: string} = hookstate({
 	problem: "",
 	idea: "",
 });

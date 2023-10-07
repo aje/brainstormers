@@ -12,24 +12,26 @@ import "react-tagsinput/react-tagsinput.css";
 import {useRouter} from "next/router";
 import {ideaFormData, loginPopper} from "./_app";
 import {useSession} from "next-auth/react";
+import {IdeaType} from "./types";
 
 const Upload = () => {
 	const {data: session} = useSession();
-	const state = useHookstate(ideaFormData);
-	const login = useHookstate(loginPopper);
+	const state = useHookstate<{problem?: string; idea?: string}>(ideaFormData);
+	const login = useHookstate<boolean>(loginPopper);
 	const router = useRouter();
 	const {problem, idea} = state.get();
-	const [loading, setLoading] = useState(false);
-	const [formData, setFormData] = useState({
+	const [loading, setLoading] = useState<boolean>(false);
+	// @ts-ignore
+	const [formData, setFormData] = useState<IdeaType>({
 		title: idea || problem,
 		description: "",
 		tags: [],
-		targetAudience: "",
+		targetAudience: [""],
 	});
-	const [problems, setProblems] = useState([problem]);
-	const [ideas, setIdeas] = useState([idea]);
-	const [alts, setAlts] = useState([""]);
-	const [step, setStep] = useState(0);
+	const [problems, setProblems] = useState<string[]>([problem]);
+	const [ideas, setIdeas] = useState<string[]>([idea]);
+	const [alts, setAlts] = useState<string[]>([""]);
+	const [step, setStep] = useState<number>(0);
 
 	const onChange = name => event => {
 		setFormData({...formData, [name]: event?.target ? event.target.value : event});
