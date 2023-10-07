@@ -36,7 +36,7 @@ export default function Explore({ideas}) {
 	const onReview = value => {
 		if (!session) onNotLoggedIn();
 		else {
-			setLoading(true);
+			// setLoading(true);
 			axios
 				.post(`/rate?value=${value}&id=${ideas[index]._id}`)
 				.then(res => {
@@ -45,7 +45,7 @@ export default function Explore({ideas}) {
 					setRates(rat);
 					toast.success("Successfully updated!");
 				})
-				.finally(() => setLoading(false))
+				// .finally(() => setLoading(false))
 				.catch(error => {
 					toast.error(error?.response?.data?.message);
 				});
@@ -84,7 +84,8 @@ export default function Explore({ideas}) {
 				{ideas?.length > 0 ? (
 					ideas.map((idea, i) => {
 						const state = index === i ? "ACTIVE" : index === i - 1 ? "NEXT" : index === i + 1 ? "PREV" : "HIDE";
-						const isRated = idea.raters?.includes(session?.user?._id);
+						// @ts-ignore
+						// const isRated = idea.raters?.includes(session?.user?._id);
 						return (
 							<Card
 								key={idea.id}
@@ -177,13 +178,15 @@ export default function Explore({ideas}) {
 	);
 }
 
-export async function getServerSideProps({params, req}) {
+export async function getServerSideProps({req}) {
 	const session = await getSession({req});
 	let latest = [];
 	try {
 		await dbConnect();
 		//? get latest for slider
+		// @ts-ignore
 		const latestQuery = session ? {raters: {$not: {$elemMatch: {$eq: session.user._id}}}} : "";
+		// @ts-ignore
 		latest = await Idea.find(latestQuery, "title author description tags")
 			.populate({path: "author", model: models.User})
 			.sort({createdAt: -1})

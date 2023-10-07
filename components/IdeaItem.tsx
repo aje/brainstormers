@@ -9,13 +9,20 @@ import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../pages/_app";
+import {IdeaType} from "../pages/types";
 
-const IdeaItem = ({item, noOwner, onCallback}) => {
+type Props = {
+	item: IdeaType;
+	noOwner?: boolean;
+	onCallback?(): void;
+};
+const IdeaItem = ({item, noOwner, onCallback}: Props) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState(false);
 	const {data: session} = useSession();
 	const state = useHookstate(loginPopper);
 
+	// @ts-ignore
 	const isRated = item.raters?.includes(session?.user?._id);
 
 	const refreshData = () => {
@@ -25,6 +32,13 @@ const IdeaItem = ({item, noOwner, onCallback}) => {
 		router.push(`/ideas/${item._id}`);
 		if (typeof onCallback === "function") {
 			onCallback();
+		}
+	};
+
+	const onNotLoggedIn = () => {
+		if (!session) {
+			state.set(true);
+			toast.error("Please login first");
 		}
 	};
 

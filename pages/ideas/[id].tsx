@@ -30,7 +30,7 @@ const IdeaPage = ({item, isOwner}) => {
 				<IdeaSides item={item} isOwner={isOwner} />
 			</Grid>
 			<Grid xs={12} sm={5}>
-				<Grid.Container alignContent={"start"} className={" overflow-y-auto h-full"}>
+				<Grid.Container alignContent={"flex-start"} className={" overflow-y-auto h-full"}>
 					<Comments item={item} isOwner={isOwner} />
 				</Grid.Container>
 			</Grid>
@@ -64,16 +64,20 @@ export async function getServerSideProps({params, req}) {
 				model: models.CustomField,
 				options: {sort: {updatedAt: -1}},
 			});
+		// @ts-ignore
 		isOwner = session?.user?._id === item?.author._id?.toString();
 
 		if (isOwner) {
 			// Schema.Types.ObjectId
+			// @ts-ignore
 			const tquery = {
+				// @ts-ignore
 				user: mongoose.Types.ObjectId(session.user._id),
+				// @ts-ignore
 				"content.idea": mongoose.Types.ObjectId(id),
 				seen: false,
 			};
-			const t = await models.Notification.updateMany(tquery, {seen: true});
+			await models.Notification.updateMany(tquery, {seen: true});
 		}
 	} catch (e) {
 		console.log(e);

@@ -1,6 +1,6 @@
 import {ObjectId} from "bson";
 
-type UserType = {
+export type UserType = {
 	_id: ObjectId;
 	name: string;
 	email: string;
@@ -8,7 +8,7 @@ type UserType = {
 	emailVerified: boolean;
 	postCount: number;
 };
-type CommentType = {
+export type CommentType = {
 	_id: ObjectId;
 	description?: string;
 	author: UserType;
@@ -18,14 +18,14 @@ type CommentType = {
 	updatedAt: Date;
 };
 
-type ProblemType = string | CommentType;
+export type ProblemType = string | CommentType;
 
-type IdeaType = {
+export type IdeaType = {
 	_id: ObjectId;
 	title: string;
 	description?: string;
 	raters?: ObjectId[];
-	author?: ObjectId;
+	author?: UserType;
 	upsides?: [];
 	downsides?: [];
 	problems?: ProblemType[];
@@ -39,4 +39,5 @@ type IdeaType = {
 		[key: string]: number;
 	};
 	ratingsAverage?: number;
+	ratingsQuantity?: number;
 };

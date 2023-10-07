@@ -1,7 +1,6 @@
 import React from "react";
 import {Button, Grid} from "@nextui-org/react";
 import dbConnect from "../services/dbconnect";
-import {useSession} from "next-auth/react";
 import Idea from "../models/Idea";
 import Empty from "../components/Empty";
 import * as models from "../models/models";
@@ -9,7 +8,7 @@ import {Plus} from "@styled-icons/entypo";
 import IdeaItem from "../components/IdeaItem";
 
 export default function Search({ideas}) {
-	const {data: session} = useSession();
+	// const {data: session} = useSession();
 
 	return (
 		<div
@@ -26,7 +25,7 @@ export default function Search({ideas}) {
 			</h2>
 			<Grid.Container gap={2}>
 				{ideas?.length > 0 ? (
-					ideas.map((idea, i) => (
+					ideas.map(idea => (
 						<Grid sm={4} key={idea._id} xs={12}>
 							<IdeaItem item={idea} />
 						</Grid>
@@ -44,7 +43,7 @@ export default function Search({ideas}) {
 	);
 }
 
-export async function getServerSideProps({params, req}) {
+export async function getServerSideProps() {
 	let latest = [];
 	try {
 		await dbConnect();

@@ -86,7 +86,7 @@ const Upload = () => {
 		setProblems(t);
 	};
 
-	const removeProblem = i => e => {
+	const removeProblem = i => () => {
 		const t = [...problems];
 		t.splice(i, 1);
 		setProblems(t);
@@ -104,7 +104,7 @@ const Upload = () => {
 		setIdeas(t);
 	};
 
-	const removeIdeas = i => e => {
+	const removeIdeas = i => () => {
 		const t = [...ideas];
 		t.splice(i, 1);
 		setIdeas(t);
@@ -122,7 +122,7 @@ const Upload = () => {
 		setAlts(t);
 	};
 
-	const removeAlts = i => e => {
+	const removeAlts = i => () => {
 		const t = [...alts];
 		t.splice(i, 1);
 		setAlts(t);
@@ -304,7 +304,7 @@ const Upload = () => {
 									) : (
 										formData.solutions.map((p, i) => (
 											<div key={i} className="flex w-full px-4  pb-4">
-												<p>{p}</p>
+												{typeof p === "string" ? <p>{p}</p> : null}
 											</div>
 										))
 									)}
@@ -321,7 +321,7 @@ const Upload = () => {
 									) : (
 										formData.problems.map((p, i) => (
 											<div key={i} className="flex w-full px-4  pb-4">
-												<p>{p}</p>
+												{typeof p === "string" ? <p>{p}</p> : null}
 											</div>
 										))
 									)}
@@ -329,7 +329,7 @@ const Upload = () => {
 							</div>
 
 							<Text h4>Existing Alternatives</Text>
-							<Text caption className={"-mt-2 mb-3"}>
+							<Text small className={"-mt-2 mb-3"}>
 								List how these problems are solved today
 							</Text>
 							<div className="bg-white rounded-3xl pt-2 mb-5">
@@ -363,7 +363,7 @@ const Upload = () => {
 							</div>
 
 							<Text h4>Early adopters ( Target audience )</Text>
-							<Text caption className={"-mt-2 mb-3"}>
+							<Text small className={"-mt-2 mb-3"}>
 								List characteristics of your ideal customer
 							</Text>
 							<div className="bg-white rounded-3xl pt-2 px-4 mb-5">

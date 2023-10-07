@@ -39,12 +39,12 @@ const theme = createTheme({
 	},
 });
 
-export const toggles: {[key: string]: boolean} = hookstate({
-	userSidebar: false,
-	notificationSidebar: false,
-	profileSidebar: false,
-	loginPopper: false,
-});
+// export const toggles: {[key: string]: boolean} = hookstate({
+// 	userSidebar: false,
+// 	notificationSidebar: false,
+// 	profileSidebar: false,
+// 	loginPopper: false,
+// });
 export const loginPopper: boolean = hookstate(false);
 
 export const ideaFormData: {problem?: string; idea?: string} = hookstate({
@@ -57,11 +57,11 @@ export default function App({Component, pageProps: {session, ...pageProps}}) {
 	const [loading, setLoading] = useState(false);
 	const [currentUrl, setCurrentUrl] = useState();
 	useEffect(() => {
-		const handleStart = (url, {shallow}) => {
+		const handleStart = url => {
 			if (url !== currentUrl) setLoading(true);
 		};
 
-		const handleStop = (url, {shallow}) => {
+		const handleStop = url => {
 			setCurrentUrl(url);
 			setLoading(false);
 		};

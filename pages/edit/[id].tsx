@@ -1,11 +1,10 @@
 import {Card, Container, Text, Textarea} from "@nextui-org/react";
-import React, {useState} from "react";
-import {useRouter} from "next/router";
+import React from "react";
 
 const EditNewIdea = () => {
-	const router = useRouter();
-	const [step, setStep] = useState(0);
-	const [formData, setFormData] = useState({});
+	// const router = useRouter();
+	// const [step, setStep] = useState(0);
+	// const [formData, setFormData] = useState({});
 
 	return (
 		<div className={"py-20 bg-violet-50"}>
