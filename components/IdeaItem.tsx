@@ -9,7 +9,7 @@ import {toast} from "react-hot-toast";
 import {useSession} from "next-auth/react";
 import {useHookstate} from "@hookstate/core";
 import {loginPopper} from "../pages/_app";
-import {IdeaType} from "../pages/types";
+import {IdeaType} from "../types";
 
 type Props = {
 	item: IdeaType;

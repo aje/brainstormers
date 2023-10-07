@@ -12,7 +12,7 @@ import "react-tagsinput/react-tagsinput.css";
 import {useRouter} from "next/router";
 import {ideaFormData, loginPopper} from "./_app";
 import {useSession} from "next-auth/react";
-import {IdeaType} from "./types";
+import {IdeaType} from "../types";
 
 const Upload = () => {
 	const {data: session} = useSession();
