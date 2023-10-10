@@ -12,6 +12,18 @@ import axios from "../../services/axios";
 import DeleteConfirmation from "../DeleteConfirmation";
 import {useRouter} from "next/router";
 
+function isValidHttpUrl(string) {
+	let url;
+
+	try {
+		url = new URL(string);
+	} catch (_) {
+		return false;
+	}
+
+	return url.protocol === "http:" || url.protocol === "https:";
+}
+
 const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deletable, item, items, onChange, formData}) => {
 	const [editable, setEditable] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -150,7 +162,20 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 					<Empty inline />
 				)
 			) : (
-				!toggle && items.map((p, i) => (typeof p === "string" ? <Text>{p}</Text> : <CommentItem item={p} dense />))
+				!toggle &&
+				items.map((p, i) =>
+					typeof p === "string" ? (
+						isValidHttpUrl(p) ? (
+							<a target={"_blank"} href={p}>
+								{p.slice(0, 50).concat("...")}
+							</a>
+						) : (
+							<Text>- {p}</Text>
+						)
+					) : (
+						<CommentItem item={p} dense />
+					)
+				)
 			)}
 		</div>
 	);
