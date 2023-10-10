@@ -166,9 +166,12 @@ const CustomListItem = ({title, custom, helper, itemKey, onSave, isOwner, deleta
 				items.map((p, i) =>
 					typeof p === "string" ? (
 						isValidHttpUrl(p) ? (
-							<a target={"_blank"} href={p}>
-								{p.slice(0, 50).concat("...")}
-							</a>
+							<Text>
+								-{" "}
+								<a className={"hover:underline"} target={"_blank"} href={p}>
+									{p.slice(0, 50).concat("...")}
+								</a>
+							</Text>
 						) : (
 							<Text>- {p}</Text>
 						)
